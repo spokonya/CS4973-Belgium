@@ -1,8 +1,8 @@
 ---
-title: "Stats are fun"
-date: 2024-04-18
+title: "Math is fun"
+date: 2026-05-12
 draft: false
-description: "PCA all the Way"
+description: "Machine Learning is Math"
 slug: "first"   # if you use, needs to be different for every post
 tags: ["authors", "config", "docs"]
 authors:
@@ -10,7 +10,7 @@ authors:
 showAuthorsBadges : false
 ---
 
-# Stats 
+# What is Machine Learning?
 
-Let's talk about Principal Component Analysis!
+Machine Learning is Math!
 
