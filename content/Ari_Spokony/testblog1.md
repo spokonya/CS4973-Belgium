@@ -6,7 +6,7 @@ description: "Another test"
 slug: "blog1"   # if you use, needs to be different for every post
 tags: ["databases", "SQL", "European Parliament", "Belgium"]
 authors:
-  - "anew_guy"
+  - "Ari_Spokony"
 showAuthorsBadges : false
 ---
 
