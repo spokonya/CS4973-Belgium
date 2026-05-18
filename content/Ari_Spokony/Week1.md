@@ -1,6 +1,6 @@
 ---
 title: "Week One Update"
-date: 2026-05-19
+date: 2026-05-18
 draft: false
 description: "Provides an overview of my first week and some of the experinces we've had such as visiting Parliment, the Comission, Learning about the DSA and exploring Brussels and leuven."
 slug: "blog1"   # if you use, needs to be different for every post
