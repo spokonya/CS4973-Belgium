@@ -1,6 +1,5 @@
 ---
-
-## title: "Project - Phase I"
+title: "Project - Phase I"
 date: 2026-05-18
 draft: false
 description: "EU Energy Security Index: Phase I team update"
@@ -12,11 +11,6 @@ authors:
   - "Anjali_Patel"
   - "Rayna_Patel"
 showAuthorsBadges: false
-
-# Phase I: Team Update
-
-
-
 ---
 
 ## At a glance
