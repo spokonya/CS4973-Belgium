@@ -17,8 +17,6 @@ showAuthorsBadges: false
 
 
 
-*[Team introduction (2-3 sentences)]*
-
 ---
 
 ## At a glance
