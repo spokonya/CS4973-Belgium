@@ -93,6 +93,7 @@ The Russian invasion of Ukraine in 2022 exposed how vulnerable European countrie
 | **Role** | *Energy Journalist* |
 | **Age** | *30* |
 | **Location** | *Brussels, Belgium* |
+| **Headshot** | <img src="https://commission.europa.eu/sites/default/files/styles/oe_theme_ratio_3_2_medium/public/2024-11/St%C3%A9phane-S%C3%A9journ%C3%A9_landing%20page.png" alt="Marco" width="150"> |
 | **Description** | *Writes 2-3 articles a week on gas markets, electricity prices, and polcy decisions* |
 | **Goals** | *Gather current country-level energy data fast. Find newsworthy comparisons and outliers across the EU. Although, our data is scattered across ENTSO-E, gas storage portals, and Eurostat. Each source has its own format* |
 
@@ -108,15 +109,7 @@ The Russian invasion of Ukraine in 2022 exposed how vulnerable European countrie
 
 ---
 
-### Persona 3: Policy analyst
-
-
-|                 |                         |
-| --------------- | ----------------------- |
-| **Name**        | *[e.g. Sofia Anderson]* |
-| **Role**        | Policy analyst          |
-| **Description** | *[…]*                   |
-| **Goals**       | *[…]*                   |
+### Persona 3: Policy Analyst
 
 | | |
 | :--- | :--- |
@@ -124,6 +117,7 @@ The Russian invasion of Ukraine in 2022 exposed how vulnerable European countrie
 | **Role** | *Policy Analyst* |
 | **Age** | *47* |
 | **Location** | *Brussels, Belgium* |
+| **Headshot** | <img src="https://cdn.assets.prezly.com/02b2af89-30e4-4609-8349-36c31b6b936b/-/preview/1000x1000/-/resize/1200/Loubna%20Azghoud.png" alt="Sofia" width="150"> |
 | **Description** | *Senior researcher who writes briefing memos for MEPs and national energy councils. Highly educated and comfortable using models* |
 | **Goals** | *Identify the most vulnerable EU countries to brief policymakers. Model supply shock scenarios for memos.* |
 
@@ -139,7 +133,7 @@ The Russian invasion of Ukraine in 2022 exposed how vulnerable European countrie
 
 ---
 
-## Data sources
+## Data Sources
 
 ### 1. ENTSO-E: Electricity transparency
 
