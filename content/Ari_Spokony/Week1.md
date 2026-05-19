@@ -3,15 +3,21 @@ title: "Week One Update"
 date: 2026-05-18
 draft: false
 description: "Provides an overview of my first week and some of the experinces we've had such as visiting Parliment, the Comission, Learning about the DSA and exploring Brussels and leuven."
-slug: "blog1"   # if you use, needs to be different for every post
+slug: "blog1"
 tags: ["databases", "SQL", "EU", "Brussels"]
 authors:
   - "Ari_Spokony"
 showAuthorsBadges : false
 ---
 
-This past week was our first week in Belgium! It's been an awesome start and we've experienced a lot in such a short time. Our speakers have primarily shared foundational information about the structure of the EU and how it functions, setting us up to dive further into EU tech policy. I've particularly found interest in our most recent speakers at the Commission and EEAS, who covered the DSA and the EU's effort to become more competitive in the AI/startup landscape. Something new I learned was that they're working with less technologically advanced nations to build up their infrastructure, pushing toward globally democratized AI rather than concentration in the U.S. and China.
+### Week one, Leuven
 
-For the first deliverable, I took lead on finding our initial data sources (I currently have four listed). One would serve as the backbone for our project and requires API approval I'm hoping to gain in the next day or so.
+This past week was our first week in Belgium. It has been an awesome start—we have experienced a lot in a short time. Our speakers have shared foundational information about how the EU is structured, setting us up to dive into EU tech policy. I was especially interested in our Commission and EEAS visits, where we heard about the DSA and the EU's push to stay competitive in AI and startups. One thing I had not heard before: the EU is partnering with less technologically advanced nations to build infrastructure, aiming for more distributed AI capacity rather than concentration in the U.S. and China.
 
-Class has been really good so far. I'd worked with SQL slightly before but never took the time to play around with the language, and I've enjoyed how the classroom is made to be fun yet informative.
+### On the project
+
+For Phase I, I led our initial data-source research (four sources so far). ENTSO-E will likely be the backbone of the dashboard; I am waiting on API approval and hope to have access within the next few days.
+
+### In class
+
+I had touched SQL before, but never really played with it. The classroom here is fun and informative—I like that the problems feel like puzzles, especially when subqueries click.

@@ -1,0 +1,14 @@
+{{/* Section index — match content folder name to data/authors/*.json */}}
+{{ $dir := strings.TrimSuffix "/" (.File.Dir | default "") }}
+{{ $authorData := index site.Data.authors $dir }}
+{{ if not $authorData }}
+  {{ range $key, $val := site.Data.authors }}
+    {{ if eq (lower $key) (lower $dir) }}
+      {{ $authorData = $val }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ if $authorData }}
+  {{ $.Scratch.Set "memberSection" true }}
+  {{ partial "team-profile.html" (dict "data" $authorData "variant" "section") }}
+{{ end }}

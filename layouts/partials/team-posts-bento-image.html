@@ -1,0 +1,26 @@
+{{/* Photo rail image. Args: path, alt, index (1–8) */}}
+{{ $path := .path }}
+{{ $alt := .alt | default "" }}
+{{ $index := .index | default 1 }}
+{{ $disableImageOptimization := site.Params.disableImageOptimization | default false }}
+
+{{ $fillSpec := "480x520 q85" }}
+{{ if eq (mod $index 2) 0 }}
+  {{ $fillSpec = "480x560 q85" }}
+{{ end }}
+
+{{ $src := "" }}
+{{ $resource := resources.Get $path }}
+{{ if $resource }}
+  {{ $display := $resource }}
+  {{ if not $disableImageOptimization }}
+    {{ with $resource.Fill $fillSpec }}
+      {{ $display = . }}
+    {{ end }}
+  {{ end }}
+  {{ $src = $display.RelPermalink }}
+{{ else }}
+  {{ $src = $path | relURL }}
+{{ end }}
+
+<img class="wecan-photo-rail__img" src="{{ $src }}" alt="{{ $alt }}" loading="lazy" decoding="async" />

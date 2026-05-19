@@ -1,0 +1,16 @@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&family=Neucha&display=swap"
+  rel="stylesheet"
+/>
+{{ $jsSite := resources.Get "js/site.js" }}
+{{ if $jsSite }}
+  {{ $jsSite = $jsSite | resources.Minify | resources.Fingerprint "sha512" }}
+  <script
+    defer
+    type="text/javascript"
+    src="{{ $jsSite.RelPermalink }}"
+    integrity="{{ $jsSite.Data.Integrity }}"
+  ></script>
+{{ end }}

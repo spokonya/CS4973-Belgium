@@ -1,0 +1,43 @@
+{{/* Renders a team photo. Args: path (assets path), alt, class, size (post|section) */}}
+{{ $path := .path }}
+{{ $alt := .alt | default "" }}
+{{ $class := .class | default "team-profile__photo" }}
+{{ $size := .size | default "section" }}
+{{ $disableImageOptimization := site.Params.disableImageOptimization | default false }}
+
+{{ $src := "" }}
+{{ $width := 112 }}
+{{ $height := 112 }}
+
+{{ if eq $size "post" }}
+  {{ $width = 144 }}
+  {{ $height = 144 }}
+{{ end }}
+
+{{ $resource := resources.Get $path }}
+{{ if $resource }}
+  {{ $display := $resource }}
+  {{ if not $disableImageOptimization }}
+    {{ $spec := "112x112 q90" }}
+    {{ if eq $size "post" }}
+      {{ $spec = "144x144 q90" }}
+    {{ end }}
+    {{ with $resource.Fill $spec }}
+      {{ $display = . }}
+    {{ end }}
+  {{ end }}
+  {{ $src = $display.RelPermalink }}
+{{ end }}
+
+{{ if not $src }}
+  {{ $src = $path | relURL }}
+{{ end }}
+
+<img
+  class="{{ $class }}"
+  src="{{ $src }}"
+  alt="{{ $alt }}"
+  width="{{ $width }}"
+  height="{{ $height }}"
+  loading="lazy"
+/>

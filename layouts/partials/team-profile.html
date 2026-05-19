@@ -1,0 +1,23 @@
+{{/* Team member photo + bio. Pass: dict "data", optional "variant" "section"|"post" */}}
+{{ $data := .data }}
+{{ if not $data }}{{ return }}{{ end }}
+{{ $variant := .variant | default "post" }}
+
+<div class="team-profile team-profile--{{ $variant }} not-prose">
+  {{ with $data.image }}
+    {{ partial "team-image.html" (dict "path" . "alt" $data.name "class" "team-profile__photo" "size" $variant) }}
+  {{ end }}
+  <div class="team-profile__text">
+    {{ if ne $variant "section" }}
+    <p class="team-profile__name">{{ $data.name }}</p>
+    {{ end }}
+    {{ with $data.bio }}
+    <p class="team-profile__bio">{{ . }}</p>
+    {{ end }}
+    {{ with $data.linkedin }}
+    <p class="team-profile__loc">
+      <a href="{{ . }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </p>
+    {{ end }}
+  </div>
+</div>

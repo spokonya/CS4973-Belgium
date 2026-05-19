@@ -1,0 +1,14 @@
+<section class="wecan-source reveal-on-scroll">
+  <header class="wecan-source__head">
+    <h3 class="wecan-source__name">{{ .Get "name" }}</h3>
+    {{ with .Get "link" }}
+    <a class="wecan-source__link" href="{{ . }}" target="_blank" rel="noopener noreferrer">Open source</a>
+    {{ end }}
+  </header>
+  {{ with .Get "use" }}
+  <p class="wecan-source__use"><strong>What we use it for:</strong> {{ . }}</p>
+  {{ end }}
+  <div class="wecan-source__body">
+    {{ .Inner | markdownify }}
+  </div>
+</section>

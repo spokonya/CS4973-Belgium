@@ -1,0 +1,50 @@
+{{/* Two-column photo rail — up to 8 images: photo-01.jpg … photo-08.jpg */}}
+{{ $max := 8 }}
+{{ $images := .Params.bentoImages | default slice }}
+
+<aside class="wecan-photo-rail" aria-label="Field photos">
+  <div class="wecan-photo-rail__col">
+    {{ range $i := seq 1 $max }}
+      {{ if eq (mod $i 2) 1 }}
+        {{ $num := printf "%02d" $i }}
+        {{ $defaultPath := printf "images/team-posts/photo-%s.jpg" $num }}
+        {{ $entry := index $images (sub $i 1) }}
+        {{ $path := "" }}
+        {{ $alt := "Belgium fieldwork" }}
+        {{ if $entry }}
+          {{ $path = $entry.path | default $defaultPath }}
+          {{ $alt = $entry.alt | default $alt }}
+        {{ else }}
+          {{ $path = $defaultPath }}
+        {{ end }}
+        {{ if resources.Get $path }}
+          <div class="wecan-photo-rail__item">
+            {{ partial "team-posts-bento-image.html" (dict "path" $path "alt" $alt "index" $i) }}
+          </div>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+  <div class="wecan-photo-rail__col wecan-photo-rail__col--stagger">
+    {{ range $i := seq 1 $max }}
+      {{ if eq (mod $i 2) 0 }}
+        {{ $num := printf "%02d" $i }}
+        {{ $defaultPath := printf "images/team-posts/photo-%s.jpg" $num }}
+        {{ $entry := index $images (sub $i 1) }}
+        {{ $path := "" }}
+        {{ $alt := "Belgium fieldwork" }}
+        {{ if $entry }}
+          {{ $path = $entry.path | default $defaultPath }}
+          {{ $alt = $entry.alt | default $alt }}
+        {{ else }}
+          {{ $path = $defaultPath }}
+        {{ end }}
+        {{ if resources.Get $path }}
+          <div class="wecan-photo-rail__item">
+            {{ partial "team-posts-bento-image.html" (dict "path" $path "alt" $alt "index" $i) }}
+          </div>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+</aside>

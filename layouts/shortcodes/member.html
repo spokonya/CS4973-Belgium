@@ -1,0 +1,21 @@
+{{ $href := .Get "href" }}
+{{ $name := .Get "name" }}
+{{ $role := .Get "role" }}
+{{ $initials := .Get "initials" }}
+{{ $photo := .Get "photo" }}
+<a class="wecan-member" href="{{ $href }}">
+  {{ if $photo }}
+    {{ $img := resources.Get $photo }}
+    {{ if $img }}
+    <img class="wecan-member__avatar" src="{{ $img.RelPermalink }}" alt="{{ $name }}" width="44" height="44" loading="lazy" />
+    {{ else }}
+    <img class="wecan-member__avatar" src="{{ $photo | relURL }}" alt="{{ $name }}" width="44" height="44" loading="lazy" />
+    {{ end }}
+  {{ else }}
+  <span class="wecan-member__initials" aria-hidden="true">{{ $initials }}</span>
+  {{ end }}
+  <span>
+    <span class="wecan-member__name">{{ $name }}</span>
+    <span class="wecan-member__role">{{ $role }}</span>
+  </span>
+</a>

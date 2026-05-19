@@ -1,0 +1,69 @@
+{{ $homepageImage := "" }}
+{{ with .Site.Params.homepage.homepageImage }}
+  {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
+    {{ $homepageImage = resources.GetRemote . }}
+  {{ else }}
+    {{ $homepageImage = resources.Get . }}
+  {{ end }}
+{{ end }}
+
+<div class="wecan-hub">
+  {{ if $homepageImage }}
+  <div
+    class="wecan-hub__bg"
+    style="background-image: url('{{ $homepageImage.RelPermalink }}');"
+    role="img"
+    aria-label="Leuven town hall"
+  ></div>
+  {{ end }}
+  <div class="wecan-hub__scrim" aria-hidden="true"></div>
+
+  <div class="wecan-hub__content">
+    <header class="wecan-hub__header">
+      <h1 class="wecan-hub__title">{{ .Site.Title }}</h1>
+      <p class="wecan-hub__subtitle">Belgium Dialogue · EU Energy Security Index</p>
+    </header>
+
+    <div class="wecan-hub__directory">
+      <section class="wecan-hub__section" aria-labelledby="hub-team-blog">
+        <h2 id="hub-team-blog" class="wecan-hub__section-title">Team blog</h2>
+        <nav class="wecan-hub__nav wecan-hub__nav--pair" aria-label="Team blog">
+          <a class="wecan-hub__tile button-55" href="{{ `/team_posts/phase1post/` | relLangURL }}">
+            <span class="wecan-hub__tile-title">Phase I update</span>
+            <span class="wecan-hub__tile-desc">Project overview, personas, data sources</span>
+          </a>
+          <a class="wecan-hub__tile button-55" href="{{ `/team_posts/` | relLangURL }}">
+            <span class="wecan-hub__tile-title">All team posts</span>
+            <span class="wecan-hub__tile-desc">Full team writing archive</span>
+          </a>
+        </nav>
+      </section>
+
+      <section class="wecan-hub__section wecan-hub__section--members" aria-labelledby="hub-members">
+        <h2 id="hub-members" class="wecan-hub__section-title">Individual blogs</h2>
+        <nav class="wecan-hub__nav wecan-hub__nav--grid" aria-label="Team members">
+          <a class="wecan-hub__tile button-55" href="{{ `/ari_spokony/` | relLangURL }}">
+            <span class="wecan-hub__tile-title">Ari Spokony</span>
+            <span class="wecan-hub__tile-desc">Data sources and weekly notes</span>
+          </a>
+          <a class="wecan-hub__tile button-55" href="{{ `/bobby_bress/` | relLangURL }}">
+            <span class="wecan-hub__tile-title">Bobby Bress</span>
+            <span class="wecan-hub__tile-desc">Project description and reflections</span>
+          </a>
+          <a class="wecan-hub__tile button-55" href="{{ `/anjali_patel/` | relLangURL }}">
+            <span class="wecan-hub__tile-title">Anjali Patel</span>
+            <span class="wecan-hub__tile-desc">Personas and Belgium notes</span>
+          </a>
+          <a class="wecan-hub__tile button-55" href="{{ `/rayna_patel/` | relLangURL }}">
+            <span class="wecan-hub__tile-title">Rayna Patel</span>
+            <span class="wecan-hub__tile-desc">Personas and week one</span>
+          </a>
+        </nav>
+      </section>
+    </div>
+
+    {{ with .Content }}
+    <div class="wecan-hub__intro prose prose-invert">{{ . }}</div>
+    {{ end }}
+  </div>
+</div>
