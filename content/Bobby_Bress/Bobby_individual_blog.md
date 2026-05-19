@@ -4,7 +4,7 @@ date: 2026-05-18
 draft: false
 description: "Reflection on SQL, Databases, and the European Parliament"
 slug: "bress-belgium-blog"   # if you use, needs to be different for every post
-tags: ["authors", "config", "docs"]
+tags: ["databases", "SQL", "European Parliament", "Belgium"]
 authors:
   - "Bobby Bress"
 showAuthorsBadges : false
