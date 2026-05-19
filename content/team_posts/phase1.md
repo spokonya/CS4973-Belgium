@@ -61,25 +61,27 @@ The Russian invasion of Ukraine in 2022 exposed how vulnerable European countrie
 ## User personas
 
 
+### Persona 1 — Household Owner
 
-### Persona 1: Household owner
-
-
-|                 |                                                           |
-| --------------- | --------------------------------------------------------- |
-| **Name**        | *[e.g. Lena Müller]*                                      |
-| **Role**        | Household owner                                           |
-| **Description** | *[Age, location, bill context, background, tech comfort]* |
-| **Goals**       | *[Bullet or short paragraph]*                             |
-
+| | |
+| :--- | :--- |
+| **Name** | *Lena Müller* |
+| **Role** | *Household Owner* |
+| **Age** | *30* |
+| **Location** | *Hamburg, Germany* |
+| **Headshot** | <img src="https://media.easy-peasy.ai/27feb2bb-aeb4-4a83-9fb6-8f3f2a15885e/540357c1-24ab-4ab9-942d-e00789905eb2_medium.webp" alt="Lena" width="150"> |
+| **Description** | *Her current electric bill is 180 euros per month. Her bill jumped 60% in winter 2022 and has since been changing depending on the electric news. She has no economics or finance background. She's comfortable with apps, but doesn't trust the contract offers that her utility company send every few months.* |
+| **Goals** | *Lena would like to be able to anticipate whether energy bills are about to rise and decide whether to lock in a fixed-rate contract.* |
 
 **User stories**
 
-1. *[As a …, I want …, so that …]*
-2. *[…]*
-3. *[…]*
-4. *[…]*
-5. *[optional]*
+1. As Lena, I would like see how electricity prices in Germany are forecasted to move over the next 30 days, so that I can decide whether to lock in a fixed-rate contract now or wait.
+
+2. As Lena, I want to see how current gas storage levels compare to recent winters, so that I can judge whether the upcoming winter is likely to be a high-bill one.
+
+3. As Lena, I want a plain-language summary explaining the forecast, so that I can understand what's driving the prediction without needing an economics background.
+
+4. As Lena, I want to compare Germany's situation to its neighbors, so that I can understand whether the price pressure is local or EU-wide.
 
 ---
 
