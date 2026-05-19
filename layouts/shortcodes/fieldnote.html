@@ -1,0 +1,8 @@
+<section class="wecan-fieldnote">
+  {{ with .Get "title" }}
+  <h3 class="wecan-fieldnote__title">{{ . }}</h3>
+  {{ end }}
+  <div class="wecan-fieldnote__body">
+    {{ .Inner | markdownify }}
+  </div>
+</section>

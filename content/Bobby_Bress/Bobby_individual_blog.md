@@ -3,13 +3,19 @@ title: "Bobby Bress First Blog Post"
 date: 2026-05-18
 draft: false
 description: "Reflection on SQL, Databases, and the European Parliament"
-slug: "bress-belgium-blog"   # if you use, needs to be different for every post
+slug: "bress-belgium-blog"
 tags: ["databases", "SQL", "European Parliament", "Belgium"]
 authors:
-  - "Bobby Bress"
+  - "Bobby_Bress"
 showAuthorsBadges : false
 ---
 
-# My first blog post
+### Phase I — project description
 
-For phase 1 of the deliverable, I was responsible for writing the project description. Beyond the coursework, I feel that I have learned a great deal about databases and the European Union in the time that I’ve been in Belgium. I find it fascinating how SQL can be used to navigate relational databases. The problems we work through in class feel like puzzles that can be very satisfying to solve. I find the subqueries problems can be challenging and is something that I want to improve on. I also enjoyed learning about the European Parliament and being able to visit the actual building in Brussels. There are many different segments to it and many moving parts, and being able to learn about it right there in Brussels was very intriguing.
+For Phase I, I wrote our project description—the narrative that ties the EU Energy Security Index to real users and policy context.
+
+### Brussels and SQL
+
+Beyond coursework, I have learned a lot about databases and the EU in a short time. SQL feels like navigation through relational puzzles; subqueries are still the hardest part for me, and that is what I want to improve next.
+
+Visiting the European Parliament in Brussels stood out: so many chambers, roles, and procedures, and hearing about them in the city where decisions actually happen made it click in a way a textbook never could.

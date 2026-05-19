@@ -1,0 +1,25 @@
+{{ $type := .Get "type" | default "household" }}
+{{ $photo := .Get "photo" }}
+{{ $name := .Get "name" }}
+<article class="wecan-persona wecan-persona--{{ $type }} reveal-on-scroll">
+  {{ if $photo }}
+    {{ $img := resources.Get $photo }}
+    {{ if $img }}
+    <img class="wecan-persona__avatar wecan-persona__avatar--photo" src="{{ $img.RelPermalink }}" alt="{{ $name }}" width="88" height="88" loading="lazy" />
+    {{ else }}
+    <div class="wecan-persona__avatar" aria-hidden="true">{{ .Get "initials" }}</div>
+    {{ end }}
+  {{ else }}
+  <div class="wecan-persona__avatar" aria-hidden="true">{{ .Get "initials" }}</div>
+  {{ end }}
+  <div class="wecan-persona__content">
+    <header class="wecan-persona__meta">
+      <h3>{{ $name }}</h3>
+      <p class="wecan-persona__role">{{ .Get "role" }}</p>
+      <p class="wecan-persona__loc">{{ .Get "age" }} · {{ .Get "location" }}</p>
+    </header>
+    <div class="wecan-persona__body">
+      {{ .Inner | markdownify }}
+    </div>
+  </div>
+</article>

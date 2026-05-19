@@ -6,6 +6,7 @@ description: "EU Energy Security Index: Phase I team update"
 slug: "phase1post"
 tags: ["project", "phase1", "energy", "Personas"]
 showAuthorsBadges: false
+showTableOfContents: true
 ---
 
 # Phase I — Team Update
@@ -14,16 +15,12 @@ We are a group of students participating in a study abroad program in Belgium. I
 
 ## At a glance
 
-
-|                   |                                                             |
-| ----------------- | ----------------------------------------------------------- |
-| **Project** | EU Energy Security Index |
-| **Problem** | EU countries lack a unified, accessible view of their energy security risk and import dependence|
-| **Solution** | An interactive per-country dashboard that tracks energy imports, gas storage, electricity prices, and supply shock risk across the EU  |
-| **Primary users** | Households · Journalists · Policy analysts |
-
-  
----
+{{< glance
+  project="EU Energy Security Index"
+  problem="EU countries lack a unified, accessible view of energy security risk and import dependence"
+  solution="Per-country dashboard for imports, gas storage, electricity prices, and supply-shock risk"
+  users="Households, Journalists, Policy analysts"
+>}}
 
 ## Project description
 
@@ -50,94 +47,53 @@ The Russian invasion of Ukraine in 2022 exposed how vulnerable European countrie
 | **ML #1: Price forecast** | Short-horizon electricity price forecast | *[e.g. historical prices, demand, gas storage]* | *[e.g. 30-day outlook]*    |
 | **ML #2: Winter stress**  | Supply-shock vulnerability classifier    | *[e.g. import dependence, storage, weather]*    | *[Per-country risk score]* |
 
-
----
-
 ## User personas
 
 
 ### Persona 1 — Household Owner
 
-| | |
-| :--- | :--- |
-| **Name** | *Lena Müller* |
-| **Role** | *Household Owner* |
-| **Age** | *30* |
-| **Location** | *Hamburg, Germany* |
-| **Headshot** | <img src="https://media.easy-peasy.ai/27feb2bb-aeb4-4a83-9fb6-8f3f2a15885e/540357c1-24ab-4ab9-942d-e00789905eb2_medium.webp" alt="Lena" width="150"> |
-| **Description** | *Her current electric bill is 180 euros per month. Her bill jumped 60% in winter 2022 and has since been changing depending on the electric news. She has no economics or finance background. She's comfortable with apps, but doesn't trust the contract offers that her utility company send every few months.* |
-| **Goals** | *Lena would like to be able to anticipate whether energy bills are about to rise and decide whether to lock in a fixed-rate contract.* |
+{{< persona name="Lena Müller" role="Household Owner" age="30" location="Hamburg, Germany" initials="LM" type="household" photo="images/team/Lena.jpg" >}}
+Her electric bill is about 180 euros per month. She wants to anticipate bill changes and decide when to lock in a fixed-rate contract. It jumped roughly 60% during winter 2022 and still moves with the news cycle. She has no economics background, uses apps comfortably, and does not fully trust the contract offers her utility sends every few months.
 
 **User stories**
 
-1. As Lena, I would like see how electricity prices in Germany are forecasted to move over the next 30 days, so that I can decide whether to lock in a fixed-rate contract now or wait.
-
-2. As Lena, I want to see how current gas storage levels compare to recent winters, so that I can judge whether the upcoming winter is likely to be a high-bill one.
-
-3. As Lena, I want a plain-language summary explaining the forecast, so that I can understand what's driving the prediction without needing an economics background.
-
-4. As Lena, I want to compare Germany's situation to its neighbors, so that I can understand whether the price pressure is local or EU-wide.
-
----
+1. As Lena, I want to see how electricity prices in Germany are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
+2. As Lena, I want to see how current gas storage levels compare to recent winters, so I can judge whether the upcoming winter is likely to be a high-bill season.
+3. As Lena, I want a plain-language summary of the forecast, so I can understand what is driving the prediction without an economics background.
+4. As Lena, I want to compare Germany's situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
+{{< /persona >}}
 
 ### Persona 2 — Energy Journalist
 
-| | |
-| :--- | :--- |
-| **Name** | *Marco Frite* |
-| **Role** | *Energy Journalist* |
-| **Age** | *30* |
-| **Location** | *Brussels, Belgium* |
-| **Headshot** | <img src="https://commission.europa.eu/sites/default/files/styles/oe_theme_ratio_3_2_medium/public/2024-11/St%C3%A9phane-S%C3%A9journ%C3%A9_landing%20page.png" alt="Marco" width="150"> |
-| **Description** | *Writes 2-3 articles a week on gas markets, electricity prices, and polcy decisions* |
-| **Goals** | *Gather current country-level energy data fast. Find newsworthy comparisons and outliers across the EU. Although, our data is scattered across ENTSO-E, gas storage portals, and Eurostat. Each source has its own format* |
+{{< persona name="Marco Frite" role="Energy Journalist" age="30" location="Brussels, Belgium" initials="MF" type="journalist" photo="images/team/marco.jpg" >}}
+He writes two to three articles a week. He needs country-level energy facts quickly and wants to spot EU-wide outliers for reporting. on gas markets, electricity prices, and policy decisions. Today he jumps between ENTSO-E, gas storage portals, and Eurostat—each with its own format.
 
 **User stories**
 
-1. As Marco, I want to view current electricity prices, gas storage levels, and import dependence for each EU country in one place, so that I can quickly gather facts for a story without bouncing between five different sources
+1. As Marco, I want current electricity prices, gas storage, and import dependence for each EU country in one place, so I can gather facts without bouncing between five sources.
+2. As Marco, I want to compare a country's indicators to its neighbors, so I know which countries deserve attention in a story.
+3. As Marco, I want a country snapshot I can screenshot or export, so figures in my article stay accurate without manual copy-paste.
+4. As Marco, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
+{{< /persona >}}
 
-2. As Marco, I want to see how a country's energy indicators compare to its neighbors to see what countries to highlight in reports
+### Persona 3 — Policy Analyst
 
-3. As Marco, I want a country snapshot I can screenshot or export, so that I can include accurate, current figures in my article without copy-pasting numbers manually
-
-4. As Marco, I want to see how a country's current prices and risk score compare to the same date in previous years, so that I can put today's
-
----
-
-### Persona 3: Policy Analyst
-
-| | |
-| :--- | :--- |
-| **Name** | *Sofia Andereson* |
-| **Role** | *Policy Analyst* |
-| **Age** | *47* |
-| **Location** | *Brussels, Belgium* |
-| **Headshot** | <img src="https://cdn.assets.prezly.com/02b2af89-30e4-4609-8349-36c31b6b936b/-/preview/1000x1000/-/resize/1200/Loubna%20Azghoud.png" alt="Sofia" width="150"> |
-| **Description** | *Senior researcher who writes briefing memos for MEPs and national energy councils. Highly educated and comfortable using models* |
-| **Goals** | *Identify the most vulnerable EU countries to brief policymakers. Model supply shock scenarios for memos.* |
+{{< persona name="Sofia Anderson" role="Policy Analyst" age="47" location="Brussels, Belgium" initials="SA" type="policy" photo="images/team/sofia.jpg" >}}
+Senior researcher writing memos. She needs to identify vulnerable member states and model supply-shock scenarios for briefing memos. for MEPs and national energy councils. Comfortable with models and needs exportable, defensible comparisons—not headline noise.
 
 **User stories**
 
-1. As Sofia, I want to rank EU countries by their winter stress risk score, so that I can identify which member states need attention in briefings
-
-2. As Sofia, I want to adjust gas storage levels and weather scenarios for each country, so that I can model different supply shock conditions for policymakers
-
-3. As Sofia, I want to see which features are driving each country's risk score, so that I can write policy recommendations 
-
-4. As Sofia, I want to export country comparison data, so that I can include it in policy memos and presentations without retyping numbers
-
----
+1. As Sofia, I want to rank EU countries by winter stress risk, so I can prioritize which member states need attention in briefings.
+2. As Sofia, I want to adjust gas storage and weather scenarios by country, so I can model different supply-shock conditions for policymakers.
+3. As Sofia, I want to see which features drive each country's risk score, so I can tie recommendations to evidence.
+4. As Sofia, I want to export country comparison data, so I can drop tables into memos and presentations without retyping numbers.
+{{< /persona >}}
 
 ## Data Sources
 
 ### 1. ENTSO-E: Electricity transparency
 
-
-|                        |                                                                                                                                                                                                                                                    |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Link**               | [ENTSO-E Transparency Platform](https://transparency.entsoe.eu/?appState=%7B%22sa%22%3A%5B%5D%2C%22st%22%3A%22BZN%22%2C%22mm%22%3Atrue%2C%22ma%22%3Afalse%2C%22sp%22%3A%22CLOSED%22%2C%22dt%22%3Anull%2C%22df%22%3Anull%2C%22tz%22%3A%22CET%22%7D) |
-| **What we use it for** | Real-time and predictive electricity data: day-ahead prices, demand forecasts, fuel-specific generation, cross-border flows, and system unavailabilities across EU bidding zones.                                                                  |
-
+{{< datasource name="ENTSO-E Transparency Platform" link="https://transparency.entsoe.eu/" use="Real-time and predictive electricity data: day-ahead prices, demand forecasts, fuel-specific generation, cross-border flows, and system unavailabilities across EU bidding zones." >}}
 
 **API access**
 
@@ -159,17 +115,11 @@ The Russian invasion of Ukraine in 2022 exposed how vulnerable European countrie
 - **Household (Lena):** Day-ahead pricing and demand forecasts power the 30-day outlook she uses to decide whether to lock in a fixed-rate contract.
 - **Journalist (Marco):** Unified view of current prices and cross-border flows across EU bidding zones for country-level comparisons and article snapshots.
 - **Policy analyst (Sofia):** Fuel-specific generation and system unavailability data feed vulnerability metrics and risk scores in policy briefings.
-
----
+{{< /datasource >}}
 
 ### 2. GIE (AGSI): Gas storage & LNG
 
-
-|                        |                                                                                                                                                           |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Link**               | [AGSI (Gas Infrastructure Europe)](https://agsi.gie.eu/)                                                                                                  |
-| **What we use it for** | Underground gas storage and LNG terminal data: storage levels vs. capacity, injection/withdrawal rates, LNG inventory, send-out rates, and slot bookings. |
-
+{{< datasource name="AGSI (Gas Infrastructure Europe)" link="https://agsi.gie.eu/" use="Underground gas storage and LNG terminal data: storage levels vs. capacity, injection/withdrawal rates, LNG inventory, send-out rates, and slot bookings." >}}
 
 **AGSI (Aggregated Gas Storage Inventory)**
 
@@ -188,18 +138,11 @@ Request API access from the [account page](https://agsi.gie.eu/account).
 - **Household (Lena):** Real-time storage vs. five-year average helps judge whether an upcoming winter is likely to mean higher bills.
 - **Journalist (Marco):** Country-level storage and LNG send-out rates highlight outliers and EU-wide comparisons for reporting.
 - **Policy analyst (Sofia):** Storage trajectories are a core input to the winter stress risk score and the primary variable for supply-shock scenario modeling.
-
----
+{{< /datasource >}}
 
 ### 3. Eurostat: Energy statistics
 
-
-|                        |                                                                                                                                                            |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Link**               | [Eurostat databrowser](http://ec.europa.eu/eurostat/databrowser/)                                                                                          |
-| **What we use it for** | Harmonized cross-EU structural and historical indicators: household energy prices, import dependence, energy balances, and renewables share.               |
-| **Access**             | No API key required; responses are JSON. Most recent published reference period: **2025S2**. Datasets update twice daily at 11:00 and 23:00 Brussels time. |
-
+{{< datasource name="Eurostat databrowser" link="http://ec.europa.eu/eurostat/databrowser/" use="Harmonized cross-EU structural and historical indicators: household energy prices, import dependence, energy balances, and renewables share. No API key required; datasets update twice daily (11:00 and 23:00 Brussels time)." >}}
 
 **Datasets we plan to use**
 
@@ -221,58 +164,24 @@ Request API access from the [account page](https://agsi.gie.eu/account).
 - **Household (Lena):** `nrg_pc_204` and `nrg_pc_202` provide a historical baseline to see whether her bill trajectory is unusual compared to other households in Germany.
 - **Journalist (Marco):** Harmonized cross-EU definitions let him compare countries without reconciling differing methodologies.
 - **Policy analyst (Sofia):** Pre-computed indicators such as `sdg_07_30` (import dependency) and `nrg_ind_ren` (renewables share) replace manual Excel compilation and map directly to structural features in risk rankings.
-
----
+{{< /datasource >}}
 
 ### 4. Open-Meteo: Weather
 
-
-|                        |                                                                                                                                        |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| **Link**               | [open-meteo.com](https://open-meteo.com/)                                                                                              |
-| **What we use it for** | Free weather forecasts and historical weather (temperature, wind speed, solar radiation) as scenario inputs for price and risk models. |
-| **Access**             | No API key required ([read the docs](https://open-meteo.com/en/docs)).                                                                 |
-
+{{< datasource name="Open-Meteo" link="https://open-meteo.com/" use="Free weather forecasts and historical weather (temperature, wind speed, solar radiation) as scenario inputs for price and risk models. No API key required." >}}
 
 **Persona relevance**
 
 - **Household (Lena):** Weather forecasts are a leading indicator of what potential energy bills could look like, especially during winter.
 - **Policy analyst (Sofia):** Wind speed and solar radiation are variables she can use in supply-shock scenarios.
-
----
-
-## Phase I deliverables checklist
-
-
-| Deliverable                                 | Owner(s)      | Status                |
-| ------------------------------------------- | ------------- | --------------------- |
-| Project description (150–250 words)         | Bobby         | Done                |
-| User personas (3) + user stories (4–5 each) | Rayna, Anjali | Done                |
-| Data sources (2+)                           | Ari           | Done                 |
-| Team blog post (this page)                  | All           | Done                 |
-| Individual blog posts                       | All           | Done                  |
-
-
----
+{{< /datasource >}}
 
 ## Individual reflections
 
+{{< members >}}
+{{< member name="Ari Spokony" role="Data sources" href="/ari_spokony/blog1/" initials="AS" photo="images/team/ari.jpg" >}}
+{{< member name="Bobby Bress" role="Project description" href="/bobby_bress/bress-belgium-blog/" initials="BB" photo="images/team/bobby.jpg" >}}
+{{< member name="Anjali Patel" role="Personas & user stories" href="/anjali_patel/anjali-intro/" initials="AP" photo="images/team/anjali.jpg" >}}
+{{< member name="Rayna Patel" role="Personas & user stories" href="/rayna_patel/rayna-intro/" initials="RP" photo="images/team/rayna.jpg" >}}
+{{< /members >}}
 
-
-
-| Team member  | Post                                                                 |
-| ------------ | -------------------------------------------------------------------- |
-| Ari Spokony  | [Week One Update](/ari_spokony/blog1/)                               |
-| Bobby Bress  | [Bobby Bress First Blog Post](/bobby_bress/bress-belgium-blog/)      |
-| Anjali Patel | [Blog Post 1](/anjali_patel/anjali-intro/)                           |
-| Rayna Patel  | [Week 1 Blog Post](/rayna_patel/rayna-intro/)                        |
-
-
----
-
-## Next steps
-
-
-- *DS3000:* Complete data collection, cleaning, and EDA/Data Vizualization, Build POC of ML Models in Jupyter
-- *CS3200:* Localized data model generation for personas, integrate localized data mdels into Global Data Model
-- *Together:* Draft Wireframes of POC

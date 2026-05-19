@@ -1,4 +1,6 @@
 {
   "name": "Bobby Bress",
-  "bio": "I love databases!"
+  "image": "images/team/bobby.jpg",
+  "bio": "CS3200",
+  "linkedin": "https://www.linkedin.com/in/bobbybress/"
 }
