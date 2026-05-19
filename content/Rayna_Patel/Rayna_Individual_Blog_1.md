@@ -17,3 +17,4 @@ In just one week in Belgium, I've explored historic cities, immersed myself in n
 In terms of the Phase 1 deliverable, I worked with Anjali to ideate and create 3 user personas (Lena Müller, Marco Frite, and Sofia Anderson) and their corresponding stories.
 
 ![Leuven](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Town_hall_of_Leuven_%288%29.jpg/1920px-Town_hall_of_Leuven_%288%29.jpg?_=20230909095448)
+(Town hall of Leuven (8).jpg) - Wikimedia Commons
