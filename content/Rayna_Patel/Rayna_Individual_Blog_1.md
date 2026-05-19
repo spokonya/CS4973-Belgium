@@ -1,5 +1,5 @@
 ---
-title: "Week 1 Blog Post!"
+title: "Week 1 Blog Post"
 date: 2026-05-19
 draft: false
 description: "Rayna's First Blog Post"
