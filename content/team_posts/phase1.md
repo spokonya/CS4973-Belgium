@@ -13,7 +13,13 @@ authors:
 showAuthorsBadges: false
 ---
 
-## At a glance
+# Phase I — Team Update
+
+<!-- Short intro: team name + semester/program + sentence on what this post covers -->
+
+# Phase I — Team Update
+
+We are a group of students participating in a study abroad program in Belgium. In this post, we'll be covering our Phase I progress on the EU Energy Security Index. It is a dashboard designed to help users understand energy security risks across European Union countries. We'll walk through our project concept, the problem we're solving, and the foundation we've built so far.
 
 
 |                   |                                                             |
@@ -23,6 +29,12 @@ showAuthorsBadges: false
 | **Solution**      | *[One-line solution: interactive per-country EU dashboard]* |
 | **Primary users** | Households · Journalists · Policy analysts                  |
 
+| | |
+| :--- | :--- |
+| **Project** | EU Energy Security Index |
+| **Problem** | EU countries lack a unified, accessible view of their energy security risk and import dependence|
+| **Solution** | An interactive per-country dashboard that tracks energy imports, gas storage, electricity prices, and supply shock risk across the EU  |
+| **Primary users** | Households · Journalists · Policy analysts |
 
 ---
 
@@ -30,9 +42,10 @@ showAuthorsBadges: false
 
 
 
-*[Paste final project description here]*
+Energy security is extremely important for countries across the world. Having sufficient information regarding energy on a country by country view could help make critical policy decisions based on energy. A dashboard that could make it easy to see information on different European Union countries could display which countries are most dependent on energy imports and which ones are at the greatest risk in case of an energy supply shock. This could help policy analysts and government officials in making policy decisions regarding energy security for their country. It could also assist journalists writing about energy policy and citizens looking to understand their energy bills. We want to build this for our project and include information like each country's dependence on others for energy imports, their current gas storage level vs historical norms, an electricity price forecast, a risk score in case of a supply shock, and how each country compares to its neighbors. We would use machine learning for predicting the electricity prices of the countries and classifying each country’s vulnerability to a supply shock.
 
 ### Why now
+
 
 
 
@@ -42,9 +55,11 @@ showAuthorsBadges: false
 
 
 
-- *[Dashboard feature 1]*
-- *[Dashboard feature 2]*
-- *[Dashboard feature 3]*
+- **Energy import dependence tracker** — visualize how reliant each EU country is on external sources for gas, oil, and electricity
+- **Gas storage monitor** — compare each country's current storage levels against historical averages and EU benchmarks
+- **Electricity price forecast** — machine learning model predicting short term electricity prices by country
+- **Supply shock risk score** — ML classifier that rates each country's vulnerability to an energy supply disruption
+- **Country comparison tool** — side by side view of how a country stacks up against its neighbors across all key metrics
 
 ### Planned machine learning
 
