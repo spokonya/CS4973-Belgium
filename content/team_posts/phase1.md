@@ -271,12 +271,12 @@ Request API access from the [account page](https://agsi.gie.eu/account).
 
 
 
-| Team member  | Post                      |
-| ------------ | ------------------------- |
-| Ari Spokony  | *[link or "coming soon"]* |
-| Bobby Bress  | *[link or "coming soon"]* |
-| Anjali Patel | *[link or "coming soon"]* |
-| Rayna Patel  | *[link or "coming soon"]* |
+| Team member  | Post                                                                 |
+| ------------ | -------------------------------------------------------------------- |
+| Ari Spokony  | [Week One Update](/ari_spokony/blog1/)                               |
+| Bobby Bress  | [Bobby Bress First Blog Post](/bobby_bress/bress-belgium-blog/)      |
+| Anjali Patel | [Blog Post 1](/anjali_patel/anjali-intro/)                           |
+| Rayna Patel  | [Week 1 Blog Post](/rayna_patel/rayna-intro/)                        |
 
 
 ---
