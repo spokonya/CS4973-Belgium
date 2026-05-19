@@ -21,9 +21,13 @@ showAuthorsBadges: false
 
 We are a group of students participating in a study abroad program in Belgium. In this post, we'll be covering our Phase I progress on the EU Energy Security Index. It is a dashboard designed to help users understand energy security risks across European Union countries. We'll walk through our project concept, the problem we're solving, and the foundation we've built so far.
 
----
 
-## At a glance
+|                   |                                                             |
+| ----------------- | ----------------------------------------------------------- |
+| **Project**       | EU Energy Security Index                                    |
+| **Problem**       | *[One-line problem statement]*                              |
+| **Solution**      | *[One-line solution: interactive per-country EU dashboard]* |
+| **Primary users** | Households · Journalists · Policy analysts                  |
 
 | | |
 | :--- | :--- |
@@ -44,7 +48,8 @@ Energy security is extremely important for countries across the world. Having su
 
 
 
-*[Context paragraph — optional]*
+
+*[Context paragraph, optional]*
 
 ### What we're building
 
