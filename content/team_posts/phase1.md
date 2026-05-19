@@ -5,11 +5,6 @@ draft: false
 description: "EU Energy Security Index: Phase I team update"
 slug: "phase1post"
 tags: ["project", "phase1", "energy", "Personas"]
-authors:
-  - "Ari_Spokony"
-  - "Bobby_Bress"
-  - "Anjali_Patel"
-  - "Rayna_Patel"
 showAuthorsBadges: false
 ---
 
