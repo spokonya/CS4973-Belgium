@@ -85,24 +85,26 @@ The Russian invasion of Ukraine in 2022 exposed how vulnerable European countrie
 
 ---
 
-### Persona 2: Energy journalist
+### Persona 2 — Energy Journalist
 
-
-|                 |                      |
-| --------------- | -------------------- |
-| **Name**        | *[e.g. Marco Frite]* |
-| **Role**        | Energy journalist    |
-| **Description** | *[…]*                |
-| **Goals**       | *[…]*                |
-
+| | |
+| :--- | :--- |
+| **Name** | *Marco Frite* |
+| **Role** | *Energy Journalist* |
+| **Age** | *30* |
+| **Location** | *Brussels, Belgium* |
+| **Description** | *Writes 2-3 articles a week on gas markets, electricity prices, and polcy decisions* |
+| **Goals** | *Gather current country-level energy data fast. Find newsworthy comparisons and outliers across the EU. Although, our data is scattered across ENTSO-E, gas storage portals, and Eurostat. Each source has its own format* |
 
 **User stories**
 
-1. *[…]*
-2. *[…]*
-3. *[…]*
-4. *[…]*
-5. *[optional]*
+1. As Marco, I want to view current electricity prices, gas storage levels, and import dependence for each EU country in one place, so that I can quickly gather facts for a story without bouncing between five different sources
+
+2. As Marco, I want to see how a country's energy indicators compare to its neighbors to see what countries to highlight in reports
+
+3. As Marco, I want a country snapshot I can screenshot or export, so that I can include accurate, current figures in my article without copy-pasting numbers manually
+
+4. As Marco, I want to see how a country's current prices and risk score compare to the same date in previous years, so that I can put today's
 
 ---
 
@@ -116,14 +118,24 @@ The Russian invasion of Ukraine in 2022 exposed how vulnerable European countrie
 | **Description** | *[…]*                   |
 | **Goals**       | *[…]*                   |
 
+| | |
+| :--- | :--- |
+| **Name** | *Sofia Andereson* |
+| **Role** | *Policy Analyst* |
+| **Age** | *47* |
+| **Location** | *Brussels, Belgium* |
+| **Description** | *Senior researcher who writes briefing memos for MEPs and national energy councils. Highly educated and comfortable using models* |
+| **Goals** | *Identify the most vulnerable EU countries to brief policymakers. Model supply shock scenarios for memos.* |
 
 **User stories**
 
-1. *[…]*
-2. *[…]*
-3. *[…]*
-4. *[…]*
-5. *[optional]*
+1. As Sofia, I want to rank EU countries by their winter stress risk score, so that I can identify which member states need attention in briefings
+
+2. As Sofia, I want to adjust gas storage levels and weather scenarios for each country, so that I can model different supply shock conditions for policymakers
+
+3. As Sofia, I want to see which features are driving each country's risk score, so that I can write policy recommendations 
+
+4. As Sofia, I want to export country comparison data, so that I can include it in policy memos and presentations without retyping numbers
 
 ---
 
@@ -272,8 +284,6 @@ Request API access from the [account page](https://agsi.gie.eu/account).
 ## Next steps
 
 
-
-- *Finalize Data sources*
-- *Choose which data is relevant to our project*
-- *Proof of Concept*
-
+- *DS3000:* Complete data collection, cleaning, and EDA/Data Vizualization, Build POC of ML Models in Jupyter
+- *CS3200:* Localized data model generation for personas, integrate localized data mdels into Global Data Model
+- *Together:* Draft Wireframes of POC
