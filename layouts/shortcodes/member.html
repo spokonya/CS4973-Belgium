@@ -3,7 +3,24 @@
 {{ $role := .Get "role" }}
 {{ $initials := .Get "initials" }}
 {{ $photo := .Get "photo" }}
-<a class="wecan-member" href="{{ $href }}">
+{{/* Resolve internal paths for GitHub Pages (e.g. /repo-name/...) */}}
+{{ $link := "" }}
+{{ with .Get "pageRef" }}
+  {{ with $.Page.GetPage . }}
+    {{ $link = .RelPermalink }}
+  {{ end }}
+{{ end }}
+{{ if not $link }}
+  {{ with $href }}
+    {{ if or (hasPrefix . "http://") (hasPrefix . "https://") (hasPrefix . "mailto:") }}
+      {{ $link = . }}
+    {{ else }}
+      {{/* Leading "/" breaks subpath sites (GitHub Pages); relURL needs a relative path */}}
+      {{ $link = (strings.TrimPrefix "/" .) | relURL }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+<a class="wecan-member" href="{{ $link }}">
   {{ if $photo }}
     {{ $img := resources.Get $photo }}
     {{ if $img }}
