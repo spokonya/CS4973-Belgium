@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"/Users/bobbybress/Downloads/CS 3200/Final Project/CS4973-Belgium\" pull)"
+    ]
+  }
+}
