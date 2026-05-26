@@ -87,13 +87,13 @@ Overlays each year's monthly trajectory for direct comparison. 2022 is a clear o
 
 <img src="/CS4973-Belgium/images/charts/lr_predictions_DEcopy.png" alt="Linear Regression Prediction vs Actual" width="600"/>
 
-**EDA Chart 4: Linear Regression Prediction vs Actual**
+**ML1 Chart 1: Linear Regression Prediction vs Actual**
 
 Directly evaluates model performance on unseen data. The model tracks the general trend and weekly cycles  across the February–May 2026 test period, with the main weakness being sudden sharp drops. Our R² = 0.265, so the model explains ~27% of the variance. Adjusting this model is somethng we must focus on in Phase 3, along with adding the possibility of selecting other countries for this model, and not Germany alone.
 
 <img src="/CS4973-Belgium/images/charts/lr_coefficients_DEcopy.png" alt="Linear Regression Coefficients" width="600"/>
 
-**EDA Chart 5: Linear Regression Coefficients**
+**ML1 Chart 2: Linear Regression Coefficients**
 
 Shows which features drive the forecast. `lag_1` dominates by a wide margin, confirming recent price momentum is the strongest signal, while dayofweek and `lag_2` carry negative coefficients reflecting the weekend dip and short-term mean patterns.
 
