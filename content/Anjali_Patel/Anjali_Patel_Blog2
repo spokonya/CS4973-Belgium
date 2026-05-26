@@ -1,0 +1,21 @@
+---
+title: "Blog Post 2"
+date: 2026-05-26
+draft: false
+description: "Anjali Blog Post 2"
+slug: "anjali-intro"
+tags: ["ds3000", "Python", "European Commission", "Belgium"]
+authors:
+  - "Anjali_Patel"
+showAuthorsBadges : false
+---
+
+## Data Cleaning and Visulization
+![The Atomium!](https://atomium.be/flexpage/galleryimage?path=/Content/Images/User/ATOMIUM-TodayOut-0621%20-%20Version%202_ltsmall.jpg)
+
+### Deliverable 2 Update
+For the second part of the project we were tasked with cleaning our data sets, EDA and data visulizations, and starting to train our model. I worked specifically on a model that predicts whether a European contry might run dangerously low on gas storage during winter. We labeled each country-winter as "stress" or "no stress" using a 30% storage threshold. Our data pulls gas storae reports from APSI for the last 10 years for 17 countries after exploring it. I compared how full each country's storage was at the start of winter to how low it dropped later on. It turns out starting full doesn't keep you safe. I also worked on labeling each country-winter as "stress" or "no stress" using a 30% storage cutoff. I then began trying to train models, both a logistic regression and a random forecast but it will take future consideration. 
+
+### Belgium
+
+I really enjoyed the Atomium as well as this week's workshops, especially the session on the Societal Impact of Data Spaces as we got to practice real-world scenarios of using MIMs. And I'm excited for our trip to Ghent!
