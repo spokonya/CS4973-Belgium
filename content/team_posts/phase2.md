@@ -67,31 +67,31 @@ Say clearly whether your plan changed, and address each of these even if the ans
 ## Data visualizations
 ### ML 1
 
-<img src="price_history_DEcopy.png" alt="Germany Day Ahead Electricity Prices" width="600"/>
+<img src="/images/charts/price_history_DEcopy.png" alt="Germany Day Ahead Electricity Prices" width="600"/>
 
 **EDA Chart 1: Germany Day Ahead Electricty Prices**
 
 Shows how prices evolved continuously over time. Prices held steady around 50–100 EUR/MWh through 2021, spiked to 699 EUR/MWh during the 2022 Ukraine invasion period, then normalized to 75–150 EUR/MWh through 2026, confirming that the current environment is not historically unusual.
 
-<img src="seasonality_DEcopy.png" alt="Avg Electricity Price by Month" width="600"/>
+<img src="/images/charts/seasonality_DEcopy.png" alt="Avg Electricity Price by Month" width="600"/>
 
 **EDA Chart 2: Average Electricty Price by Month**
 
 Compares monthly averages as discrete categories. Summer months (July–September) average 125–160 EUR/MWh while spring (April–May) is cheapest at ~90 EUR/MWh. Note: these figures are inflated by the 2022 crisis peak.
 
-<img src="yoy_comparison_DEcopy.png" alt="Monthly Avg Price per Year" width="600"/>
+<img src="/images/charts/yoy_comparison_DEcopy.png" alt="Monthly Avg Price per Year" width="600"/>
 
 **EDA Chart 3: Monthly Average Price pper Year**
 
 Overlays each year's monthly trajectory for direct comparison. 2022 is a clear outlier peaking at 460 EUR/MWh, while all other years cluster tightly in the 60–130 EUR/MWh range. This answers Marco's question that the current moment is not historically unusual.
 
-<img src="lr_predictions_DEcopy.png" alt="Linear Regression Prediction vs Actual" width="600"/>
+<img src="/images/charts/lr_predictions_DEcopy.png" alt="Linear Regression Prediction vs Actual" width="600"/>
 
 **EDA Chart 4: Linear Regression Prediction vs Actual**
 
 Directly evaluates model performance on unseen data. The model tracks the general trend and weekly cycles  across the February–May 2026 test period, with the main weakness being sudden sharp drops. Our R² = 0.265, so the model explains ~27% of the variance. Adjusting this model is somethng we must focus on in Phase 3, along with adding the possibility of selecting other countries for this model, and not Germany alone.
 
-<img src="lr_coefficients_DEcopy.png" alt="Linear Regression Coefficients" width="600"/>
+<img src="/images/charts/lr_coefficients_DEcopy.png" alt="Linear Regression Coefficients" width="600"/>
 
 **EDA Chart 5: Linear Regression Coefficients**
 
