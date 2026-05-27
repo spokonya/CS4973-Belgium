@@ -65,7 +65,7 @@ Since our last update we have had a couple of changes to our project based on th
 - Filtered to country-winters with at least 90 days of data so partial winters don't skew the label
 
 **Saved to CSV**
-- - Saved both `agsi_raw.csv` (raw API pull) and `agsi_clean.csv` (cleaned, typed data) so we don't have to re-hit the API every time we iterate on the model 
+- Saved both `agsi_raw.csv` (raw API pull) and `agsi_clean.csv` (cleaned, typed data) so we don't have to re-hit the API every time we iterate on the model 
 
 **Exploratory analysis:** 
 - **Single-variable:** across all countries and years, storage % full ranges from near 0 to 100%, with country-lvel means varying by a lot sometimes
@@ -113,19 +113,19 @@ Shows which features drive the forecast. `lag_1` dominates by a wide margin, con
 
 A multi-line time series for Germany, France, Italy, and the Netherlands from 2014 to 2024, with the 30% stress threshold marked. We chose a line chart because storage % is a continuous value tracked daily, and the yearly fill- draw cycle is the most important pattern to surface — bars or scatter would hide it. This answers Lena's question of whether the current winter is historically unusual most years the lines dip but stay above 30%, while a few winters clearly cross the line, giving her a visual baseline for what "normal" looks like.
 
-{{< siteimg src="images/charts/min_storage_by_country.png" alt="Lowest Winter Storage" width="600" >}}
+{{< siteimg src="images/charts/min_storage_by_country.html" alt="Lowest Winter Storage" width="600" >}}
 
 **EDA Chart 2: Lowest Winter Storage Ever Recorded, by Country**
 
 A horizontal-ranked bar chart of the single lowest storage point each country has ever recorded, colored red when below the 30% threshold and blue when above. We chose a ranked bar chart because the question is comparative — who is most at risk historically? — and ranking makes the answer instantly readable. This answers Sofia's question of which countries belong at the top of a risk ranking: almost every country in our dataset has crossed below 30% at least once, with Spain (ES) and Poland (PL) the only consistent exceptions.
 
-{{< siteimg src="images/charts/start_vs_min.png" alt="Full Gas Tank Start" width="600" >}}
+{{< siteimg src="images/charts/start_vs_min.html" alt="Full Gas Tank Start" width="600" >}}
 
 **EDA Chart 3: Does a Full Start Mean a Safe Winter?**
 
 A scatter plot of storage % at the start of winter (x-axis) versus the minimum storage % reached during winter (y-axis), colored by whether that country-winter ended in stress. We chose a scatter plot because the underlying question is about the relationship between two continuous variables across many country-winter pairs — a scatter makes the spread and the outliers visible at once. This is the chart that justifies the project: several red "stress" points sit above 90% on the x-axis, meaning a country started winter nearly full and still dropped into stress. If a full start guaranteed a safe winter, no model would be needed. It doesn't, so one is.
 
-{{< siteimg src="images/charts/feature_importance.png" alt="Feature Importance" width="600" >}}
+{{< siteimg src="images/charts/feature_importance.html" alt="Feature Importance" width="600" >}}
 
 **ML2 Chart 1: What Drives Winter Storage Stress**
 
