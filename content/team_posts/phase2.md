@@ -11,29 +11,26 @@ showTableOfContents: true
 
 # Phase II — Team Update
 
-Open with a short paragraph: one sentence on what the EU Energy Security Index is,
-then a few sentences summarizing what this phase delivered — you pulled real data and
-cleaned it, explored it with summary statistics and charts, built your first
-machine-learning model on real data, drafted the app's data model and database schema,
-and made initial UI wireframes.
- 
+The EU Energy Security Index is our per-country dashboard for energy security risk, import dependence, gas storage, and electricity prices. In Phase II we moved from planning to execution: live API data, exploratory charts, a first supervised model on real prices, a global ER model with SQL DDL, and persona-specific UI wireframes—while refining personas around read/write interactions and securing ENTSO-E access.
+
 ## At a glance
-{{< glance
-project="EU Energy Security Index"
-problem="EU countries lack a unified view of energy security risk and import dependence"
-solution="Per-country dashboard for imports, gas storage, electricity prices, and supply-shock risk"
-users="Households, Journalists, Policy analysts"
->}}
+
+{{< glance >}}
+Updates since Phase I :: Personas revised for CRUD and write actions (saved searches, household spend input); project description redrafted; ENTSO-E API access granted
+Real data :: 64,267 hourly ENTSO-E DE_LU prices (Jan 2021–May 2026) cleaned to daily features and CSVs; Eurostat and Open-Meteo confirmed; AGSI gas storage still pending
+Visualizations & ML 1 :: Five EDA charts plus linear regression on real prices (R² ≈ 0.27 on 90-day holdout); lag and rolling features drive forecasts; 30-day outlook planned for Phase III API
+Data model & database :: Drafted ER diagrams at both the per-persona and global level, along with an initial SQL schema for the users, personas, stats, articles, and comments tables
+{{< /glance >}}
  
 ## Updates since Phase I
-Say clearly whether your plan changed, and address each of these even if the answer is
-"no change" (the graders specifically ask):
- 
-- Did any **persona** change, or did you add or edit any **user stories**?
+Since our last update we have had a couple of changes to our project based on the feedback we received this past week as well as our own internal discussions as a team. The most notable changes are documented below:
+
+- We reevaluated our personas through the lens of how they would interact with our site through CRUD operations, specifically focusing on interactions beyond just read. This meant thinking about how the analyst and journalist would want to save past searches to pick up where they left off, how a household owner could enter their own expenditure to compare against the national average, and similar write-oriented interactions.
 - Did you find or confirm any **new datasets** for the ML? Mention that you secured
-  **ENTSO-E** access, that **Eurostat** and **Open-Meteo** are your keyless real-data
-  sources for now, and that **AGSI** (gas storage) access is still pending.
 - Any change in **scope or modeling approach** worth noting.
+- We redrafted our project description based on the feedback from our previous update, which is shown on our team posts landing page as well as at the top of this blog post. The main changes had to do with making it more action-oriented and redefining the solution as more than just a single dashboard.
+- API access to ENTSO-E was granted last week, which allowed us to pull in data and clean it directly rather than relying solely on CSV downloads.
+
 ## Real data curation
  
 ### ML 1

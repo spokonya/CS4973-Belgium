@@ -15,12 +15,14 @@ We are a group of students participating in a study abroad program in Belgium. I
 
 ## At a glance
 
-{{< glance
-  project="EU Energy Security Index"
-  problem="EU countries lack a unified, accessible view of energy security risk and import dependence"
-  solution="Per-country dashboard for imports, gas storage, electricity prices, and supply-shock risk"
-  users="Households, Journalists, Policy analysts"
->}}
+{{< glance >}}
+What we're building :: EU Energy Security Index — per-country dashboard for import dependence, gas storage vs norms, electricity price outlook, supply-shock risk, and neighbor comparisons
+Why now :: Ukraine-era energy crisis showed EU countries need clearer, accessible security data for households, journalists, and policymakers
+Personas :: Lena (household owner), Marco (energy journalist), Sofia (policy analyst) — each with four user stories in this post
+Planned ML :: Price forecast model (short-horizon electricity outlook) and winter-stress / supply-shock vulnerability classifier
+Data sources :: ENTSO-E, Eurostat, AGSI+, and Open-Meteo identified with API access steps; integration approach drafted
+Phase I outcome :: Project concept, personas, data-source plan, and feature scope locked before real pipelines and models in Phase II
+{{< /glance >}}
 
 ## Project description
 

@@ -1,30 +1,16 @@
+{{- $lines := split (.Inner | replaceRE "\r\n" "\n") "\n" -}}
 <div class="wecan-glance reveal-on-scroll">
-  {{ with .Get "project" }}
-  <div class="wecan-glance__item">
-    <span class="wecan-glance__label">Project</span>
-    <span class="wecan-glance__value">{{ . }}</span>
-  </div>
-  {{ end }}
-  {{ with .Get "problem" }}
-  <div class="wecan-glance__item">
-    <span class="wecan-glance__label">Problem</span>
-    <span class="wecan-glance__value">{{ . }}</span>
-  </div>
-  {{ end }}
-  {{ with .Get "solution" }}
-  <div class="wecan-glance__item">
-    <span class="wecan-glance__label">Solution</span>
-    <span class="wecan-glance__value">{{ . }}</span>
-  </div>
-  {{ end }}
-  {{ with .Get "users" }}
-  <div class="wecan-glance__item wecan-glance__item--users">
-    <span class="wecan-glance__label">Primary users</span>
-    <ul class="wecan-glance__user-list">
-      {{ range (split . ",") }}
-      <li>{{ trim . " " }}</li>
-      {{ end }}
-    </ul>
-  </div>
-  {{ end }}
+  {{- range $lines -}}
+    {{- $line := trim . " \t" -}}
+    {{- $line = strings.TrimPrefix "- " $line -}}
+    {{- if and $line (strings.Contains $line "::") -}}
+      {{- $parts := split $line "::" -}}
+      {{- $label := trim (index $parts 0) " \t" -}}
+      {{- $value := trim (delimit (after 1 $parts) "::") " \t" -}}
+      <div class="wecan-glance__item">
+        <span class="wecan-glance__label">{{ $label }}</span>
+        <span class="wecan-glance__value">{{ $value }}</span>
+      </div>
+    {{- end -}}
+  {{- end -}}
 </div>
