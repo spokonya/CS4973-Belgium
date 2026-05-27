@@ -137,10 +137,10 @@ you'll ultimately have at least two models on real data;
 - No ready-made label for "high price risk" exists in the data — thresholds have to be defined manually for any future classifier work
 
 **What's left:** 
+- Adjust the model to be able to change the country in Phase III
+- Improve the model to improve the R² score by adding gas storage and electricity demand as features
 - Insert final MAE, RMSE, and R² scores once the model finishes its latest run
-- Connect the forecast function to the React frontend via a REST API endpoint in Phase III
-- Add gas storage and electricity demand as additional features once AGSI access is approved
-- Train ML2 — the supply-shock vulnerability classifier targeting Sofia's user stories
+- Connect the forecast function to the frontend in Phase III
 ### ML 2
 Describe your modeling work and be honest about its state:
  
