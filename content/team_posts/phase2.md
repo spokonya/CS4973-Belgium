@@ -113,7 +113,23 @@ Shows which features drive the forecast. `lag_1` dominates by a wide margin, con
 
 A multi-line time series for Germany, France, Italy, and the Netherlands from 2014 to 2024, with the 30% stress threshold marked. We chose a line chart because storage % is a continuous value tracked daily, and the yearly fill- draw cycle is the most important pattern to surface — bars or scatter would hide it. This answers Lena's question of whether the current winter is historically unusual most years the lines dip but stay above 30%, while a few winters clearly cross the line, giving her a visual baseline for what "normal" looks like.
 
+{{< siteimg src="images/charts/min_storage_by_country.png" alt="Lowest Winter Storage" width="600" >}}
 
+**EDA Chart 2: Lowest Winter Storage Ever Recorded, by Country**
+
+A horizontal-ranked bar chart of the single lowest storage point each country has ever recorded, colored red when below the 30% threshold and blue when above. We chose a ranked bar chart because the question is comparative — who is most at risk historically? — and ranking makes the answer instantly readable. This answers Sofia's question of which countries belong at the top of a risk ranking: almost every country in our dataset has crossed below 30% at least once, with Spain (ES) and Poland (PL) the only consistent exceptions.
+
+{{< siteimg src="images/charts/start_vs_min.png" alt="Full Gas Tank Start" width="600" >}}
+
+**EDA Chart 3: Does a Full Start Mean a Safe Winter?**
+
+A scatter plot of storage % at the start of winter (x-axis) versus the minimum storage % reached during winter (y-axis), colored by whether that country-winter ended in stress. We chose a scatter plot because the underlying question is about the relationship between two continuous variables across many country-winter pairs — a scatter makes the spread and the outliers visible at once. This is the chart that justifies the project: several red "stress" points sit above 90% on the x-axis, meaning a country started winter nearly full and still dropped into stress. If a full start guaranteed a safe winter, no model would be needed. It doesn't, so one is.
+
+{{< siteimg src="images/charts/feature_importance.png" alt="Feature Importance" width="600" >}}
+
+**ML2 Chart 1: What Drives Winter Storage Stress**
+
+A horizontal bar chart of feature importance from the trained random forest, showing how much each input variable contributed to the model's predictions. We chose horizontal bars because the labels are descriptive strings and ranking is the point. This tells us why the model makes the calls it does: `storage_at_start` is the strongest predictor, followed by `storage_trend_30d` and `storage_volatility` — meaning the level a country enters winter at matters most, but the direction and stability of that level in the run-up add real lift on top. This will be the basis of the "what's driving this prediction" explanation Lena needs on the dashboard.
 
 ## Machine learning
 
@@ -157,18 +173,31 @@ you'll ultimately have at least two models on real data;
 ### ML 2
 Describe your modeling work and be honest about its state:
  
-- **What you built:** at least one supervised model trained on real cleaned data — your
-  high-price classifier — and note it's deliberately **more complex than a neighborhood
-  (kNN) model**, which the assignment requires. kNN is used only as a baseline and for the
-  "similar countries" feature. Also mention PCA and the risk ranking.
-- **The plan for two models:** you'll ultimately have at least two models on real data;
-  parts not yet on real data (like the day-ahead price forecast) currently use simulated
-  data, which is allowed for this phase.
-- **How well it worked:** your results, using the fair "leave-one-country-out" test, and
-  what the scores mean.
-- **Difficulties:** e.g. API approval wait times, no ready-made "supply-shock" label, etc.
-- **What's left:** run everything on real data, pick the final model, add gas-storage
-  features once AGSI is approved, build the shock classifier in Phase III.
+**What you built:** 
+- A supervised classifier predicting whether a country's gas storage will drop below 30% full during winter, directly targeting Sofia's user story of identifying countries at risk of a supply shortfall before winter begins
+- Three engineered features built only from data available before November 1 of each winter, so the model can't cheat by peeking at the outcome: `storage_at_start` (average storage in the 30 days leading into winter), `storage_trend_30d` (change across those 30 days), and `storage_volatility`(standard deviation across the prior 90 days)
+- Trained on roughly 200 country-winter rows across 17 countries and 10 winters
+
+**The plan for two models:** 
+- We trained two candidates models - a logistic regression and a random foresr and compared them rather than committing to one upfront. This is more complex than a kNN baseline as the assignment requires, and lets us see how much non-linear strucutre actually exsists in the data
+- Logistic regression gives coefficients for the dashboard, while random forest captures interactions between storage level, trend, and volatility that a linear model can't
+
+**How well it worked:** 
+- Used stratified 5-fold cross-validation so each country-winter was tested while held out
+- Logistic regression reached about 64% accuracy with balanced stress-class precision/recall around 0.62
+- Random forest performed slightly better at about 66% accuracy and caught more true stress winters, which matters most for policymakers
+- Random forest feature importance showed storage at the start of winter was the strongest signal, followed by 30-day storage trend and storage volatility
+
+**Difficulties:** 
+- AGSI API rate limits and server issues required a retry loop with backoff to collect data for all 17 countries
+- The “stress” label is only a proxy for supply-shock risk, so it is useful but not perfect
+- The dataset is small, around 200 rows, so more complex models would likely overfit
+- Current features are storage-only, which limits the model’s ability to explain why a winter becomes risky
+
+
+**What's left:** 
+- Adjust the decision threshold to prioritize recall, since missing a real stress event is worse than a false alarm
+- Build a separate supply-shock vulnerability classifier that adds import dependence and price exposure
 
 
 ## Data model — ER diagrams 
