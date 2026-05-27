@@ -1,0 +1,10 @@
+{{- $src := .Get "src" -}}
+<img
+  src="{{ $src | relURL }}"
+  alt="{{ .Get "alt" | default "" }}"
+  {{ with .Get "width" }}width="{{ . }}"{{ end }}
+  {{ with .Get "class" }}class="{{ . }}"{{ end }}
+  {{ with .Get "data-target" }}data-target="{{ . }}"{{ end }}
+  {{ with .Get "style" }}style="{{ . }}"{{ end }}
+  loading="{{ .Get "loading" | default "lazy" }}"
+/>
