@@ -3,7 +3,7 @@ title: "Blog Post 2"
 date: 2026-05-27
 draft: false
 description: "Anjali Blog Post 2"
-slug: "anjali-intro"
+slug: "anjali-blog2"
 tags: ["ds3000", "Python", "European Commission", "Belgium"]
 authors:
   - "Anjali_Patel"
