@@ -17,8 +17,8 @@ The EU Energy Security Index is our per-country dashboard for energy security ri
 
 {{< glance >}}
 Updates since Phase I :: Personas revised for CRUD and write actions (saved searches, household spend input); project description redrafted; ENTSO-E API access granted
-Real data :: 64,267 hourly ENTSO-E DE_LU prices (Jan 2021–May 2026) cleaned to daily features and CSVs; Eurostat and Open-Meteo confirmed; AGSI gas storage still pending
-Visualizations & ML 1 :: Five EDA charts plus linear regression on real prices (R² ≈ 0.27 on 90-day holdout); lag and rolling features drive forecasts; 30-day outlook planned for Phase III API
+Real data :: 64,267 hourly ENTSO-E DE_LU prices (Jan 2021–May 2026) cleaned to daily features and CSVs; Eurostat and Open-Meteo confirmed; AGSI gas storage received and cleaned
+Visualizations & ML 1 :: Five EDA charts plus linear regression on real prices (R² ≈ 0.27 on 90-day holdout); lag and rolling features drive forecasts; 30-day outlook planned for Phase III API - 3 EDA charts and logistic regression on gas storage prices (R² ≈ 0.62)
 Data model & database :: Drafted ER diagrams at both the per-persona and global level, along with an initial SQL schema for the users, personas, stats, articles, and comments tables
 {{< /glance >}}
  
@@ -26,8 +26,7 @@ Data model & database :: Drafted ER diagrams at both the per-persona and global 
 Since our last update we have had a couple of changes to our project based on the feedback we received this past week as well as our own internal discussions as a team. The most notable changes are documented below:
 
 - We reevaluated our personas through the lens of how they would interact with our site through CRUD operations, specifically focusing on interactions beyond just read. This meant thinking about how the analyst and journalist would want to save past searches to pick up where they left off, how a household owner could enter their own expenditure to compare against the national average, and similar write-oriented interactions.
-- Did you find or confirm any **new datasets** for the ML? Mention that you secured
-- Any change in **scope or modeling approach** worth noting.
+- AGSI and ENTSO-E API access is confirmed. We have working programmatic access to both sources Phase I feedback asked us to confirm
 - We redrafted our project description based on the feedback from our previous update, which is shown on our team posts landing page as well as at the top of this blog post. The main changes had to do with making it more action-oriented and redefining the solution as more than just a single dashboard.
 - API access to ENTSO-E was granted last week, which allowed us to pull in data and clean it directly rather than relying solely on CSV downloads.
 
@@ -51,16 +50,28 @@ Since our last update we have had a couple of changes to our project based on th
 **Exploratory analysis:** 
 - **Single-variable:** daily average prices ranged from -53.87 to 699.44 EUR/MWh, with a mean of 126.51 and standard deviation of 99.48 (high variance driven by the 2022 energy crisis). The median of 95.88 EUR/MWh is more representative of typical conditions outside the crisis period. Negative prices occur briefly when renewable generation exceeds demand.
 - **Two-variable:** correlation between price and calendar month was 0.204 (meaning seasonality alone does not explain price movements). Recent price history proved far more predictive, which is confirmed by the model's coefficient analysis showing lag_1 as the dominant feature.
+
 ### ML 2
-- **Where it came from and how:** which sources you pulled, that you pulled via API into
-  Python (e.g. as JSON).
-- **Cleaning (pandas/numpy):** the steps you ran — matching country codes (Eurostat uses
-  "EL" for Greece → "GR"), handling missing values, lining up time periods, turning daily
-  weather into yearly features.
-- **Saved to CSV** so you don't have to re-run the API every time.
-- **Exploratory analysis:** report your **single-variable** summary stats (averages,
-  spread) and your **two-variable** stats (how things relate — e.g. electricity price
-  rises with gas price and import dependence, falls with renewables share).
+**Where it came from and how:** 
+- Pulled daily country-level gas storage data from the AGSI Transparency Platform via the AGSI API (REST calls authenticated with a personal
+  API key), for 17 European countries from 2014 through 2024
+- Each row = one country on one gas day, with storage % full as the main signal
+
+**Cleaning (pandas/numpy):** 
+- Parsed `gasDayStart` as proper datetimes and converted `full` (storage %) to numeric, dropping any rows missing date, storage, or country
+- Kept only the columns that mattered for modeling: country, date, %full, gas in storage, and trend direction
+- Built a "winter" assignment so Nov-Mar all map to the same winter year 
+- For each (country, winter) pair, computed the minimum % full across the winter and labeled it `storage_stress = 1` if it dropped below 30%, else 0
+- Filtered to country-winters with at least 90 days of data so partial winters don't skew the label
+
+**Saved to CSV**
+- - Saved both `agsi_raw.csv` (raw API pull) and `agsi_clean.csv` (cleaned, typed data) so we don't have to re-hit the API every time we iterate on the model 
+
+**Exploratory analysis:** 
+- **Single-variable:** across all countries and years, storage % full ranges from near 0 to 100%, with country-lvel means varying by a lot sometimes
+  - EX. Spain consistently runs higher than Poland or Belgium, reflecting both capacity and import strategy
+- **Two-variable:** the strongest signal is what we expected to be obvious but wasn't, so starting winter near 100% full does not guarantee storage stays safe. Several country-winters started above 90% and still dropped below the 30% stress line. This is what motivated building a model in the first place
+
 ## Data visualizations
 ### ML 1
 
@@ -95,18 +106,17 @@ Directly evaluates model performance on unseen data. The model tracks the genera
 Shows which features drive the forecast. `lag_1` dominates by a wide margin, confirming recent price momentum is the strongest signal, while dayofweek and `lag_2` carry negative coefficients reflecting the weekend dip and short-term mean patterns.
 
 ### ML 2
-Show each chart, and for every one write two things: **why** you chose that chart type,
-and **what it tells you about one of your Phase I big questions.** Your charts and the
-question each answers:
- 
-- Import-dependence ranking → which countries rely most on imports.
-- Price drivers (scatter) → what pushes household prices up.
-- Correlation heatmap → which factors move together.
-- Storage vs. historical norm → is this winter unusual? (Lena)
-- Price distribution → where one country sits in the EU range. (Marco)
-- PCA country map → which countries are most similar.
-- Risk ranking → countries ordered from most to least at-risk. (Sofia)
+
+{{< siteimg src="images/charts/storage_historycopy.png" alt="EU Gas Storage Levels" width="600" >}}
+
+**EDA Chart 1: EU Gas Storage Levels Over Time**
+
+A multi-line time series for Germany, France, Italy, and the Netherlands from 2014 to 2024, with the 30% stress threshold marked. We chose a line chart because storage % is a continuous value tracked daily, and the yearly fill- draw cycle is the most important pattern to surface — bars or scatter would hide it. This answers Lena's question of whether the current winter is historically unusual most years the lines dip but stay above 30%, while a few winters clearly cross the line, giving her a visual baseline for what "normal" looks like.
+
+
+
 ## Machine learning
+
 ### ML 1
  
 **What we built:** 
@@ -141,6 +151,7 @@ you'll ultimately have at least two models on real data;
 - Connect the forecast function to the React frontend via a REST API endpoint in Phase III
 - Add gas storage and electricity demand as additional features once AGSI access is approved
 - Train ML2 — the supply-shock vulnerability classifier targeting Sofia's user stories
+
 ### ML 2
 Describe your modeling work and be honest about its state:
  
@@ -156,6 +167,8 @@ Describe your modeling work and be honest about its state:
 - **Difficulties:** e.g. API approval wait times, no ready-made "supply-shock" label, etc.
 - **What's left:** run everything on real data, pick the final model, add gas-storage
   features once AGSI is approved, build the shock classifier in Phase III.
+
+
 ## Data model — ER diagrams 
 In this phase, we produced persona-specific ER diagrams for Household Owner, Journalist,
 and Policy Analyst workflows, then merged those into a global ER model for the full app.
