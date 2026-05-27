@@ -3,7 +3,7 @@ title: "Week 1 Blog Post"
 date: 2026-05-19
 draft: false
 description: "Rayna's First Blog Post"
-slug: "rayna-intro"
+slug: "rayna-week1"
 tags: ["DS3000", "Leuven", "Linear Algebra", "Belgium"]
 authors:
   - "Rayna_Patel"
