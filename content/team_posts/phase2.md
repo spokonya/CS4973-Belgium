@@ -1,5 +1,5 @@
 ---
-title: "Project - Phase II"
+title: "Zeus - Phase II"
 date: 2026-05-25
 draft: false
 description: "EU Energy Security Index: Phase II team update"
@@ -9,7 +9,7 @@ showAuthorsBadges: false
 showTableOfContents: true
 ---
 
-# Phase II — Team Update
+# Project Description
 
 The EU Energy Security Index is our per-country dashboard for energy security risk, import dependence, gas storage, and electricity prices. In Phase II we moved from planning to execution: live API data, exploratory charts, a first supervised model on real prices, a global ER model with SQL DDL, and persona-specific UI wireframes—while refining personas around read/write interactions and securing ENTSO-E access.
 
