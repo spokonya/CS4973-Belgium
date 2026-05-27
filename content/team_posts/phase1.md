@@ -1,5 +1,5 @@
 ---
-title: "Project - Phase I"
+title: "Zeus - Phase I"
 date: 2026-05-18
 draft: false
 description: "EU Energy Security Index: Phase I team update"
