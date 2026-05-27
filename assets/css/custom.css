@@ -6,12 +6,14 @@
   --wecan-radius: 0.75rem;
   --wecan-radius-lg: 1.25rem;
   --wecan-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  /* Lightning bolt cursors (32×32, hotspot at tip) */
-  --wecan-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23FACC15' stroke='%23171717' stroke-width='1.25' stroke-linejoin='round' d='M17 2L7 16h7l-2 14 16-20h-7l2-12z'/%3E%3C/svg%3E")
-    9 3,
+  /* Lightning bolt cursors (40x40) — bolt has top padding inside viewBox
+     to prevent OS clipping at various DPIs.
+     Hotspot scaled to keep the visual click point consistent. */
+  --wecan-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 32 32'%3E%3Cpath fill='%23FACC15' stroke='%23171717' stroke-width='1.25' stroke-linejoin='round' d='M17 12L8 23h6l-2 9 13-14h-6l2-8z'/%3E%3C/svg%3E")
+    11 16,
     auto;
-  --wecan-cursor-pointer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23FDE047' stroke='%23171717' stroke-width='1.25' stroke-linejoin='round' d='M17 2L7 16h7l-2 14 16-20h-7l2-12z'/%3E%3C/svg%3E")
-    9 3,
+  --wecan-cursor-pointer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 32 32'%3E%3Cpath fill='%23FDE047' stroke='%23171717' stroke-width='1.25' stroke-linejoin='round' d='M17 12L8 23h6l-2 9 13-14h-6l2-8z'/%3E%3C/svg%3E")
+    11 16,
     pointer;
 }
 
