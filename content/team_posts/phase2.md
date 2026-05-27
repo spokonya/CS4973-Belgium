@@ -157,15 +157,49 @@ Describe your modeling work and be honest about its state:
 - **What's left:** run everything on real data, pick the final model, add gas-storage
   features once AGSI is approved, build the shock classifier in Phase III.
 ## Data model — ER diagrams 
-For **each persona**, include a localized data model (an ER diagram) built from the data
-their user stories need. Then show one **global ER diagram** that combines them into the
-full app. Make sure it includes a place to store the cleaned, pre-processed features used
-to train and test the ML models.
+In this phase, we produced persona-specific ER diagrams for Household Owner, Journalist,
+and Policy Analyst workflows, then merged those into a global ER model for the full app.
+The global model captures user/profile relationships, analytics-facing entities, and
+storage for cleaned statistical records used in model training and evaluation.
+
+### Full ER Diagram
+<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+  {{< siteimg class="er-thumb" data-target="dlg-full" src="images/diagrams/FullERDiagram.png" alt="Full ER diagram for the EU Energy Security Index" style="width: 100%; display: block; cursor: zoom-in;" >}}
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Full ER diagram — click to enlarge, press Esc to close</figcaption>
+</figure>
+
+[Download the full ER diagram (PDF)]({{< relurl "pdfs/FullERDiagram.pdf" >}})
+
+### Household Owner ER Diagram
+<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+  {{< siteimg class="er-thumb" data-target="dlg-household" src="images/diagrams/HouseholdOwner.png" alt="Household Owner ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Household Owner ER diagram — click to enlarge, press Esc to close</figcaption>
+</figure>
+
+[Download the Household Owner ER diagram (PDF)]({{< relurl "pdfs/HouseholdOwner.pdf" >}})
+
+### Journalist ER Diagram
+<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+  {{< siteimg class="er-thumb" data-target="dlg-journalist" src="images/diagrams/JournalistDiagram.png" alt="Journalist ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Journalist ER diagram — click to enlarge, press Esc to close</figcaption>
+</figure>
+
+[Download the Journalist ER diagram (PDF)]({{< relurl "pdfs/JournalistDiagram.pdf" >}})
+
+### Policy Analyst ER Diagram
+<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+  {{< siteimg class="er-thumb" data-target="dlg-policy" src="images/diagrams/PolicyAnalyst.png" alt="Policy Analyst ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Policy Analyst ER diagram — click to enlarge, press Esc to close</figcaption>
+</figure>
+
+[Download the Policy Analyst ER diagram (PDF)]({{< relurl "pdfs/PolicyAnalyst.pdf" >}})
 
  
 ## Database — first-pass schema (DDL) 
-Include a first draft of the SQL `CREATE TABLE` statements for the global data model,
-including the table that holds the ML feature data.
+From the global ER model, we drafted a first-pass SQL schema with explicit primary/foreign
+keys and role-specific entities. This DDL establishes the baseline structure for app data,
+including users, personas, content, comments, and statistical records that support ML
+feature workflows.
 
 ```sql
 CREATE TABLE IF NOT EXISTS Stat_Type (
@@ -261,6 +295,8 @@ CREATE TABLE IF NOT EXISTS Comments (
 
 ## UI wireframes
 
+These are our initial wireframes for the landing page and persona-specific app views.
+The layouts and interactions are expected to evolve as development continues.
 
 ### Home Page
 <figure style="margin: 1.5rem 0 1.5rem -6rem;">
@@ -303,40 +339,6 @@ CREATE TABLE IF NOT EXISTS Comments (
   {{< siteimg class="er-thumb" data-target="dlg-policy2" src="images/diagrams/PolicyAnalystView2.png" alt="Policy Analyst wireframe — View 2" style="width: 100%; display: block; cursor: zoom-in;" >}}
   <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Policy Analyst — View 2 — click to enlarge, press Esc to close</figcaption>
 </figure>
-
-## ER Diagrams
-
-### Full ER Diagram
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
-  {{< siteimg class="er-thumb" data-target="dlg-full" src="images/diagrams/FullERDiagram.png" alt="Full ER diagram for the EU Energy Security Index" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Full ER diagram — click to enlarge, press Esc to close</figcaption>
-</figure>
-
-[Download the full ER diagram (PDF)]({{< relurl "pdfs/FullERDiagram.pdf" >}})
-
-### Household Owner ER Diagram
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
-  {{< siteimg class="er-thumb" data-target="dlg-household" src="images/diagrams/HouseholdOwner.png" alt="Household Owner ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Household Owner ER diagram — click to enlarge, press Esc to close</figcaption>
-</figure>
-
-[Download the Household Owner ER diagram (PDF)]({{< relurl "pdfs/HouseholdOwner.pdf" >}})
-
-### Journalist ER Diagram
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
-  {{< siteimg class="er-thumb" data-target="dlg-journalist" src="images/diagrams/JournalistDiagram.png" alt="Journalist ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Journalist ER diagram — click to enlarge, press Esc to close</figcaption>
-</figure>
-
-[Download the Journalist ER diagram (PDF)]({{< relurl "pdfs/JournalistDiagram.pdf" >}})
-
-### Policy Analyst ER Diagram
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
-  {{< siteimg class="er-thumb" data-target="dlg-policy" src="images/diagrams/PolicyAnalyst.png" alt="Policy Analyst ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Policy Analyst ER diagram — click to enlarge, press Esc to close</figcaption>
-</figure>
-
-[Download the Policy Analyst ER diagram (PDF)]({{< relurl "pdfs/PolicyAnalyst.pdf" >}})
 
 <dialog id="dlg-full" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
   <div style="position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); color: white; font-size: 0.85rem; background: rgba(0,0,0,0.6); padding: 0.4rem 0.9rem; border-radius: 9999px; pointer-events: none;">Press <kbd style="background: white; color: black; padding: 0.05rem 0.4rem; border-radius: 0.25rem; font-family: inherit;">Esc</kbd> to close</div>
@@ -410,9 +412,8 @@ CREATE TABLE IF NOT EXISTS Comments (
 </script>
 
 ## Individual posts
-Each teammate writes their own post covering: which charts or data-pipeline steps they
-personally worked on, which localized data model they were the point person for, and
-(optional) a short note about anything notable from the week.
+Each teammate also published an individual update documenting their direct Phase II
+contributions, including data/visualization tasks and the data-model areas they led.
 {{< members >}}
 {{< member name="Ari Spokony" role="" href="/ari_spokony/" initials="AS" photo="images/team/ari.jpg" >}}
 {{< member name="Bobby Bress" role="" href="/bobby_bress/" initials="BB" photo="images/team/bobby.jpg" >}}
