@@ -34,3 +34,5 @@ In Phase III, a key focus will be adjusting this model to support country select
 ## Belgium Update
 
 Today was a key highlight of my time in Belgium so far. We took a day trip to Ghent, and visited St. Bavo's Cathedral, where we took part in a VR experience that brought the famous Mystic Lamb to life in a way that felt both immersive way. It was a fascinating way to learn about one of the most celebrated works of art up close. After visiting the cathedral, we wandered through Ghent's streets, admiring the medieval architecture, canals, and atmosphere.
+
+{{< figure src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Lamgods_open.jpg/1920px-Lamgods_open.jpg?_=20160214095932" alt="Mystic Lamb" caption="The Mystic Lamb — Wikimedia Commons" >}}
