@@ -49,7 +49,7 @@ Since our last update we have had a couple of changes to our project based on th
 
 **Exploratory analysis:** 
 - **Single-variable:** daily average prices ranged from -53.87 to 699.44 EUR/MWh, with a mean of 126.51 and standard deviation of 99.48 (high variance driven by the 2022 energy crisis). The median of 95.88 EUR/MWh is more representative of typical conditions outside the crisis period. Negative prices occur briefly when renewable generation exceeds demand.
-- **Two-variable:** correlation between price and calendar month was 0.204 (meaning seasonality alone does not explain price movements). Recent price history proved far more predictive, which is confirmed by the model's coefficient analysis showing lag_1 as the dominant feature.
+- **Two-variable:** the relationship between price and calendar month is not linear and varies across years in a loosely seasonal and irregular cyclical pattern. For example, the 2022 energy crisis distorts the loose seasonal pattern. We used one-hot encoding for month to let the model learn each month's effect independently rather than assuming any fixed relationship. Recent price history proved the most predictive overall. This is showed through the model's coefficient analysis and feature importance, which show lag_1 (electricity prices from the previous day) as the dominant feature by a wide margin.
 
 ### ML 2
 **Where it came from and how:** 
