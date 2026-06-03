@@ -12,15 +12,6 @@ showTableOfContents: true
 # Project Description
 
 The EU Energy Security Index is our per-country dashboard for energy security risk, import dependence, gas storage, and electricity prices. In Phase II we moved from planning to execution: live API data, exploratory charts, a first supervised model on real prices, a global ER model with SQL DDL, and persona-specific UI wireframes—while refining personas around read/write interactions and securing ENTSO-E access.
-
-## At a glance
-
-{{< glance >}}
-Updates since Phase I :: Personas revised for CRUD and write actions (saved searches, household spend input); project description redrafted; ENTSO-E API access granted
-Real data :: 64,267 hourly ENTSO-E DE_LU prices (Jan 2021–May 2026) cleaned to daily features and CSVs; Eurostat and Open-Meteo confirmed; AGSI gas storage received and cleaned
-Visualizations & ML 1 :: Five EDA charts plus linear regression on real prices (R² ≈ 0.27 on 90-day holdout); lag and rolling features drive forecasts; 30-day outlook planned for Phase III API - 3 EDA charts and logistic regression on gas storage prices (R² ≈ 0.62)
-Data model & database :: Drafted ER diagrams at both the per-persona and global level, along with an initial SQL schema for the users, personas, stats, articles, and comments tables
-{{< /glance >}}
  
 ## Updates since Phase I
 Since our last update we have had a couple of changes to our project based on the feedback we received this past week as well as our own internal discussions as a team. The most notable changes are documented below:
@@ -51,26 +42,6 @@ Since our last update we have had a couple of changes to our project based on th
 - **Single-variable:** daily average prices ranged from -53.87 to 699.44 EUR/MWh, with a mean of 126.51 and standard deviation of 99.48 (high variance driven by the 2022 energy crisis). The median of 95.88 EUR/MWh is more representative of typical conditions outside the crisis period. Negative prices occur briefly when renewable generation exceeds demand.
 - **Two-variable:** the relationship between price and calendar month is not linear and varies across years in a loosely seasonal and irregular cyclical pattern. For example, the 2022 energy crisis distorts the loose seasonal pattern. We used one-hot encoding for month to let the model learn each month's effect independently rather than assuming any fixed relationship. Recent price history proved the most predictive overall. This is showed through the model's coefficient analysis and feature importance, which show lag_1 (electricity prices from the previous day) as the dominant feature by a wide margin.
 
-### ML 2
-**Where it came from and how:** 
-- Pulled daily country-level gas storage data from the AGSI Transparency Platform via the AGSI API (REST calls authenticated with a personal
-  API key), for 17 European countries from 2014 through 2024
-- Each row = one country on one gas day, with storage % full as the main signal
-
-**Cleaning (pandas/numpy):** 
-- Parsed `gasDayStart` as proper datetimes and converted `full` (storage %) to numeric, dropping any rows missing date, storage, or country
-- Kept only the columns that mattered for modeling: country, date, %full, gas in storage, and trend direction
-- Built a "winter" assignment so Nov-Mar all map to the same winter year 
-- For each (country, winter) pair, computed the minimum % full across the winter and labeled it `storage_stress = 1` if it dropped below 30%, else 0
-- Filtered to country-winters with at least 90 days of data so partial winters don't skew the label
-
-**Saved to CSV**
-- - Saved both `agsi_raw.csv` (raw API pull) and `agsi_clean.csv` (cleaned, typed data) so we don't have to re-hit the API every time we iterate on the model 
-
-**Exploratory analysis:** 
-- **Single-variable:** across all countries and years, storage % full ranges from near 0 to 100%, with country-lvel means varying by a lot sometimes
-  - EX. Spain consistently runs higher than Poland or Belgium, reflecting both capacity and import strategy
-- **Two-variable:** the strongest signal is what we expected to be obvious but wasn't, so starting winter near 100% full does not guarantee storage stays safe. Several country-winters started above 90% and still dropped below the 30% stress line. This is what motivated building a model in the first place
 
 ## Data visualizations
 ### ML 1
@@ -104,32 +75,6 @@ Directly evaluates model performance on unseen data. The model tracks the genera
 **ML1 Chart 2: Linear Regression Coefficients**
 
 Shows which features drive the forecast. `lag_1` dominates by a wide margin, confirming recent price momentum is the strongest signal, while dayofweek and `lag_2` carry negative coefficients reflecting the weekend dip and short-term mean patterns.
-
-### ML 2
-
-{{< siteimg src="images/charts/storage_historycopy.png" alt="EU Gas Storage Levels" width="600" >}}
-
-**EDA Chart 1: EU Gas Storage Levels Over Time**
-
-A multi-line time series for Germany, France, Italy, and the Netherlands from 2014 to 2024, with the 30% stress threshold marked. We chose a line chart because storage % is a continuous value tracked daily, and the yearly fill- draw cycle is the most important pattern to surface — bars or scatter would hide it. This answers Lena's question of whether the current winter is historically unusual most years the lines dip but stay above 30%, while a few winters clearly cross the line, giving her a visual baseline for what "normal" looks like.
-
-{{< siteimg src="images/charts/min_storage_by_country.png" alt="Lowest Winter Storage" width="600" >}}
-
-**EDA Chart 2: Lowest Winter Storage Ever Recorded, by Country**
-
-A horizontal-ranked bar chart of the single lowest storage point each country has ever recorded, colored red when below the 30% threshold and blue when above. We chose a ranked bar chart because the question is comparative — who is most at risk historically? — and ranking makes the answer instantly readable. This answers Sofia's question of which countries belong at the top of a risk ranking: almost every country in our dataset has crossed below 30% at least once, with Spain (ES) and Poland (PL) the only consistent exceptions.
-
-{{< siteimg src="images/charts/start_vs_min.png" alt="Full Gas Tank Start" width="600" >}}
-
-**EDA Chart 3: Does a Full Start Mean a Safe Winter?**
-
-A scatter plot of storage % at the start of winter (x-axis) versus the minimum storage % reached during winter (y-axis), colored by whether that country-winter ended in stress. We chose a scatter plot because the underlying question is about the relationship between two continuous variables across many country-winter pairs — a scatter makes the spread and the outliers visible at once. This is the chart that justifies the project: several red "stress" points sit above 90% on the x-axis, meaning a country started winter nearly full and still dropped into stress. If a full start guaranteed a safe winter, no model would be needed. It doesn't, so one is.
-
-{{< siteimg src="images/charts/feature_importance.png" alt="Feature Importance" width="600" >}}
-
-**ML2 Chart 1: What Drives Winter Storage Stress**
-
-A horizontal bar chart of feature importance from the trained random forest, showing how much each input variable contributed to the model's predictions. We chose horizontal bars because the labels are descriptive strings and ranking is the point. This tells us why the model makes the calls it does: `storage_at_start` is the strongest predictor, followed by `storage_trend_30d` and `storage_volatility` — meaning the level a country enters winter at matters most, but the direction and stability of that level in the run-up add real lift on top. This will be the basis of the "what's driving this prediction" explanation Lena needs on the dashboard.
 
 ## Machine learning
 
@@ -170,34 +115,113 @@ you'll ultimately have at least two models on real data;
 - Add gas storage and electricity demand as additional features once AGSI access is approved
 - Train ML2 — the supply-shock vulnerability classifier targeting Sofia's user stories
 
-### ML 2
-Describe your modeling work and be honest about its state:
- 
-**What you built:** 
-- A supervised classifier predicting whether a country's gas storage will drop below 30% full during winter, directly targeting Sofia's user story of identifying countries at risk of a supply shortfall before winter begins
-- Three engineered features built only from data available before November 1 of each winter, so the model can't cheat by peeking at the outcome: `storage_at_start` (average storage in the 30 days leading into winter), `storage_trend_30d` (change across those 30 days), and `storage_volatility`(standard deviation across the prior 90 days)
-- Trained on roughly 200 country-winter rows across 17 countries and 10 winters
+.......
 
-**The plan for two models:** 
-- We trained two candidates models - a logistic regression and a random foresr and compared them rather than committing to one upfront. This is more complex than a kNN baseline as the assignment requires, and lets us see how much non-linear strucutre actually exsists in the data
-- Logistic regression gives coefficients for the dashboard, while random forest captures interactions between storage level, trend, and volatility that a linear model can't
+## ML 2: Winter Gas Storage Stress Model
 
-**How well it worked:** 
-- Used stratified 5-fold cross-validation so each country-winter was tested while held out
-- Logistic regression reached about 64% accuracy with balanced stress-class precision/recall around 0.62
-- Random forest performed slightly better at about 66% accuracy and caught more true stress winters, which matters most for policymakers
-- Random forest feature importance showed storage at the start of winter was the strongest signal, followed by 30-day storage trend and storage volatility
+Our second machine learning model focuses on predicting whether a European country’s gas storage will drop below 30% full during the winter. This directly connects to Sofia, our policy analyst persona, because the model helps identify which countries may be at risk of a supply shortage before winter begins.
 
-**Difficulties:** 
-- AGSI API rate limits and server issues required a retry loop with backoff to collect data for all 17 countries
-- The “stress” label is only a proxy for supply-shock risk, so it is useful but not perfect
-- The dataset is small, around 200 rows, so more complex models would likely overfit
-- Current features are storage-only, which limits the model’s ability to explain why a winter becomes risky
+### Data Collection
 
+Our data was pulled from daily country-level gas storage data from the AGSI Transparency Platform through the AGSI API, which was authenticated with a personal API key. We collected data for 17 different European countries from 2014 through 2024.
 
-**What's left:** 
-- Adjust the decision threshold to prioritize recall, since missing a real stress event is worse than a false alarm
-- Build a separate supply-shock vulnerability classifier that adds import dependence and price exposure
+### Cleaning
+
+For cleaning, we used pandas and NumPy. We parsed `gasDayStart` as a proper datetime column and converted `full`, which represents storage percentage, into a numeric value. We also dropped any rows with missing date or storage values.
+
+We kept only the columns that mattered for our model:
+
+- Country
+- Date
+- Storage percentage full
+- Gas in storage
+- Trend direction
+
+I also decided to map November through March to a single “winter year” so the winter season would not be split across two calendar years. For example, December 2018 and February 2019 are both counted as part of Winter 2018.
+
+For each country-winter pair, we took the minimum storage percentage during winter and labeled it `storage_stress = 1` if it dropped below 30%. If it stayed above 30%, we labeled it `storage_stress = 0`. We also filtered the dataset to only include country-winters with at least 90 days of data so partial winters would not skew the label.
+
+### Why We Chose a 30% Threshold
+
+- We chose 30% as our stress threshold because it is both policy-related and physically meaningful. After the 2022 gas crisis, the EU set a 90% storage mandate by November 1. Since then, many EU policy analysts have treated around 28-30% as the level to start worrying about. There is also a physical reason behind this threshold. As storage empties, gas pressure drops, which slows the rate at which gas can be pulled out.
+- The main issue is not just running out of gas. The bigger concern is whether storage can keep up with demand during periods of high need
+- To make sure 30% was a reasonable option, we also tested 25%, 35%, and 40%. At 40%, about one in five winters got flagged, which created too many alerts for the model to actually be useful. Because of this, 30% gave us a better balance between catching real risk and avoiding too many false alarms.
+
+### Saved Data
+
+- We saved both `agsi_raw.csv`, which contains the raw API pull, and `agsi_clean.csv`, which contains the cleaned and typed data. This way, we do not have to re-hit the API every time we iterate on the model.
+
+## Exploratory Analysis
+
+- For our exploratory analysis, we looked at both single-variable and two-variable patterns in the gas storage data. On the single-variable side, storage percentage ranges from almost 0% to 100% across countries and years, but country averages vary widely. For example, Spain consistently runs higher than Poland or Belgium, which likely reflects differences in capacity, geography, and import strategy.
+
+- For the two-variable analysis, the strongest signal was something we expected to be obvious but actually was not: starting winter near 90-100% full does not guarantee a safe winter. Several country-winters started above 90% and still dropped below the 30% stress line. This helped justify why a predictive model is useful.
+
+### EDA Chart 1: EU Gas Storage Levels Over Time
+
+Our first EDA chart is a multi-line time series for Germany, France, Italy, and the Netherlands from 2014 to 2024, with the 30% stress threshold marked. We chose a line chart because storage percentage is a continuous value tracked daily, and the yearly fill-and-draw cycle is the most important pattern to surface. A bar chart or scatter plot would hide this seasonal pattern.
+
+This chart answers Lena’s question of whether the current winter is historically unusual. Most years, the lines dip but stay above 30%, while a few winters clearly cross the stress line. This gives her a visual baseline for what “normal” looks like compared to a risky winter.
+
+### EDA Chart 2: Lowest Winter Storage Ever Recorded by Country
+
+Our second EDA chart is a horizontal ranked bar chart showing the single lowest storage point each country has ever recorded. Countries below the 30% threshold are shown as risky, while countries above the threshold are shown as safer.
+
+We chose a ranked bar chart because the question is comparative: who is most at risk historically? Ranking makes the answer instantly readable. This chart answers Sofia’s question of which countries belong at the top of a risk ranking. Almost every country in our dataset has crossed below 30% at least once, with Spain and Poland being the main exceptions.
+
+### EDA Chart 3: Does a Full Start Mean a Safe Winter?
+
+Our third EDA chart is a scatter plot of storage percentage at the start of winter on the x-axis versus the minimum storage percentage reached during winter on the y-axis. Each point represents a country-winter pair and is colored based on whether that winter ended in storage stress.
+
+We chose a scatter plot because the main question is about the relationship between two continuous variables across many country-winter pairs. This is the chart that justifies the project: several red “stress” points sit above 90% on the x-axis, meaning a country started winter nearly full and still dropped into stress.
+
+If a full start guaranteed a safe winter, then no model would be needed.
+
+## Machine Learning Model
+
+- Our model is a supervised classifier that predicts whether a country’s gas storage will drop below 30% full during winter. It directly targets Sofia’s user story of identifying countries at risk of a supply shortfall before winter begins.
+
+- We built three features using only data available before November 1 of each winter, so the model cannot cheat by looking at the outcome:
+
+- `storage_at_start`: average storage in the 30 days leading into winter
+- `storage_trend_30d`: change in storage across those 30 days
+- `storage_volatility`: standard deviation across the prior 90 days
+
+- The model was trained on roughly 200 country-winter rows across 17 countries and 10 winters.
+
+- We used 5-fold GroupKFold, grouping rows by winter year. This means each fold holds out a chunk of winters entirely. For example, if 2018 is in the test set, every country’s 2018 data goes to the test set and none of it appears in training. We did not use StratifiedKFold because our rows are not fully independent.
+
+### Model Plan
+
+- We trained two candidate models, logistic regression and random forest, and compared them instead of committing to one immediately. Logistic regression gives coefficients that are easier to explain in the dashboard, while random forest can capture interactions between storage level, trend, and volatility that a linear model might miss.
+
+### Model Results
+
+- The logistic regression model performed better overall. It reached 68% accuracy, with stress-class precision of 0.63 and recall of 0.59.
+
+- The random forest underperformed at 61% accuracy and caught only 40 out of 75 stress winters, giving it a recall of 0.53. Since we only have 176 usable rows after filtering, the simpler linear model seems to generalize better. This suggests that the relationship between our current features and winter stress is mostly linear, and that we do not have enough data yet to justify the complexity of a random forest.
+
+- The random forest still gave us a useful ranking of what matters. Storage at the start of winter was the strongest signal, followed by the 30-day storage trend and storage volatility.
+
+### ML Chart 1: A Full Tank Does Not Mean a Safe Winter
+
+- Our first ML chart is a horizontal bar chart of feature importance from the trained random forest. It shows how much each variable contributed to the model’s predictions. The biggest driver was `storage_at_start`, which shows how full storage is when winter begins. The less obvious signals were `storage_trend_30d` and `storage_volatility`, which the model also picked up on.
+
+- This supports our main idea that a full tank does not always mean a safe winter. Energy security also depends on how storage is changing before winter and how stable or unstable that storage pattern is.
+
+## Difficulties
+
+- One difficulty was working with the AGSI API. API rate limits and occasional server issues required us to build a retry loop with backoff to collect data for all 17 countries.
+
+- Another difficulty was that the “stress” label is only a proxy for supply-shock risk. It is useful for our policy analyst persona because it flags risky winters, but it is not a perfect measure of energy insecurity.
+
+- The dataset is also small, with only around 200 rows. This limits how much we can trust more complex models because they are more likely to overfit. Our current features are storage-only, which also limits the model’s ability to explain why a winter becomes risky.
+
+## What’s Left
+
+- Next, we want to adjust the decision threshold to prioritize recall because missing a real stress event is worse than creating a false alarm.
+
+- We also want to build a separate supply-shock vulnerability classifier that adds more features beyond storage, such as import dependence and price exposure. This would make the model more complete and better connected to the full scope of our Zeus Energy Security Index dashboard.
 
 
 ## Data model — ER diagrams 
