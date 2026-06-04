@@ -176,25 +176,21 @@ Phase III UI moves from wireframes to working views for the two personas.
 
 ### Household persona (Lena)
 
-*[Brief intro: primary views, navigation from home, key interactions.]*
+Lena's flow is built around her own situation rather than the EU-wide view: a landing dashboard summarizing what her bill looks like now and where it's heading, a saved household profile that personalizes the bill-cycle details, and a curated news feed so she can put the forecast in context.
 
 **Views & components**
 
-- *[View 1: e.g. 30-day forecast chart + plain-language summary]*
-- *[View 2: e.g. gas storage vs winter norms, neighbor comparison]*
-- *[CRUD: country selection, optional monthly spend input]*
+- **Household owner dashboard** — default landing page after logging in. Three KPI cards summarize "your energy at a glance" (current per-kWh price, predicted % change for next month, days until the next bill), followed by a scatter-plot forecast of household energy price over the next 30 days produced by the ML price model.
+
+- **Household persona info** — profile form that captures the household-level details used for bill reminders and country-level context: household/contact name, email, country, utility provider, typical bill amount (€), next bill due date, billing frequency, average monthly usage (kWh), tariff type, and free-form notes. Profile state is reflected in the banner ("No household profile saved yet…" before save, the saved details after) and submitted via "Create profile."
+
+- **EU energy news** — separate page driven by NewsData.io's top-domain filter and a broad energy keyword search across major EU countries. A single "Fetch EU energy news" action loads the latest headlines on electricity, gas, renewables, and related EU energy topics, giving Lena editorial context for the model's numbers without leaving the app.
 
 **Data binding**
 
-- *[Which routes power which widgets; loading and error states]*
-
-**Screenshots**
-
-<!-- Replace with siteimg figures when assets are ready, e.g.:
-{{< siteimg src="images/ui/household_forecast.png" alt="Household forecast view" width="600" >}}
--->
-
-*[Add screenshots or link to deployed demo.]*
+- Dashboard KPIs and forecast chart → `/api/household/forecast` (returns current price, predicted change, days until next bill, and the 30-day price series).
+- Profile create/update → `POST /api/household/profile` (stores the form fields keyed by email).
+- EU energy news → `/api/news/eu` (proxies NewsData.io with the configured domain filter and keyword set).
 
 ### Journalist persona (Marco)
 
