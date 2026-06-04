@@ -201,29 +201,31 @@ Phase III UI moves from wireframes to working views for the two personas.
 
 ### Journalist persona (Marco)
 
-Marco's flow centers on three views: a country snapshot for article-ready figures, a multi-country comparison for framing stories, and an interactive gas storage risk model for explaining winter scenarios. All views pull live data from the ENTSO-E Transparency Platform at the latest available day.
+Marco's flow centers on three views built around the gas storage stress model: a 10-year historical country snapshot for grounding a story, a multi-country risk ranking for finding the next angle, and an interactive what-if model for explaining the underlying drivers.
 
 **Views & components**
 
-- **Country snapshot** — country selector, four KPI cards (Electricity Price €/MWh, Demand GWh, Renewables Share %, Import Dependence %) each with day-over-day deltas, plus a horizontal bar chart breaking down generation by fuel (nuclear, gas, coal, oil, wind, solar, hydro, biomass, other).
+- **Country snapshot** — per-country dashboard with four KPIs (current storage level with 30-day delta, stressed winters on record, lowest winter level on record, and the 30% stress threshold), a 2014-present time series of storage % full with the 30% stress line marked, and a "Context for your story" panel with EU policy background, a risk-tier-specific recommendation banner, curated external links (GIE AGSI, EC gas storage policy, national TSO announcements, Eurostat import dependency, Ember, ENTSOG), and quick-jump buttons to the risk model and comparison views.
 
-  {{< siteimg src="images/ui/journalist_snapshot.png" alt="Country snapshot — Netherlands" width="600" >}}
+  {{< siteimg src="images/ui/journalist_snapshot_kpis.png" alt="Country snapshot — Poland KPIs" width="600" >}}
 
-  *How the fuel mix is built:* the "Where the electricity comes from" chart pulls actual generation by production type from ENTSO-E's `query_generation` endpoint for the last three days. Raw "Actual Aggregated" series are cleaned (pumped-storage consumption dropped, negatives clipped to zero) and collapsed into nine buckets — for example, Gas combines Fossil Gas and Fossil Coal-derived gas; Coal combines Hard coal, Lignite, Peat, and Oil shale; Wind combines onshore and offshore; Hydro combines run-of-river, reservoir, and pumped storage. Each bucket is averaged into a daily mean MW, and the chart shows the most recent day as `100 × bucket_MW / total_MW`. Two caveats: it reflects **generation**, not consumption — imports and exports are captured separately by the Import Dependence KPI — and it's a single-day snapshot, so a sunny or windy day will push solar/wind shares higher than a multi-day average would.
+  {{< siteimg src="images/ui/journalist_snapshot_chart.png" alt="Country snapshot — Poland storage time series" width="600" >}}
 
-- **Country comparison** — multi-select country picker and indicator dropdown that renders a side-by-side bar chart on the chosen metric (e.g. electricity price across Netherlands, Germany, France).
+  {{< siteimg src="images/ui/journalist_snapshot_story.png" alt="Country snapshot — context for your story" width="600" >}}
 
-  {{< siteimg src="images/ui/journalist_comparison.png" alt="Country comparison — electricity price" width="600" >}}
+- **Country comparison** — runs the gas storage stress model across every available country and ranks them by risk probability. A summary banner flags how many countries (and which) the model predicts could fall below 30% storage this winter, naming the highest-risk country. A horizontal bar chart shows the full ranking with the 50% decision boundary marked, and an optional country filter narrows the view.
 
-- **Gas storage risk** — logistic regression trained on GIE AGSI winters 2015–2024. Country dropdown plus three sliders (storage level entering winter, change in storage over October, storage volatility) returning a risk probability and an at-risk/not-at-risk label.
+  {{< siteimg src="images/ui/journalist_comparison.png" alt="Country comparison — winter risk ranking" width="600" >}}
 
-  {{< siteimg src="images/ui/journalist_storage_risk.png" alt="Gas storage risk model" width="600" >}}
+- **Gas storage risk** — logistic regression trained on GIE AGSI winters 2015–2024. Country dropdown plus three sliders (storage level entering winter, change in storage over October, storage volatility over the past 90 days) returning a risk probability and an at-risk/not-at-risk label. Sliders default to the country's most recent winter so journalists see the live prediction first and can then explore what-if scenarios.
+
+  {{< siteimg src="images/ui/journalist_storage_risk.png" alt="Gas storage risk model — Poland" width="600" >}}
 
 **Data binding**
 
-- Snapshot KPIs and fuel mix → `/api/country/{code}/snapshot` (ENTSO-E live).
-- Comparison chart → `/api/compare?countries=…&indicator=…`.
-- Storage risk → `/api/storage/risk` (POST with slider values, returns probability + class label).
+- Snapshot KPIs, time series, and context panel → `/api/country/{code}/snapshot` backed by GIE AGSI historical storage.
+- Comparison ranking → `/api/storage/risk/ranking` (runs the same model per country, returns sorted probabilities).
+- Storage risk what-if → `/api/storage/risk` (POST with slider values, returns probability + class label).
 
 ## Individual posts
 
