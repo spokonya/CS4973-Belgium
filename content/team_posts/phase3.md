@@ -201,25 +201,29 @@ Phase III UI moves from wireframes to working views for the two personas.
 
 ### Journalist persona (Marco)
 
-*[Brief intro: snapshot/export flow, multi-country table or map, saved context.]*
+Marco's flow centers on three views: a country snapshot for article-ready figures, a multi-country comparison for framing stories, and an interactive gas storage risk model for explaining winter scenarios. All views pull live data from the ENTSO-E Transparency Platform at the latest available day.
 
 **Views & components**
 
-- *[View 1: e.g. country dashboard / snapshot for articles]*
-- *[View 2: e.g. YoY or neighbor comparison for story framing]*
-- *[CRUD: saved searches or bookmarks if implemented]*
+- **Country snapshot** — country selector, four KPI cards (Electricity Price €/MWh, Demand GWh, Renewables Share %, Import Dependence %) each with day-over-day deltas, plus a horizontal bar chart breaking down generation by fuel (nuclear, gas, coal, oil, wind, solar, hydro, biomass, other).
+
+  {{< siteimg src="images/ui/journalist_snapshot.png" alt="Country snapshot — Netherlands" width="600" >}}
+
+  *How the fuel mix is built:* the "Where the electricity comes from" chart pulls actual generation by production type from ENTSO-E's `query_generation` endpoint for the last three days. Raw "Actual Aggregated" series are cleaned (pumped-storage consumption dropped, negatives clipped to zero) and collapsed into nine buckets — for example, Gas combines Fossil Gas and Fossil Coal-derived gas; Coal combines Hard coal, Lignite, Peat, and Oil shale; Wind combines onshore and offshore; Hydro combines run-of-river, reservoir, and pumped storage. Each bucket is averaged into a daily mean MW, and the chart shows the most recent day as `100 × bucket_MW / total_MW`. Two caveats: it reflects **generation**, not consumption — imports and exports are captured separately by the Import Dependence KPI — and it's a single-day snapshot, so a sunny or windy day will push solar/wind shares higher than a multi-day average would.
+
+- **Country comparison** — multi-select country picker and indicator dropdown that renders a side-by-side bar chart on the chosen metric (e.g. electricity price across Netherlands, Germany, France).
+
+  {{< siteimg src="images/ui/journalist_comparison.png" alt="Country comparison — electricity price" width="600" >}}
+
+- **Gas storage risk** — logistic regression trained on GIE AGSI winters 2015–2024. Country dropdown plus three sliders (storage level entering winter, change in storage over October, storage volatility) returning a risk probability and an at-risk/not-at-risk label.
+
+  {{< siteimg src="images/ui/journalist_storage_risk.png" alt="Gas storage risk model" width="600" >}}
 
 **Data binding**
 
-- *[Which routes power which widgets; export or screenshot affordances]*
-
-**Screenshots**
-
-<!-- Replace with siteimg figures when assets are ready, e.g.:
-{{< siteimg src="images/ui/journalist_snapshot.png" alt="Journalist country snapshot" width="600" >}}
--->
-
-*[Add screenshots or link to deployed demo.]*
+- Snapshot KPIs and fuel mix → `/api/country/{code}/snapshot` (ENTSO-E live).
+- Comparison chart → `/api/compare?countries=…&indicator=…`.
+- Storage risk → `/api/storage/risk` (POST with slider values, returns probability + class label).
 
 ## Individual posts
 
