@@ -13,24 +13,12 @@ showTableOfContents: true
 
 The EU Energy Security Index is our per-country dashboard for energy security risk, import dependence, gas storage, and electricity prices. In Phase III we moved from prototypes to integration: refined personas around live app flows, improved both ML models, exposed forecasts and risk scores through REST routes, and shipped persona-specific UI for Lena (household) and Marco (journalist). This post summarizes what changed since Phase II and how the pieces connect end to end.
 
-## At a glance
-
-{{< glance >}}
-Updates since Phase II :: *[Persona refinements, multi-country ML1, API + frontend wiring — summarize here]*
-ML 1 (price forecast) :: *[Country selection, feature additions, holdout metrics, 30-day API — summarize here]*
-ML 2 (winter stress) :: *[Threshold tuning, model choice, cross-validation results — summarize here]*
-Model implementation :: *[Training/serving pipeline, persistence, how models are loaded at request time — summarize here]*
-Routes :: *[REST endpoints, request/response shape, which persona each route serves — summarize here]*
-UI :: *[Household and journalist views connected to live data and models — summarize here]*
-Phase III outcome :: *[Integrated app: models behind API, routes documented, two persona UIs demonstrable — summarize here]*
-{{< /glance >}}
-
 ## Updates since Phase II
 
 Since our last update we have focused on shipping an integrated experience rather than isolated notebooks and wireframes. The most notable changes are documented below:
 
-- *[Bullet: persona or user-story updates tied to implemented UI/API behavior]*
-- *[Bullet: ML1 changes — e.g. country selection, new features, improved metrics]*
+- *[Bullet: User story changes]*
+- ML1 was significantly improved through feature engineering, the addition of 14 new EU countries with a single shared model with one-hot encoded country features. These changes increased the R² from 0.265 to 0.608.
 - *[Bullet: ML2 changes — e.g. threshold, model selection, evaluation]*
 - *[Bullet: backend routes and how they map to Phase II “what’s left” items]*
 - *[Bullet: frontend implementation status for household and journalist flows]*
@@ -69,30 +57,39 @@ We refined Lena and Marco against the flows we actually built in Phase III (save
 
 ## Model 1 updates
 
-**Price forecast (electricity)** — short-horizon outlook for household contract decisions.
+**Price Forecast** — 30-day forecast of electricty prices in a certain EU country
 
 **What changed since Phase II**
 
-- *[Data: countries/zones added beyond DE_LU, date range, cleaning notes]*
-- *[Features: new lags, rolling means, gas storage or demand if added]*
-- *[Model: algorithm or hyperparameter changes, train/test split]*
+- We removed `year` as a feature, as it does not support a linear trend, especially considering the 2022 outlier 
+- We changed the lag features from 1, 2, 3, 7, 14, and 30 to a consecutive 1-7
+- We used one-hot encoding to replace raw `month` and `dayofweek` numbers, as well as `drop_first=True`
+- We added `rolling_7d_std` as a feature to capture price volatility and `price_vs_7d_avg` as a feature to capture if current prices are above/blow the recent trend
+- We added another EDA graph, a scatterplot, to check that a quadratic, cubic, square root, etc. relationship didn't exist (each year in the scatter plot had a different shape, especially 2022)
+
+  *(The changes above increased the R² from 0.265 to 0.320.)*
+
+- We added 14 additional countries beyond Germany (SK, HR, PT, BG, RO, HU, CZ, PL, ES, AT, BE, NL, LV, FR), all of which pulled from ENTSOE-E API, and combined them into one dataset of 29,565 rows across 15 countries
+- We made country a one-hot encoded feature, so the model was able to learn country-specific price level effects while also sharing EU patterns (this will be added as an interactive input feature in the front-end)
+
+  *(The changes above increased the R² from 0.320 to 0.608.)*
 
 **Performance**
 
 | Metric | Phase II (DE_LU) | Phase III |
 | ------ | ---------------- | --------- |
-| R²     | ~0.27            | *[TBD]*   |
-| MAE    | *[TBD]*          | *[TBD]*   |
-| RMSE   | *[TBD]*          | *[TBD]*   |
+| R²     | 0.265            | 0.608     |
+| MAE    | --               | 17.68     |
+| RMSE   | --               | 23.21.    |
 
 **30-day forecast behavior**
 
-- *[How start date and country are passed in; iterative lag roll-forward]*
-- *[Link to chart or notebook artifact if not yet in UI]*
+- ML1 accepts any start date and any of the 15 country codes — if the start date is within the dataset it uses real historical prices to predict the 30-day forecast, if it's beyond, it forecasts forward from the last known date
+- The forecast output is a 30-row dataframe of date and predicted EUR/MWh, saved to a CSV and visualized as an interactive Plotly chart
 
 **What's left**
 
-- *[Remaining ML1 items for final delivery or polish]*
+- Connect the model to the frontend in Phase 4
 
 ## Model 2 updates
 
