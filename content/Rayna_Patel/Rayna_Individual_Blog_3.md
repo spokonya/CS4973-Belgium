@@ -34,3 +34,5 @@ I also added residual plots to validate the linear regression model assumptions.
 ## Belgium Update
 
 This week we explored Strasbourg and visited Eurostat in Luxembourg.Also, in Brussels, we had a guest speaker session on EU digital and industrial policy which is currently my favorite guest speaker of the entire program. The speaker was very engaging and the meeting was more discussion based which allowed for us to hear different perspectives from one another. We also took part in a chocolate making workshop. Regardless of being allergic, this was one of the most fun afternoons of the trip.
+
+{{< figure src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Gerwerstub_1572%2C_maison_des_tanneurs%2C_Strasbourg_%282014%29.jpg/1920px-Gerwerstub_1572%2C_maison_des_tanneurs%2C_Strasbourg_%282014%29.jpg?_=20230622195150" alt="Strasbourg" caption="Strasbourg — Wikimedia Commons" >}}
