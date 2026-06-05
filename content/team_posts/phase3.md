@@ -18,7 +18,7 @@ The EU Energy Security Index is our per-country dashboard for energy security ri
 Since our last update we have focused on shipping an integrated experience rather than isolated notebooks and wireframes. The most notable changes are documented below:
 
 - *[Bullet: User story changes]*
-- ML1 was significantly improved through feature engineering, the addition of 14 new EU countries with a single shared model with one-hot encoded country features. These changes increased the R² from 0.265 to 0.608.
+- ML1 was significantly improved through feature engineering, the addition of 14 new EU countries with a single shared model with one-hot encoded country features. These changes increased the R² from 0.265 to 0.608. *(See Model 1 updates for more in depth description)*
 - *[Bullet: ML2 changes — e.g. threshold, model selection, evaluation]*
 - *[Bullet: backend routes and how they map to Phase II “what’s left” items]*
 - *[Bullet: frontend implementation status for household and journalist flows]*
