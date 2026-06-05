@@ -15,13 +15,12 @@ The EU Energy Security Index is our per-country dashboard for energy security ri
 
 ## Updates since Phase II
 
-Since our last update we have focused on shipping an integrated experience rather than isolated notebooks and wireframes. The most notable changes are documented below:
+Since our last update, we have focused on refining our personas and user stories to more accurately reflect how individuals would interact with the application and to identify which features carry the most value for each user type. This, combined with our finalized models and updated database schema, made meeting the Phase III requirements more manageable.
 
-- *[Bullet: User story changes]*
+- User stories and personas were revamped to more accurately represent realistic user needs and to motivate a fuller set of CRUD operations across all three personas.
 - ML1 was significantly improved through feature engineering, the addition of 14 new EU countries with a single shared model with one-hot encoded country features. These changes increased the R² from 0.265 to 0.608.
 - ML2 justified the 30% stress threshold with EU policy, dropped the random forest for the logistic regressionn, fixed a standardization bug, corrected our reported accuracy , and deployed the model into three interactive app pages
-- *[Bullet: backend routes and how they map to Phase II “what’s left” items]*
-- *[Bullet: frontend implementation status for household and journalist flows]*
+- Our database schema was updated to better support our finalized features and ML models. Updated ER diagrams and SQL will replace the outdated resources from our previous blog post in the coming days.
 
 ## Updated user personas
 
@@ -30,21 +29,24 @@ We refined Lena and Marco against the flows we actually built in Phase III (save
 ### Persona 1 — Household Owner
 
 {{< persona name="Lena Müller" role="Household Owner" age="30" location="Hamburg, Germany" initials="LM" type="household" photo="images/team/Lena.jpg" >}}
-*[One paragraph: what changed since Phase I/II — e.g. monthly spend input, country selector, plain-language forecast summary on the dashboard.]*
+Since Phase I, Lena's persona has been grounded in a concrete billing intake flow. She now enters her utility provider, monthly bill amount, tariff type, and billing cycle dates through a profile form on her dashboard. This gives the dashboard enough context to count down to her next payment due date and frame the 30-day electricity price forecast directly against what she is currently paying. The plain-language summary remains central to her experience — she has no economics background and needs the forecast translated into a simple contract decision.
 
 **User stories**
 
-1. As Lena, I want to see how electricity prices in *[country]* are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
+1. As Lena, I want to see how electricity prices in Germany are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
 2. As Lena, I want to see how current gas storage levels compare to recent winters, so I can judge whether the upcoming winter is likely to be a high-bill season.
 3. As Lena, I want a plain-language summary of the forecast, so I can understand what is driving the prediction without an economics background.
-4. As Lena, I want to compare *[country]*'s situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
-5. *[Optional new story from Phase III — e.g. enter household spend and compare to national average.]*
+4. As Lena, I want to compare Germany's situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
+5. **[NEW]** As Lena, I want to enter my billing cycle dates, monthly rate, and tariff type so the dashboard can show me a countdown to my next payment and flag whether the forecast suggests prices will be higher or lower by then.
+6. **[NEW]** As Lena, I want to save news articles about EU energy to a personal reading list, so I can review them later before making a contract decision.
 {{< /persona >}}
+
+---
 
 ### Persona 2 — Energy Journalist
 
 {{< persona name="Marco Frite" role="Energy Journalist" age="30" location="Brussels, Belgium" initials="MF" type="journalist" photo="images/team/marco.jpg" >}}
-*[One paragraph: what changed since Phase I/II — e.g. unified country snapshot, export/screenshot path, saved searches.]*
+Since Phase I, Marco's persona has been sharpened around two problems: the need to cite figures accurately at a specific point in time, and the need to track story leads without losing context between sessions. The country snapshot feature addresses the first — Marco can freeze a country's indicators and ML outputs as a timestamped record rather than relying on whatever the dashboard shows at publication time. Saved notes address the second by offering the ability to attach notes to any data visualization, and edit or delete them as a story develops or goes cold.
 
 **User stories**
 
@@ -52,7 +54,26 @@ We refined Lena and Marco against the flows we actually built in Phase III (save
 2. As Marco, I want to compare a country's indicators to its neighbors, so I know which countries deserve attention in a story.
 3. As Marco, I want a country snapshot I can screenshot or export, so figures in my article stay accurate without manual copy-paste.
 4. As Marco, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
-5. *[Optional new story from Phase III — e.g. save a search or filter set to resume reporting.]*
+5. **[NEW]** As Marco, I want to save a country's indicators and model outputs as a timestamped snapshot, so the figures I cite in an article reflect the data as it was when I checked
+6. **[NEW]** As Marco, I want to annotate a data point with a private note flagging why it looks newsworthy
+7. **[NEW]** As Marco, I want to browse, edit, and delete my notes, so I can track which leads I have already investigated and which are still open.
+{{< /persona >}}
+
+---
+
+### Persona 3 — Energy Trader
+
+{{< persona name="Niels Becker" role="Energy Trader" age="34" location="Amsterdam, Netherlands" initials="NB" type="trader" photo="images/team/niels.jpg" >}}
+Niels trades electricity on the EPEX day-ahead market from a desk in Amsterdam. He positions his book 24 to 72 hours out and uses the 30-day price forecast as a directional input to that process. He works fast, trusts quantitative outputs, and keeps a running log of the decisions he makes against the data he acted on so he can evaluate forecast quality over time. Unlike Lena, who checks prices a few times a year, Niels interacts with the forecast daily and needs the dashboard scoped tightly to the markets he is actively trading.
+
+**User stories**
+
+1. As Niels, I want to manage a watchlist of bidding zones so my dashboard shows only the markets I am actively trading, without noise from the full EU view.
+2. As Niels, I want to see the 30-day price forecast and gas storage stress risk score side by side for each watched zone, so I can assess both the price direction and the supply-side risk driving it in one view.
+3. As Niels, I want to set a price alert on a bidding zone so the dashboard flags me when the forecast crosses a threshold I define, without me having to check manually throughout the day.
+5. As Niels, I want to add a post-trade outcome annotation to a past trade note, so I can record whether the forecast called it correctly and build a personal track record over time.
+6. As Niels, I want to browse my trade note history filtered by bidding zone and date range, so I can review patterns in how I have been responding to the forecast across different markets.
+
 {{< /persona >}}
 
 ## Model 1 updates
@@ -90,8 +111,6 @@ We refined Lena and Marco against the flows we actually built in Phase III (save
 **What's left**
 
 - Connect the model to the frontend in Phase 4
-
-## Model 2 updates
 
 ## Model 2 updates
 
@@ -137,58 +156,46 @@ This was honestly surprising because before standardizing, `storage_at_start` lo
     - Weather/temperature features
 - Keep refining the journalist persona pages on webapp
 
-## Model implementation
-
-How trained models are packaged, versioned, and invoked from the application backend.
-
-**Training & artifacts**
-
-- *[Where training scripts live; output paths for pickles, scalers, or ONNX/etc.]*
-- *[How often models are retrained vs loaded from disk at startup]*
-
-**Inference path**
-
-1. *[Request hits route → validation → feature build from DB/API/cache]*
-2. *[Load model + scaler → predict → format JSON for frontend]*
-3. *[Error handling / fallback when country or date out of range]*
-
-**Dependencies**
-
-- *[Python stack: e.g. scikit-learn, pandas; any joblib or custom serializers]*
-
-**Configuration**
-
-- *[Env vars or config file: model paths, default country, API keys for live features]*
-
 ## Routes
-
-REST (or equivalent) endpoints that connect the React frontend to model outputs and curated data.
+REST endpoints that connect the Streamlit frontend to model outputs and curated data.
 
 | Method | Path | Purpose | Persona |
 | ------ | ---- | ------- | ------- |
-| GET    | *[e.g. `/api/forecast`]* | 30-day electricity price forecast | Household (Lena) |
-| GET    | *[e.g. `/api/storage`]* | Gas storage vs norms | Household, Journalist |
-| GET    | *[e.g. `/api/country/{code}/snapshot`]* | Country snapshot for reporting | Journalist (Marco) |
-| GET    | *[e.g. `/api/compare`]* | Neighbor comparison | Both |
-| POST   | *[e.g. `/api/household/spend`]* | Save household spend for comparison | Household (Lena) |
-| *[…]*  | *[…]* | *[…]* | *[…]* |
-
-**Example request/response**
-
-```json
-// GET /api/forecast?country=DE&start=2026-06-01
-{
-  "country": "DE",
-  "start_date": "2026-06-01",
-  "horizon_days": 30,
-  "forecast": []
-}
-```
+| GET | `/users?persona=household_owner` | List demo users for login dropdown | Both |
+| GET | `/users?persona=journalist` | List demo users for login dropdown | Both |
+| GET | `/users/{user_id}` | Fetch logged-in user record | Both |
+| GET | `/users/{user_id}/household-profile` | Read saved household profile | Household (Maria) |
+| POST | `/users/{user_id}/household-profile` | Create household profile | Household (Maria) |
+| PUT | `/users/{user_id}/household-profile` | Update household profile | Household (Maria) |
+| DELETE | `/users/{user_id}/household-profile` | Delete household profile | Household (Maria) |
+| GET | `/stats/storage/history?country=DE` | Daily gas storage % series (AGSI) | Journalist (James) |
+| GET | `/countries/{code}/storage/summary` | Latest storage level, 30-day delta, stressed-winter stats | Journalist (James) |
+| GET | `/stats/storage/winters?country=DE` | Winter feature rows (slider defaults, charts) | Journalist (James) |
+| GET | `/stats/storage/winters` | All countries' winter rows | Journalist (James) |
+| GET | `/stats/storage/risk/compare` | Gas storage risk ranking (logistic regression) | Journalist (James) |
+| POST | `/stats/storage/risk` | What-if risk prediction from model inputs | Journalist (James) |
+| GET | `/news/eu-energy` | Latest EU energy news (NewsData.io proxy) | Household (Maria) |
 
 **Notes**
 
-- *[Auth, CORS, rate limits, or mock vs live data flags]*
-- *[Which routes are wired in Phase III vs stubbed]*
+- Streamlit calls the API via `app/src/modules/zeus_api.py` (`ZEUS_API_BASE`, default `http://web-api:4000`).
+- Auth is mock-only: persona chosen on Home; no passwords or JWT.
+- Gas storage data lives in MySQL, seeded from `datasets/apsi/agsi_clean.csv` and `dataset.csv` (`docker compose exec api python scripts/seed_gas_storage.py`). Model weights are in `gas_storage_model` (inserted by `03_gas_storage_schema.sql`).
+- News uses live NewsData.io data; requires `NEWSDATA_API_KEY` in `api/.env`.
+- Not implemented yet: `/stats/prices/forecast` and `/stats/prices/history` — `40_Household_Owner_Dashboard` still uses placeholder metrics; price ML is in `datasets/entsoe/` notebooks only.
+
+**Streamlit page wiring**
+
+| Page | Routes used |
+|------|-------------|
+| `Home.py` | `GET /users` |
+| `41_Household_Persona_Info.py` | Household profile CRUD |
+| `42_Household_Energy_News.py` | `GET /news/eu-energy` |
+| `Country_Snapshot.py` | `GET /countries/{code}/storage/summary`, `GET /stats/storage/history` |
+| `Country_Comparison.py` | `GET /stats/storage/risk/compare` |
+| `Gas_Storage_Risk.py` | `GET /stats/storage/winters`, `POST /stats/storage/risk` |
+
+
 
 ## UI implementation
 
@@ -196,15 +203,23 @@ Phase III UI moves from wireframes to working views for the two personas.
 
 ### Household persona (Lena)
 
-Lena's flow is built around her own situation rather than the EU-wide view: a landing dashboard summarizing what her bill looks like now and where it's heading, a saved household profile that personalizes the bill-cycle details, and a curated news feed so she can put the forecast in context.
+Lena's flow is built around her own situation rather than the EU-wide view: a landing dashboard summarizing what her bill looks like now and current energy pricing, a saved household profile that personalizes the bill-cycle details (amongst other details specific to the user which we plan to use for the creation of additioanl screen that could for additional CRUD operations), and a curated news feed so she can put the models prediction in context of current events.
 
 **Views & components**
 
-- **Household owner dashboard** — default landing page after logging in. Three KPI cards summarize "your energy at a glance" (current per-kWh price, predicted % change for next month, days until the next bill), followed by a scatter-plot forecast of household energy price over the next 30 days produced by the ML price model.
+- **Household owner dashboard** — default landing page after logging in. Three KPI cards summarize "your energy at a glance" (current per-kWh price, predicted % change for next month, days until the next bill), followed by a scatter-plot forecast of household energy price over the next 30 days produced by the ML price model (Figures 1 and 2).
 
-- **Household persona info** — profile form that captures the household-level details used for bill reminders and country-level context: household/contact name, email, country, utility provider, typical bill amount (€), next bill due date, billing frequency, average monthly usage (kWh), tariff type, and free-form notes. Profile state is reflected in the banner ("No household profile saved yet…" before save, the saved details after) and submitted via "Create profile."
+  {{< siteimg src="images/phase3/figure1.png" alt="Household dashboard — your energy at a glance KPI cards" width="600" caption="Figure 1: Your energy at a glance — household dashboard KPIs" >}}
 
-- **EU energy news** — separate page driven by NewsData.io's top-domain filter and a broad energy keyword search across major EU countries. A single "Fetch EU energy news" action loads the latest headlines on electricity, gas, renewables, and related EU energy topics, giving Lena editorial context for the model's numbers without leaving the app.
+  {{< siteimg src="images/phase3/figure2.png" alt="Household dashboard — 30-day ML price forecast scatter plot" width="600" caption="Figure 2: Predicted energy price forecast — 30-day ML outlook" >}}
+
+- **Household persona info** — profile form that captures the household-level details used for bill reminders and country-level context: household/contact name, email, country, utility provider, typical bill amount (€), next bill due date, billing frequency, average monthly usage (kWh), tariff type, and free-form notes. Profile state is reflected in the banner ("No household profile saved yet…" before save, the saved details after) and submitted via "Save profile" (Figure 3).
+
+  {{< siteimg src="images/phase3/figure3.png" alt="Household persona info — saved profile form" width="600" caption="Figure 3: Household persona info — profile form and saved state" >}}
+
+- **EU energy news** — separate page driven by NewsData.io's top-domain filter and a broad energy keyword search across major EU countries. A single "Fetch EU energy news" action loads the latest headlines on electricity, gas, renewables, and related EU energy topics, giving Lena editorial context for the model's numbers without leaving the app (Figure 4).
+
+  {{< siteimg src="images/phase3/figure4.png" alt="EU energy news — fetch headlines from NewsData.io" width="600" caption="Figure 4: EU energy news — curated headlines for household context" >}}
 
 **Data binding**
 
@@ -218,27 +233,28 @@ Marco's flow centers on three views built around the gas storage stress model: a
 
 **Views & components**
 
-- **Country snapshot** — per-country dashboard with four KPIs (current storage level with 30-day delta, stressed winters on record, lowest winter level on record, and the 30% stress threshold), a 2014-present time series of storage % full with the 30% stress line marked, and a "Context for your story" panel with EU policy background, a risk-tier-specific recommendation banner, curated external links (GIE AGSI, EC gas storage policy, national TSO announcements, Eurostat import dependency, Ember, ENTSOG), and quick-jump buttons to the risk model and comparison views.
+- **Country snapshot** — per-country dashboard with four KPIs (current storage level with 30-day delta, stressed winters on record, lowest winter level on record, and the 30% stress threshold), a 2014-present time series of storage % full with the 30% stress line marked, and a "Context for your story" panel with EU policy background, a risk-tier-specific recommendation banner, curated external links (GIE AGSI, EC gas storage policy, national TSO announcements, Eurostat import dependency, Ember, ENTSOG), and quick-jump buttons to the risk model and comparison views (Figures 5–7).
 
-  {{< siteimg src="images/ui/journalist_snapshot_kpis.png" alt="Country snapshot — Poland KPIs" width="600" >}}
+  {{< siteimg src="images/ui/journalist_snapshot_kpis.png" alt="Country snapshot — Poland KPIs" width="600" caption="Figure 5: Country snapshot — Poland KPI cards" >}}
 
-  {{< siteimg src="images/ui/journalist_snapshot_chart.png" alt="Country snapshot — Poland storage time series" width="600" >}}
+  {{< siteimg src="images/ui/journalist_snapshot_chart.png" alt="Country snapshot — Poland storage time series" width="600" caption="Figure 6: Country snapshot — Poland storage time series" >}}
 
-  {{< siteimg src="images/ui/journalist_snapshot_story.png" alt="Country snapshot — context for your story" width="600" >}}
+  {{< siteimg src="images/ui/journalist_snapshot_story.png" alt="Country snapshot — context for your story" width="600" caption="Figure 7: Country snapshot — context for your story" >}}
 
-- **Country comparison** — runs the gas storage stress model across every available country and ranks them by risk probability. A summary banner flags how many countries (and which) the model predicts could fall below 30% storage this winter, naming the highest-risk country. A horizontal bar chart shows the full ranking with the 50% decision boundary marked, and an optional country filter narrows the view.
+- **Country comparison** — runs the gas storage stress model across every available country and ranks them by risk probability. A summary banner flags how many countries (and which) the model predicts could fall below 30% storage this winter, naming the highest-risk country. A horizontal bar chart shows the full ranking with the 50% decision boundary marked, and an optional country filter narrows the view (Figure 8).
 
-  {{< siteimg src="images/ui/journalist_comparison.png" alt="Country comparison — winter risk ranking" width="600" >}}
+  {{< siteimg src="images/ui/journalist_comparison.png" alt="Country comparison — winter risk ranking" width="600" caption="Figure 8: Country comparison — winter risk ranking by country" >}}
 
-- **Gas storage risk** — logistic regression trained on GIE AGSI winters 2015–2024. Country dropdown plus three sliders (storage level entering winter, change in storage over October, storage volatility over the past 90 days) returning a risk probability and an at-risk/not-at-risk label. Sliders default to the country's most recent winter so journalists see the live prediction first and can then explore what-if scenarios.
+- **Gas storage risk** — logistic regression trained on GIE AGSI winters 2015–2024. Country dropdown plus three sliders (storage level entering winter, change in storage over October, storage volatility over the past 90 days) returning a risk probability and an at-risk/not-at-risk label. Sliders default to the country's most recent winter so journalists see the live prediction first and can then explore what-if scenarios (Figure 9).
 
-  {{< siteimg src="images/ui/journalist_storage_risk.png" alt="Gas storage risk model — Poland" width="600" >}}
+  {{< siteimg src="images/ui/journalist_storage_risk.png" alt="Gas storage risk model — Poland" width="600" caption="Figure 9: Gas storage risk model — what-if scenario sliders" >}}
 
 **Data binding**
 
 - Snapshot KPIs, time series, and context panel → `/api/country/{code}/snapshot` backed by GIE AGSI historical storage.
 - Comparison ranking → `/api/storage/risk/ranking` (runs the same model per country, returns sorted probabilities).
 - Storage risk what-if → `/api/storage/risk` (POST with slider values, returns probability + class label).
+
 
 ## Individual posts
 

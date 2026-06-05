@@ -743,6 +743,24 @@ body,
   color: rgba(var(--color-neutral-500), 1);
 }
 
+/* --- siteimg with caption (team post figures) --- */
+.siteimg-figure {
+  margin: 1.5rem auto;
+  max-width: 600px;
+}
+
+.siteimg-figure img {
+  width: 100%;
+  display: block;
+}
+
+.siteimg-figure__caption {
+  margin-top: 0.45rem;
+  font-size: 0.78rem;
+  text-align: center;
+  color: rgba(var(--color-neutral-500), 1);
+}
+
 /* --- Team profile (section index + blog post header) --- */
 .team-profile {
   display: flex;

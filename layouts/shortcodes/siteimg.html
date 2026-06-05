@@ -1,4 +1,19 @@
 {{- $src := .Get "src" -}}
+{{- $caption := .Get "caption" -}}
+{{- if $caption -}}
+<figure class="siteimg-figure">
+  <img
+    src="{{ $src | relURL }}"
+    alt="{{ .Get "alt" | default "" }}"
+    {{ with .Get "width" }}width="{{ . }}"{{ end }}
+    {{ with .Get "class" }}class="{{ . }}"{{ end }}
+    {{ with .Get "data-target" }}data-target="{{ . }}"{{ end }}
+    {{ with .Get "style" }}style="{{ . }}"{{ end }}
+    loading="{{ .Get "loading" | default "lazy" }}"
+  />
+  <figcaption class="siteimg-figure__caption">{{ $caption }}</figcaption>
+</figure>
+{{- else -}}
 <img
   src="{{ $src | relURL }}"
   alt="{{ .Get "alt" | default "" }}"
@@ -8,3 +23,4 @@
   {{ with .Get "style" }}style="{{ . }}"{{ end }}
   loading="{{ .Get "loading" | default "lazy" }}"
 />
+{{- end -}}
