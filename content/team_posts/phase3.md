@@ -19,7 +19,7 @@ Since our last update we have focused on shipping an integrated experience rathe
 
 - *[Bullet: User story changes]*
 - ML1 was significantly improved through feature engineering, the addition of 14 new EU countries with a single shared model with one-hot encoded country features. These changes increased the R² from 0.265 to 0.608.
-- *[Bullet: ML2 changes — e.g. threshold, model selection, evaluation]*
+- ML2 justified the 30% stress threshold with EU policy, dropped the random forest for the logistic regressionn, fixed a standardization bug, corrected our reported accuracy , and deployed the model into three interactive app pages
 - *[Bullet: backend routes and how they map to Phase II “what’s left” items]*
 - *[Bullet: frontend implementation status for household and journalist flows]*
 
@@ -93,29 +93,49 @@ We refined Lena and Marco against the flows we actually built in Phase III (save
 
 ## Model 2 updates
 
-**Winter storage stress classifier** — predicts whether gas storage drops below 30% full during winter (will also take into account weather eventually)
+## Model 2 updates
 
-**What changed since Phase II**
+**Winter storage stress classifier** — predicts whether gas storage drops below 30% full during winter and if the country will be at risk
 
-- *[Label or threshold adjustments; feature engineering updates]*
-- *[Model choice: logistic regression vs random forest and why]*
-- *[Evaluation: cross-validation, accuracy, precision/recall for stress class]*
+**Changes since Phase II**
+
+- We justified the 30% threshold more clearly. Essentially, it's a policy relevant EU regulation set in 2022 for countries to mandate 90% storage by Nov 1st. EU Analysts now treat 28-30% as the stress zone. It's also physically meaningful as lower storage causes lower pressure meaning lower withdrawls. Additionally, when testing other thresholds like 40%, every 1 in 5 winters were flagged and I thought it would be too common to use as an alert
+- Decided to drop the random forest model and only stick with logistic regression. 
+- We caught a bug in our feature importance as features have different scales, so ranking raw coefficients reflected units rather than actual influence. We fixed it by standardizing all features with a StandardScaler pipeline, and scaled inside each CV fold
+-  We previously wrote that StratifiedKFold stratifies by country, but it actually stratifies on the class label so each fold keeps the same ratio of stress to no-stress winters. We also tried GroupKFold by country but dropped it since we're predicting future winters for these same 17 countries, and grouping by country made the folds too small and unstable.
+- Corrected reported numbers
+- We deployed to the app so now the model powers three pages: Gas Storage Risk, Country Comparison, and Country Snapshot
+
+**Features**
+
+- `storage_at_start` — how full a country's storage is at the start of winter. The bigger the buffer, the more cold weather it can absorb before hitting 30%
+- `storage_trend_30d` — whether storage was filling up or draining in the last 30 days before winter. Two countries can start at the same level, but one still adding gas is in much better shape than one already using
+- `storage_volatility` — how steady or jumpy storage levels were before winter. Smooth changes suggest planned filling and big swings suggest supply problems or demand shocks that may carry into winter
 
 **Performance**
 
-| Model              | Accuracy | Stress-class precision/recall | Notes        |
-| ------------------ | -------- | ----------------------------- | ------------ |
-| Logistic regression | ~64%    | ~0.62 / ~0.62                 | Phase II baseline |
-| Random forest      | ~66%    | *[TBD]*                       | *[Phase III]* |
-| Phase III (chosen) | *[TBD]* | *[TBD]*                       | *[TBD]*      |
+| Model | Accuracy | Stress-class precision/recall | Notes |
+| --- | --- | --- | --- |
+| Logistic regression (Phase II, unstandardized) | 66% | 0.62 / 0.62 | Baseline |
+| Logistic regression (Phase III, standardized, chosen) | 66% | 0.62 / 0.56 | Deployed in app |
 
-**Feature importance (dashboard copy)**
+Standardizing barely moved performance since logistic regression predictions are fairly scale-robust but it fixed the interpretation
 
-- *[Top drivers: storage_at_start, storage_trend_30d, storage_volatility — update if changed]*
+**Feature importance (standardized logistic regression coefficients)**
+
+| Feature | Coefficient |
+| --- | --- |
+| `storage_at_start` | −0.774 |
+| `storage_trend_30d` | −0.374 |
+| `storage_volatility` | −0.127 |
+
+This was honestly surprising because before standardizing, `storage_at_start` looked like the weakest predictor simply because its 0–100 scale shrinks its coefficient, but once all three features were put on the same scale it became by far the strongest driver and since all three coefficients are negative (fuller, rising, steadier storage all lower stress risk), this also corrects our Phase II claim that volatility mattered more than the trend.
 
 **What's left**
-
-- *[Supply-shock classifier, import dependence, export for policy persona, etc.]*
+ 
+- Import dependence features so the model isn't storage-only
+    - Weather/temperature features
+- Keep refining the journalist persona pages on webapp
 
 ## Model implementation
 
