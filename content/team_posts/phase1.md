@@ -26,7 +26,7 @@ Phase I outcome :: Project concept, personas, data-source plan, and feature scop
 
 ## Project description
 
-Energy security is extremely important for countries across the world. Having sufficient information regarding energy on a country by country view could help make critical policy decisions based on energy. A dashboard that could make it easy to see information on different European Union countries could display which countries are most dependent on energy imports and which ones are at the greatest risk in case of an energy supply shock. This could help policy analysts and government officials in making policy decisions regarding energy security for their country. It could also assist journalists writing about energy policy and citizens looking to understand their energy bills. We want to build this for our project and include information like each country's dependence on others for energy imports, their current gas storage level vs historical norms, an electricity price forecast, a risk score in case of a supply shock, and how each country compares to its neighbors. We would use machine learning for predicting the electricity prices of the countries and classifying each country’s vulnerability to a supply shock.
+Energy security is a major concern for countries across the world, especially in Europe, where many countries depend heavily on imported gas and have faced price spikes and supply uncertainty in recent years. The problem is that the information needed to understand a country's energy situation like its gas storage levels, electricity prices, and how vulnerable it is to a supply shock is spread across different sources and is hard for non-experts to interpret. This makes it difficult for policymakers, journalists, and everyday citizens to quickly see which countries are most at risk and how they compare to one another. Our project addresses this by building a single dashboard that brings this data together for European Union countries and uses machine learning to forecast electricity prices and estimate each country's risk of a winter gas supply shock, so users can understand and compare energy security at a glance.
 
 ### Why now
 
@@ -59,10 +59,10 @@ Her electric bill is about 180 euros per month. She wants to anticipate bill cha
 
 **User stories**
 
-1. As Lena, I want to see how electricity prices in Germany are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
-2. As Lena, I want to see how current gas storage levels compare to recent winters, so I can judge whether the upcoming winter is likely to be a high-bill season.
-3. As Lena, I want a plain-language summary of the forecast, so I can understand what is driving the prediction without an economics background.
-4. As Lena, I want to compare Germany's situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
+1. As a houshold owner, Lena, I want to see how electricity prices in Germany are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
+2. As a houshold owner, Lena, I want to see how current gas storage levels compare to recent winters, so I can judge whether the upcoming winter is likely to be a high-bill season.
+3. As a houshold owner, Lena, I want a plain-language summary of the forecast, so I can understand what is driving the prediction without an economics background.
+4. As a houshold owner, Lena, I want to compare Germany's situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
 {{< /persona >}}
 
 ### Persona 2 — Energy Journalist
@@ -72,23 +72,23 @@ He writes two to three articles a week. He needs country-level energy facts quic
 
 **User stories**
 
-1. As Marco, I want current electricity prices, gas storage, and import dependence for each EU country in one place, so I can gather facts without bouncing between five sources.
-2. As Marco, I want to compare a country's indicators to its neighbors, so I know which countries deserve attention in a story.
-3. As Marco, I want a country snapshot I can screenshot or export, so figures in my article stay accurate without manual copy-paste.
-4. As Marco, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
+1. As a journalist, Marco, I want current electricity prices, gas storage, and import dependence for each EU country in one place, so I can gather facts without bouncing between five sources.
+2. As a journalist, Marco, I want to compare a country's indicators to its neighbors, so I know which countries deserve attention in a story.
+3. As a journalist, Marco, I want a country snapshot I can screenshot or export, so figures in my article stay accurate without manual copy-paste.
+4. As a journalist, Marco, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
 {{< /persona >}}
 
-### Persona 3 — Policy Analyst
+### Persona 3 - Policy Analyst
 
 {{< persona name="Sofia Anderson" role="Policy Analyst" age="47" location="Brussels, Belgium" initials="SA" type="policy" photo="images/team/sofia.jpg" >}}
 Senior researcher writing memos. She needs to identify vulnerable member states and model supply-shock scenarios for briefing memos. for MEPs and national energy councils. Comfortable with models and needs exportable, defensible comparisons—not headline noise.
 
 **User stories**
 
-1. As Sofia, I want to rank EU countries by winter stress risk, so I can prioritize which member states need attention in briefings.
-2. As Sofia, I want to adjust gas storage and weather scenarios by country, so I can model different supply-shock conditions for policymakers.
-3. As Sofia, I want to see which features drive each country's risk score, so I can tie recommendations to evidence.
-4. As Sofia, I want to export country comparison data, so I can drop tables into memos and presentations without retyping numbers.
+1. As a policy analyst, Sofia, I want to rank EU countries by winter stress risk, so I can prioritize which member states need attention in briefings.
+2. As a policy analyst, Sofia, I want to adjust gas storage and weather scenarios by country, so I can model different supply-shock conditions for policymakers.
+3. As a policy analyst, Sofia, I want to see which features drive each country's risk score, so I can tie recommendations to evidence.
+4. As a policy analyst, Sofia, I want to export country comparison data, so I can drop tables into memos and presentations without retyping numbers.
 {{< /persona >}}
 
 ## Data Sources
