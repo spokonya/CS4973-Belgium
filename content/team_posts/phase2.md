@@ -226,7 +226,7 @@ If a full start guaranteed a safe winter, then no model would be needed.
 
 ## Data model — ER diagrams 
 In this phase, we produced persona-specific ER diagrams for Household Owner, Journalist,
-and Policy Analyst workflows, then merged those into a global ER model for the full app.
+and Energy Trader workflows, then merged those into a global ER model for the full app.
 The global model captures user/profile relationships, analytics-facing entities, and
 storage for cleaned statistical records used in model training and evaluation.
 
@@ -240,7 +240,7 @@ storage for cleaned statistical records used in model training and evaluation.
 
 ### Household Owner ER Diagram
 <figure style="margin: 1.5rem 0 1.5rem -6rem;">
-  {{< siteimg class="er-thumb" data-target="dlg-household" src="images/diagrams/HouseholdOwner.png" alt="Household Owner ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
+  {{< siteimg class="er-thumb" data-target="dlg-household" src="images/diagrams/HouseholdOwner-v2.png" alt="Household Owner ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
   <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Household Owner ER diagram — click to enlarge, press Esc to close</figcaption>
 </figure>
 
@@ -248,19 +248,19 @@ storage for cleaned statistical records used in model training and evaluation.
 
 ### Journalist ER Diagram
 <figure style="margin: 1.5rem 0 1.5rem -6rem;">
-  {{< siteimg class="er-thumb" data-target="dlg-journalist" src="images/diagrams/JournalistDiagram.png" alt="Journalist ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
+  {{< siteimg class="er-thumb" data-target="dlg-journalist" src="images/diagrams/JournalistDiagram-v2.png" alt="Journalist ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
   <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Journalist ER diagram — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 [Download the Journalist ER diagram (PDF)]({{< relurl "pdfs/JournalistDiagram.pdf" >}})
 
-### Policy Analyst ER Diagram
+### Energy Trader ER Diagram
 <figure style="margin: 1.5rem 0 1.5rem -6rem;">
-  {{< siteimg class="er-thumb" data-target="dlg-policy" src="images/diagrams/PolicyAnalyst.png" alt="Policy Analyst ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Policy Analyst ER diagram — click to enlarge, press Esc to close</figcaption>
+  {{< siteimg class="er-thumb" data-target="dlg-trader" src="images/diagrams/EnergyTrader.png" alt="Energy Trader ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Energy Trader ER diagram — click to enlarge, press Esc to close</figcaption>
 </figure>
 
-[Download the Policy Analyst ER diagram (PDF)]({{< relurl "pdfs/PolicyAnalyst.pdf" >}})
+[Download the Energy Trader ER diagram (PDF)]({{< relurl "pdfs/EnergyTrader.pdf" >}})
 
  
 ## Database — first-pass schema (DDL) 
@@ -415,17 +415,17 @@ The layouts and interactions are expected to evolve as development continues.
 
 <dialog id="dlg-household" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
   <div style="position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); color: white; font-size: 0.85rem; background: rgba(0,0,0,0.6); padding: 0.4rem 0.9rem; border-radius: 9999px; pointer-events: none;">Press <kbd style="background: white; color: black; padding: 0.05rem 0.4rem; border-radius: 0.25rem; font-family: inherit;">Esc</kbd> to close</div>
-  {{< siteimg src="images/diagrams/HouseholdOwner.png" alt="Household Owner ER diagram (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
+  {{< siteimg src="images/diagrams/HouseholdOwner-v2.png" alt="Household Owner ER diagram (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
 </dialog>
 
 <dialog id="dlg-journalist" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
   <div style="position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); color: white; font-size: 0.85rem; background: rgba(0,0,0,0.6); padding: 0.4rem 0.9rem; border-radius: 9999px; pointer-events: none;">Press <kbd style="background: white; color: black; padding: 0.05rem 0.4rem; border-radius: 0.25rem; font-family: inherit;">Esc</kbd> to close</div>
-  {{< siteimg src="images/diagrams/JournalistDiagram.png" alt="Journalist ER diagram (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
+  {{< siteimg src="images/diagrams/JournalistDiagram-v2.png" alt="Journalist ER diagram (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
 </dialog>
 
-<dialog id="dlg-policy" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
+<dialog id="dlg-trader" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
   <div style="position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); color: white; font-size: 0.85rem; background: rgba(0,0,0,0.6); padding: 0.4rem 0.9rem; border-radius: 9999px; pointer-events: none;">Press <kbd style="background: white; color: black; padding: 0.05rem 0.4rem; border-radius: 0.25rem; font-family: inherit;">Esc</kbd> to close</div>
-  {{< siteimg src="images/diagrams/PolicyAnalyst.png" alt="Policy Analyst ER diagram (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
+  {{< siteimg src="images/diagrams/EnergyTrader.png" alt="Energy Trader ER diagram (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
 </dialog>
 
 <dialog id="dlg-home" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
