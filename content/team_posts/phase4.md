@@ -29,8 +29,6 @@ Two machine-learning models power the analytics:
 In Phase 4, we focused on finalizing the implementation of the website. We reworked our interface design based on the feedback we got, connected the database to the Energy Trader persona so they can log their trade notes, and finalized our two machine learning models to make them as accurate as we could.
 
 
-# Phase IV — Team Update
-
 ## ML #1 — Electricity Price Forecast
 
 ### The model
@@ -133,15 +131,6 @@ The easiest way to see how it fits together is to follow one request. A trader p
 
 _TODO: table groupings (core/identity, persona features, model tables), keys/FKs, and the "model lives in the DB" rationale._
 
-## Reflection & Next Steps
-
-<!--
-- What went well, what was hard, what you'd do differently.
-- Honest limitations of the current models/architecture.
-- Concrete next steps beyond this phase.
--->
-
-_TODO: reflection on Phase IV and next steps._
 
 ## Individual posts
 
