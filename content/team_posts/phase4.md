@@ -52,41 +52,39 @@ In Phase 4, we focused on finalizing the implementation of the website. We rewor
 
 ### The model
 - A logistic regression that predicts before winter starts, whether a country's gas storage will drop below 30 during the winter (the "stress" level)
+- Trained on GIE AGSI (Gas Infrastructure Europes Aggrgate Gas Supply Index) for 17 countries over the last 10 years
+- It outputs a risk probability (0-1) through the sigmoid function
 
 ### What changed this phase
-- **Added an interaction term** — `storage_volatility × storage_at_start` — so volatility's effect on risk now depends on how full storage is entering winter, instead of being a flat, one-directional linear term.
-- **Found and fixed a real data bug in the volatility feature:**
-  - Volatility was computed on **unsorted** daily data, so the 90-day window grabbed the wrong days and the feature came out as **noise** (correlation with stress was only **−0.015**).
-  - Fix: **sort the data by date** before taking the last 90 days.
-  - After the fix, volatility became a **genuine predictor** (correlation **+0.205**) and its model weight became meaningful.
-  - As a result, the **risk slider in the app now actually responds** to volatility instead of staying frozen.
-- **Refit the model** on the corrected data and **recomputed all the weights** (intercept, coefficients, and the standardization means/standard deviations).
+- We added an interaction term, `storage_volatility × storage_at_start` so volatility's effect on risk now depends on how full storage is entering winter, instead of being a one-directional linear term
+- We found and fixed a real data bug in the volatility feature as volatility was computed on unsorted daily data, so the 90-day window grabbed the wrong days and the feature came out as noise (correlation with stress was only −0.015).
+- Our fix was sorting the data by date before taking the last 90 days
+- After the fix, volatility became a better predictor** (correlation +0.205) and its model weight changed
+- As a result, the risk slider in the app now actually responds to volatility 
+- Then we re-fit the model on the corrected data and recomputed all the weights (intercept, coefficients, and the standardization means/standard deviations)
 
 ### What didn't change
-- Still a **logistic regression** (chosen over a random forest for its interpretability).
-- Still uses **balanced class weights** — recall on the "stress" class matters most, since missing a genuinely at-risk winter is worse than a false alarm.
-- Still the same **30% stress threshold**.
-- Still the same **three base storage features** (storage at start, 30-day trend, volatility).
+- Still a logistic regression (chosen over a random forest for its interpretability)
+- Still uses balanced class weights as recall on the "stress" class matters most, since missing a genuinely risky winter is worse than a false alarm.
+- Still the same 30% stress threshold. Additionally, gas is stored under pressure underground, so as the reservoir empties the internal pressure drops and gas physically comes out more slowly
+- Still the same three base storage features (storage at start, 30-day trend, volatility)
 
 ### Model implementation
-- The model is trained in the notebook as a **StandardScaler + LogisticRegression pipeline**.
-- We export the trained numbers — **intercept, the four weights, and each feature's mean and standard deviation** — and store them as a row in the **`gas_storage_model`** database table.
-- The API's **`predict_risk`** function rebuilds the prediction in plain Python: it standardizes the three inputs (plus the interaction term) using the stored means/stds, applies the weights, and runs the result through the sigmoid.
-- It's served at the **`/stats/storage/risk`** endpoint, and the Country Comparison page runs the same function for every country.
-- We **verified the API's predictions match the trained scikit-learn model exactly**, so what runs in the app is identical to what we trained.
+- We train the model in the notebook as a StandardScaler + LogisticRegression pipeline*
+- We export the trained numbers of the intercept, the four weights, and each feature's mean and standard deviation and store them as one row in our `gas_storage_model` table.
+- Our Flask API's `predict_risk` function rebuilds the prediction in plain Python and standardizes the inputs (including the interaction term), applies the weights, and runs the result through the sigmoid page calls the same function for every country.
+- We verified the API's predictions match the trained scikit-learn model 
 
-### Checks (not shown in the web app)
-- **Assumptions:**
-  - Binary outcome (the label is 0/1).
-  - Feature **correlation matrix**.
-  - **Multicollinearity (VIF)** — the interaction term structurally inflates VIF, which we confirmed is harmless using a mean-centered comparison.
-  - **Linearity of the log-odds** via the Box-Tidwell test.
-- **Predictive checks:**
-  - **5-fold stratified cross-validation.**
-  - **Confusion matrix** with **precision and recall.**
-  - **Compared logistic regression against a random forest.**
 
----
+### Assumption Checks
+- The outcome is binary (0/1, no-stress vs stress), with 103 no-stress and 81 stress winters, so the classes are fairly balanced
+- In the correlation matrix the only notable link is storage_trend_30d and storage_volatility at 0.34, everything else is under 0.2, so no redundant features
+- The one issue was multicollinearity as the raw storage_at_start × storage_volatility interaction pushed VIF up to 43.6, because it ends up 0.95-correlated with storage_volatility
+- Mean-centering the features before multiplying fixes it every VIF drops back to about 1, and the interaction still works
+- The Box-Tidwell test passes for all four features (p = 0.56, 0.34, 0.93, 0.83), so none need a transform
+- For accuracy I used 5-fold stratified cross-validation, checked precision and recall on the confusion matrix, and compared logistic regression against a random forest
+
+
 ## Software Architecture
 
 <!--
