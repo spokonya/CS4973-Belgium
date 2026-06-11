@@ -11,23 +11,7 @@ showTableOfContents: true
 
 # Phase IV — Team Update
 
-<!--
-OUTLINE — fill in each section below. Notes in HTML comments describe what
-each section should cover; replace the placeholder prose as you write.
--->
-
 ## Project Recap
-
-<!--
-- One-paragraph reminder of what Zeus (the EU Energy Security Index) is and the
-  problem it solves.
-- Recap the three personas and the core question each one brings to the product:
-  - Household Owner
-  - Journalist
-  - Energy Trader
-- State the Phase IV goal: what "done" looks like for this phase and how it
-  builds on Phases I–III.
--->
 
 Energy security matters to everyone, but the data needed to understand it is scattered across fragmented official sources: ENTSO-E for electricity, GIE for gas storage, and Eurostat for the wider picture. Zeus pulls those signals into a single platform and turns raw European energy data into country-level insight, including day-ahead electricity price forecasts, gas-storage stress relative to historical norms, import dependence, and how each country compares to its neighbors. The goal is to surface the conditions that precede a supply shock, not just report one after it happens.
 
@@ -45,9 +29,66 @@ Two machine-learning models power the analytics:
 In Phase 4, we focused on finalizing the implementation of the website. We reworked our interface design based on the feedback we got, connected the database to the Energy Trader persona so they can log their trade notes, and finalized our two machine learning models to make them as accurate as we could.
 
 
+# Phase IV — Team Update
 
+## ML #1 — Electricity Price Forecast
 
+### The model
+- A linear regression that forecasts daily electricity prices 30 days out for 15 EU countries, trained on ENTSO-E day-ahead price data. It uses 7 daily lags, rolling 7- and 30-day statistics, and month / day-of-week / country dummies, all standardized before fitting. _[teammate: confirm the feature list and add the data time range / number of rows.]_
 
+### What changed this phase
+- _[teammate: did the model itself change this phase, or was the main work deploying it into the app? Fill in what's new since the last phase.]_
+
+### What didn't change
+- The core modeling approach stayed the same as the previous phase — same linear regression, same features, and same single-shared-model design. _[teammate: confirm and add any detail.]_
+
+### Model implementation
+- The trained weights are exported from the notebook and stored as rows in the `price_model_weights` and `price_model_scaler` tables. The Flask API loads them and rebuilds the prediction in NumPy, rolling forward one day at a time to produce the 30-day forecast, served at `/ml1/forecast`. _[teammate: expand on how the recursive forecast works step by step.]_
+
+### Checks (not shown in the web app)
+- Evaluated on a held-out test set with R² ≈ 0.61, MAE ≈ 17.7, and RMSE ≈ 23.2, plus residual and predicted-vs-actual plots. _[teammate: confirm the numbers and link the plots.]_
+
+## ML #2 — Winter Gas-Storage Stress
+
+### The model
+- A **logistic regression** that predicts, before winter starts, whether a country's gas storage will drop **below 30%** during the winter — our "stress" label.
+- Trained on **GIE AGSI** gas-storage data, aggregated to **one row per country per winter**.
+- Outputs a **risk probability** (0–1) through the sigmoid function.
+
+### What changed this phase
+- **Added an interaction term** — `storage_volatility × storage_at_start` — so volatility's effect on risk now depends on how full storage is entering winter, instead of being a flat, one-directional linear term.
+- **Found and fixed a real data bug in the volatility feature:**
+  - Volatility was computed on **unsorted** daily data, so the 90-day window grabbed the wrong days and the feature came out as **noise** (correlation with stress was only **−0.015**).
+  - Fix: **sort the data by date** before taking the last 90 days.
+  - After the fix, volatility became a **genuine predictor** (correlation **+0.205**) and its model weight became meaningful.
+  - As a result, the **risk slider in the app now actually responds** to volatility instead of staying frozen.
+- **Refit the model** on the corrected data and **recomputed all the weights** (intercept, coefficients, and the standardization means/standard deviations).
+
+### What didn't change
+- Still a **logistic regression** (chosen over a random forest for its interpretability).
+- Still uses **balanced class weights** — recall on the "stress" class matters most, since missing a genuinely at-risk winter is worse than a false alarm.
+- Still the same **30% stress threshold**.
+- Still the same **three base storage features** (storage at start, 30-day trend, volatility).
+
+### Model implementation
+- The model is trained in the notebook as a **StandardScaler + LogisticRegression pipeline**.
+- We export the trained numbers — **intercept, the four weights, and each feature's mean and standard deviation** — and store them as a row in the **`gas_storage_model`** database table.
+- The API's **`predict_risk`** function rebuilds the prediction in plain Python: it standardizes the three inputs (plus the interaction term) using the stored means/stds, applies the weights, and runs the result through the sigmoid.
+- It's served at the **`/stats/storage/risk`** endpoint, and the Country Comparison page runs the same function for every country.
+- We **verified the API's predictions match the trained scikit-learn model exactly**, so what runs in the app is identical to what we trained.
+
+### Checks (not shown in the web app)
+- **Assumptions:**
+  - Binary outcome (the label is 0/1).
+  - Feature **correlation matrix**.
+  - **Multicollinearity (VIF)** — the interaction term structurally inflates VIF, which we confirmed is harmless using a mean-centered comparison.
+  - **Linearity of the log-odds** via the Box-Tidwell test.
+- **Predictive checks:**
+  - **5-fold stratified cross-validation.**
+  - **Confusion matrix** with **precision and recall.**
+  - **Compared logistic regression against a random forest.**
+
+---
 ## Software Architecture
 
 <!--
@@ -84,47 +125,6 @@ The easiest way to see how it fits together is to follow one request. A trader p
 
 _TODO: table groupings (core/identity, persona features, model tables), keys/FKs, and the "model lives in the DB" rationale._
 
-## ML Models — Fundamental Understanding
-
-<!--
-For EACH model: task, input features, the underlying math, and why this model
-class is the right fit for the problem.
--->
-
-### ML1 — Day-Ahead Price Forecast (Autoregressive Linear Regression)
-
-_TODO: task (forecast daily avg price), features (lags, rolling means, calendar),
-the linear-regression math, why autoregressive linear regression fits._
-
-### ML2 — Winter Storage-Risk Classifier (Logistic Regression)
-
-_TODO: task (predict storage_stress before winter), features (storage_at_start,
-trend, volatility), the logistic-regression math, why logistic regression fits._
-
-## ML Implementation in the Architecture
-
-<!--
-- Show how the models flow through the system: train → seed-to-DB → serve-with-NumPy.
-- Training scripts produce weights/scaler/intercept → seeded into the model tables.
-- Flask routes load those parameters and run inference with plain NumPy (no heavy
-  ML runtime in the request path).
-- List the relevant API routes and the frontend clients that call them.
--->
-
-_TODO: train → seed-to-DB → serve-with-NumPy pipeline, the Flask routes, and the Streamlit clients that consume them._
-
-## Model Verification — Assumptions & Predictive Checks
-
-<!--
-CREDIT-EARNING SECTION. This work is done OUTSIDE the web app (notebooks/scripts),
-not served in the UI.
-- State the modeling assumptions for each model and test them.
-- Predictive checks: held-out performance, residual analysis, calibration, etc.
-- Be explicit that these checks live outside the deployed app.
--->
-
-_TODO: assumption checks and predictive validation for ML1 and ML2 (performed outside the web app)._
-
 ## Reflection & Next Steps
 
 <!--
@@ -137,9 +137,6 @@ _TODO: reflection on Phase IV and next steps._
 
 ## Individual posts
 
-<!--
-Keep consistent with earlier phases — link each teammate's individual Phase IV update.
--->
 {{< members >}}
 {{< member name="Ari Spokony" role="" href="/ari_spokony/" initials="AS" photo="images/team/ari.jpg" >}}
 {{< member name="Bobby Bress" role="" href="/bobby_bress/" initials="BB" photo="images/team/bobby.jpg" >}}
