@@ -1,7 +1,7 @@
 ---
 title: "Zeus - Phase IV"
 date: 2026-06-11
-draft: true
+draft: false
 description: "EU Energy Security Index: Phase IV team update"
 slug: "phase4post"
 tags: ["project", "phase4", "energy", "Personas"]
