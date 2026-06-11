@@ -34,19 +34,19 @@ In Phase 4, we focused on finalizing the implementation of the website. We rewor
 ## ML #1 — Electricity Price Forecast
 
 ### The model
-- A linear regression that forecasts daily electricity prices 30 days out for 15 EU countries, trained on ENTSO-E day-ahead price data. It uses 7 daily lags, rolling 7- and 30-day statistics, and month / day-of-week / country dummies, all standardized before fitting. _[teammate: confirm the feature list and add the data time range / number of rows.]_
+- A linear regression that forecasts daily electricity prices 30 days forward for 15 EU countries (AT, BE, BG, CZ, DE, ES, FR, HR, HU, LV, NL, PL, PT, RO, SK), trained on ENTSO-E day-ahead price data from January 2021. through May 2026. It uses 7 daily lags (`lag_1` through `lag_8`), rolling 7-day mean, 30-day mean, 7-day standard deviation, and price vs 7-day average ratio as rolling statistics, plus one-hot encoded month (drop_first drops January), day of week (drop_first drops Monday), and country (drop_first drops Austria) dummies — 42 features total, all standardized with StandardScaler.
 
 ### What changed this phase
-- _[teammate: did the model itself change this phase, or was the main work deploying it into the app? Fill in what's new since the last phase.]_
+The model itself did not change. The main work this phase was deploying the model end-to-end into the application. This included exporting the trained weights and scaler parameters from the notebook into the database, building the backend to have live predictions, connecting the frontend dashboard to the API, and adding the historical price chart and hybrid forecast visualization (a chart with 15 days of historical data and the 30-day price forecast).
 
 ### What didn't change
-- The core modeling approach stayed the same as the previous phase — same linear regression, same features, and same single-shared-model design. _[teammate: confirm and add any detail.]_
+The modeling approach stayed the same as Phase III with the same linear regression, same 42 features, and same single shared model across all 15 countries. No retraining was done this phase.
 
 ### Model implementation
-- The trained weights are exported from the notebook and stored as rows in the `price_model_weights` and `price_model_scaler` tables. The Flask API loads them and rebuilds the prediction in NumPy, rolling forward one day at a time to produce the 30-day forecast, served at `/ml1/forecast`. _[teammate: expand on how the recursive forecast works step by step.]_
+The trained weights are exported from the notebook and stored as named columns in the `price_model_weights` table (one column per feature weight plus intercept) and the StandardScaler means and standard deviations are stored in `price_model_scaler`. At prediction time, the API loads both tables, fetches the 30 most recent real prices for the selected country from `price_daily`, and runs a 30-step loop. Each step builds the full 42-element feature vector x from the current price history, scales x using the stored means and standard deviations, then computes wTx + intercept to produce one predicted EUR/MWh value. That prediction is appended to the price history so the next step uses it as lag_1, rolling the forecast forward one day at a time.
 
 ### Assumption Checks
-- Evaluated on a held-out test set with R² ≈ 0.61, MAE ≈ 17.7, and RMSE ≈ 23.2, plus residual and predicted-vs-actual plots. _[teammate: confirm the numbers and link the plots.]_
+We evaluated the model on the final 90 days of data withheld from training, achieving R²=0.608, MAE=17.68 EUR/MWh, and RMSE=23.21 EUR/MWh. We validated the linear regression assumptions using three plots: a residuals over time chart (actual minus predicted on the test set) confirming residuals are randomly distributed around zero with no systematic bias, and a residual distribution histogram showing the errors are approximately normally distributed.
 
 ## ML #2 — Winter Gas-Storage Stress
 
