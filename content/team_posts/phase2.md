@@ -98,7 +98,10 @@ Niels trades electricity on the EPEX day-ahead market from a desk in Amsterdam. 
 ### ML 1
 
 {{< rawhtml >}}
+<figure class="siteimg-figure">
 <iframe src="/CS4973-Belgium/interactive_charts/price_history_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 1: Germany day-ahead electricity prices — continuous price history from 2021 through 2026</figcaption>
+</figure>
 {{< /rawhtml >}}
 
 **EDA Chart 1: Germany Day Ahead Electricty Prices**
@@ -106,7 +109,10 @@ Niels trades electricity on the EPEX day-ahead market from a desk in Amsterdam. 
 Shows how prices evolved continuously over time. Prices held steady around 50–100 EUR/MWh through 2021, spiked to 699 EUR/MWh during the 2022 Ukraine invasion period, then normalized to 75–150 EUR/MWh through 2026, confirming that the current environment is not historically unusual.
 
 {{< rawhtml >}}
+<figure class="siteimg-figure">
 <iframe src="/CS4973-Belgium/interactive_charts/seasonality_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 2: Average electricity price by month — seasonal monthly averages for Germany</figcaption>
+</figure>
 {{< /rawhtml >}}
 
 **EDA Chart 2: Average Electricty Price by Month**
@@ -114,7 +120,10 @@ Shows how prices evolved continuously over time. Prices held steady around 50–
 Compares monthly averages as discrete categories. Summer months (July–September) average 125–160 EUR/MWh while spring (April–May) is cheapest at ~90 EUR/MWh. Note: these figures are inflated by the 2022 crisis peak.
 
 {{< rawhtml >}}
+<figure class="siteimg-figure">
 <iframe src="/CS4973-Belgium/interactive_charts/yoy_comparison_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 3: Monthly average price per year — year-over-year monthly comparison for Germany</figcaption>
+</figure>
 {{< /rawhtml >}}
 
 **EDA Chart 3: Monthly Average Price pper Year**
@@ -122,7 +131,10 @@ Compares monthly averages as discrete categories. Summer months (July–Septembe
 Overlays each year's monthly trajectory for direct comparison. 2022 is a clear outlier peaking at 460 EUR/MWh, while all other years cluster tightly in the 60–130 EUR/MWh range. This answers Marco's question that the current moment is not historically unusual.
 
 {{< rawhtml >}}
+<figure class="siteimg-figure">
 <iframe src="/CS4973-Belgium/interactive_charts/lr_predictions_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 4: Linear regression prediction vs actual — model performance on the 90-day test set</figcaption>
+</figure>
 {{< /rawhtml >}}
 
 **ML1 Chart 1: Linear Regression Prediction vs Actual**
@@ -130,7 +142,10 @@ Overlays each year's monthly trajectory for direct comparison. 2022 is a clear o
 Directly evaluates model performance on unseen data. The model tracks the general trend and weekly cycles  across the February–May 2026 test period, with the main weakness being sudden sharp drops. Our R² = 0.265, so the model explains ~27% of the variance. Adjusting this model is somethng we must focus on in Phase 3, along with adding the possibility of selecting other countries for this model, and not Germany alone.
 
 {{< rawhtml >}}
+<figure class="siteimg-figure">
 <iframe src="/CS4973-Belgium/interactive_charts/lr_coefficients_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 5: Linear regression coefficients — feature weights driving the price forecast</figcaption>
+</figure>
 {{< /rawhtml >}}
 
 **ML1 Chart 2: Linear Regression Coefficients**
@@ -173,7 +188,7 @@ Shows which features drive the forecast. `lag_1` dominates by a wide margin, con
 
 .......
 
-## ML 2: Winter Gas Storage Stress Model
+## ML 2 — Winter Storage Stress
 
 Our second machine learning model focuses on predicting whether a European country’s gas storage will drop below 30% full during the winter. This directly connects to Sofia, our policy analyst persona, because the model helps identify which countries may be at risk of a supply shortage before winter begins.
 
@@ -213,19 +228,19 @@ For each country-winter pair, we took the minimum storage percentage during wint
 
 - For the two-variable analysis, the strongest signal was something we expected to be obvious but actually was not: starting winter near 90-100% full does not guarantee a safe winter. Several country-winters started above 90% and still dropped below the 30% stress line. This helped justify why a predictive model is useful.
 
-### EDA Chart 1: EU Gas Storage Levels Over Time
+### EDA Chart 1
 
 Our first EDA chart is a multi-line time series for Germany, France, Italy, and the Netherlands from 2014 to 2024, with the 30% stress threshold marked. We chose a line chart because storage percentage is a continuous value tracked daily, and the yearly fill-and-draw cycle is the most important pattern to surface. A bar chart or scatter plot would hide this seasonal pattern.
 
 This chart answers Lena’s question of whether the current winter is historically unusual. Most years, the lines dip but stay above 30%, while a few winters clearly cross the stress line. This gives her a visual baseline for what “normal” looks like compared to a risky winter.
 
-### EDA Chart 2: Lowest Winter Storage Ever Recorded by Country
+### EDA Chart 2
 
 Our second EDA chart is a horizontal ranked bar chart showing the single lowest storage point each country has ever recorded. Countries below the 30% threshold are shown as risky, while countries above the threshold are shown as safer.
 
 We chose a ranked bar chart because the question is comparative: who is most at risk historically? Ranking makes the answer instantly readable. This chart answers Sofia’s question of which countries belong at the top of a risk ranking. Almost every country in our dataset has crossed below 30% at least once, with Spain and Poland being the main exceptions.
 
-### EDA Chart 3: Does a Full Start Mean a Safe Winter?
+### EDA Chart 3
 
 Our third EDA chart is a scatter plot of storage percentage at the start of winter on the x-axis versus the minimum storage percentage reached during winter on the y-axis. Each point represents a country-winter pair and is colored based on whether that winter ended in storage stress.
 
@@ -259,7 +274,7 @@ If a full start guaranteed a safe winter, then no model would be needed.
 
 - The random forest still gave us a useful ranking of what matters. Storage at the start of winter was the strongest signal, followed by the 30-day storage trend and storage volatility.
 
-### ML Chart 2: A Full Tank Does Not Mean a Safe Winter
+### ML Chart 2
 
 - Our first ML chart is a horizontal bar chart of feature importance from the trained random forest. It shows how much each variable contributed to the model’s predictions. The biggest driver was `storage_at_start`, which shows how full storage is when winter begins. The less obvious signals were `storage_trend_30d` and `storage_volatility`, which the model also picked up on.
 
@@ -284,134 +299,340 @@ The global model captures user/profile relationships, analytics-facing entities,
 storage for cleaned statistical records used in model training and evaluation.
 
 ### Full ER Diagram
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-full" src="images/diagrams/FullERDiagram.png" alt="Full ER diagram for the EU Energy Security Index" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Full ER diagram — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 6: Full ER diagram — global model for the EU Energy Security Index — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 [Download the full ER diagram (PDF)]({{< relurl "pdfs/FullERDiagram.pdf" >}})
 
 ### Household Owner ER Diagram
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-household" src="images/diagrams/HouseholdOwner-v2.png" alt="Household Owner ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Household Owner ER diagram — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 7: Household Owner ER diagram — entities and relationships for Lena's workflow — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 [Download the Household Owner ER diagram (PDF)]({{< relurl "pdfs/HouseholdOwner.pdf" >}})
 
 ### Journalist ER Diagram
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-journalist" src="images/diagrams/JournalistDiagram-v2.png" alt="Journalist ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Journalist ER diagram — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 8: Journalist ER diagram — entities and relationships for Marco's workflow — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 [Download the Journalist ER diagram (PDF)]({{< relurl "pdfs/JournalistDiagram.pdf" >}})
 
 ### Energy Trader ER Diagram
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-trader" src="images/diagrams/EnergyTrader.png" alt="Energy Trader ER diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Energy Trader ER diagram — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 9: Energy Trader ER diagram — entities and relationships for Niels's workflow — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 [Download the Energy Trader ER diagram (PDF)]({{< relurl "pdfs/EnergyTrader.pdf" >}})
 
  
-## Database — first-pass schema (DDL) 
-From the global ER model, we drafted a first-pass SQL schema with explicit primary/foreign
-keys and role-specific entities. This DDL establishes the baseline structure for app data,
-including users, personas, content, comments, and statistical records that support ML
-feature workflows.
+## Database schema (DDL)
+
+The schema below matches the final `database-files/` init scripts in the Zeus-Energy_Security_Index app repo. Only `CREATE TABLE` definitions are shown — seed and model-weight `INSERT` statements are in the repo but omitted here.
+
+### 01_zeus_database.sql
 
 ```sql
-CREATE TABLE IF NOT EXISTS Stat_Type (
-    Stat_Type_ID     INT          NOT NULL AUTO_INCREMENT,
-    Cross_Border_Flow VARCHAR(100),
-    Imports          VARCHAR(100),
-    Storage_Levels   INT,
-    Price_Info       INT,
-    CONSTRAINT pk_stat_type PRIMARY KEY (Stat_Type_ID)
+-- Creates the application database (matches api/.env DB_NAME=Zeus).
+CREATE DATABASE IF NOT EXISTS Zeus;
+USE Zeus;
+```
+
+### 02_zeus_core.sql
+
+```sql
+-- =============================================================
+-- ZEUS CORE — users + household profiles (Household Owner persona)
+-- Matches: Home.py, user_routes.py, household_routes.py,
+--          41_Household_Persona_Info.py
+-- =============================================================
+USE Zeus;
+-- Mock demo users (no passwords). One row per dropdown option on Home.
+-- email, country, and language are seeded and edited on the Persona Info page.
+-- Seed data is loaded from 08_mockaroo_data.sql (runs after all schemas).
+CREATE TABLE IF NOT EXISTS users (
+    user_id      INT          NOT NULL AUTO_INCREMENT,
+    display_name VARCHAR(100) NOT NULL,
+    persona      ENUM('household_owner', 'journalist', 'energy_trader') NOT NULL,
+    first_name   VARCHAR(50),
+    email        VARCHAR(255),
+    country      VARCHAR(100),
+    language     VARCHAR(50),
+    CONSTRAINT pk_users PRIMARY KEY (user_id)
 );
 
-CREATE TABLE IF NOT EXISTS Stats (
-    Stat_ID          INT          NOT NULL AUTO_INCREMENT,
-    Country          VARCHAR(100),
-    Unit             VARCHAR(50),
-    Quantity         INT,
-    Used_For_Training BOOLEAN     NOT NULL DEFAULT FALSE,
-    Stat_Type_ID     INT          NOT NULL,
-    CONSTRAINT pk_stats          PRIMARY KEY (Stat_ID),
-    CONSTRAINT fk_stats_stat_type_v2 FOREIGN KEY (Stat_Type_ID) REFERENCES Stat_Type (Stat_Type_ID)
-);
-
-CREATE TABLE IF NOT EXISTS User (
-    User_ID    INT          NOT NULL AUTO_INCREMENT,
-    Name       VARCHAR(150) NOT NULL,
-    Email      VARCHAR(255) NOT NULL,
-    CONSTRAINT pk_user       PRIMARY KEY (User_ID),
-    CONSTRAINT uq_user_email UNIQUE (Email)
-);
-
-CREATE TABLE IF NOT EXISTS Profile (
-    Profile_ID           INT          NOT NULL AUTO_INCREMENT,
-    Countries_of_Interest VARCHAR(255),
-    User_ID              INT          NOT NULL,
-    Position             VARCHAR(150),
-    CONSTRAINT pk_profile      PRIMARY KEY (Profile_ID),
-    CONSTRAINT fk_profile_user_v2 FOREIGN KEY (User_ID) REFERENCES User (User_ID)
-);
-
-CREATE TABLE IF NOT EXISTS Household_Owner (
-    Household_Owner_ID  INT NOT NULL AUTO_INCREMENT,
-    User_ID             INT NOT NULL,
-    CONSTRAINT pk_household_owner      PRIMARY KEY (Household_Owner_ID),
-    CONSTRAINT fk_household_owner_user_v2 FOREIGN KEY (User_ID) REFERENCES User (User_ID)
-);
-
-CREATE TABLE IF NOT EXISTS Policy_Analyst (
-    Analyst_ID  INT NOT NULL AUTO_INCREMENT,
-    User_ID     INT NOT NULL,
-    CONSTRAINT pk_policy_analyst      PRIMARY KEY (Analyst_ID),
-    CONSTRAINT fk_policy_analyst_user_v2 FOREIGN KEY (User_ID) REFERENCES User (User_ID)
-);
-
-CREATE TABLE IF NOT EXISTS Journalist (
-    Journalist_ID  INT NOT NULL AUTO_INCREMENT,
-    User_ID        INT NOT NULL,
-    CONSTRAINT pk_journalist      PRIMARY KEY (Journalist_ID),
-    CONSTRAINT fk_journalist_user_v2 FOREIGN KEY (User_ID) REFERENCES User (User_ID)
-);
-
-CREATE TABLE IF NOT EXISTS Articles (
-    Article_ID   INT          NOT NULL AUTO_INCREMENT,
-    Link_To_Live VARCHAR(500),
-    Theme_Tags   VARCHAR(255),
-    User_ID      INT          NOT NULL,
-    Date         DATE,
-    Title        VARCHAR(300),
-    Content      VARCHAR(5000),
-    CONSTRAINT pk_articles      PRIMARY KEY (Article_ID),
-    CONSTRAINT fk_articles_user_v2 FOREIGN KEY (User_ID) REFERENCES User (User_ID)
-);
-
-CREATE TABLE IF NOT EXISTS Comments (
-    ID            INT          NOT NULL AUTO_INCREMENT,
-    Content       VARCHAR(2000),
-    Date          DATE,
-    Journalist_ID INT          NOT NULL,
-    Analyst_ID    INT          NOT NULL,
-    Stat_ID       INT          NOT NULL,
-    Visibility    BOOLEAN      NOT NULL DEFAULT TRUE,
-    CONSTRAINT pk_comments           PRIMARY KEY (ID),
-    CONSTRAINT fk_comments_journalist_v2 FOREIGN KEY (Journalist_ID) REFERENCES Journalist    (Journalist_ID),
-    CONSTRAINT fk_comments_analyst_v2  FOREIGN KEY (Analyst_ID)    REFERENCES Policy_Analyst (Analyst_ID),
-    CONSTRAINT fk_comments_stat_v2     FOREIGN KEY (Stat_ID)       REFERENCES Stats          (Stat_ID)
+-- Billing preferences per household_owner user (Persona Info billing form)
+CREATE TABLE IF NOT EXISTS household_profiles (
+    profile_id          INT           NOT NULL AUTO_INCREMENT,
+    user_id             INT           NOT NULL,
+    utility_provider    VARCHAR(100)  NOT NULL,
+    monthly_bill_amount DECIMAL(10, 2) NOT NULL,
+    bill_due_date       DATE          NOT NULL,
+    billing_frequency   ENUM('Weekly', 'Monthly', 'Quarterly', 'Annually') NOT NULL,
+    avg_monthly_kwh     DECIMAL(10, 2) NOT NULL,
+    tariff_type         ENUM('Fixed rate', 'Variable rate', 'Time-of-use') NOT NULL,
+    notes               TEXT,
+    CONSTRAINT pk_household_profiles PRIMARY KEY (profile_id),
+    CONSTRAINT uq_household_profiles_user UNIQUE (user_id),
+    CONSTRAINT fk_household_profiles_user
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 ```
 
+### 03_gas_storage_schema.sql
+
+```sql
+-- =============================================================
+-- GAS STORAGE — journalist pages (Country Snapshot, Comparison, Risk)
+-- Daily + winter rows: 06_gas_storage_data.sql (loaded on db init)
+-- =============================================================
+USE Zeus;
+CREATE TABLE IF NOT EXISTS gas_storage_daily (
+    storage_id     BIGINT       NOT NULL AUTO_INCREMENT,
+    country_code   CHAR(2)      NOT NULL,
+    gas_day        DATE         NOT NULL,
+    full_pct       DECIMAL(6, 2) NOT NULL,
+    gas_in_storage DECIMAL(12, 4),
+    trend          DECIMAL(8, 2),
+    CONSTRAINT pk_gas_storage_daily PRIMARY KEY (storage_id),
+    CONSTRAINT uq_gas_storage_daily_country_day UNIQUE (country_code, gas_day),
+    INDEX idx_gas_storage_daily_country_day (country_code, gas_day)
+);
+
+-- storage_at_start / storage_trend_30d / storage_volatility must stay DOUBLE —
+-- DECIMAL rounding would change logistic-regression predictions.
+CREATE TABLE IF NOT EXISTS gas_storage_winters (
+    winter_id          INT          NOT NULL AUTO_INCREMENT,
+    country_code       CHAR(2)      NOT NULL,
+    winter_year        SMALLINT     NOT NULL,
+    min_winter_full    DECIMAL(6, 2) NOT NULL,
+    days               INT,
+    storage_stress     TINYINT      NOT NULL,
+    storage_at_start   DOUBLE       NOT NULL,
+    storage_trend_30d  DOUBLE       NOT NULL,
+    storage_volatility DOUBLE       NOT NULL,
+    CONSTRAINT pk_gas_storage_winters PRIMARY KEY (winter_id),
+    CONSTRAINT uq_gas_storage_winters_country_year UNIQUE (country_code, winter_year),
+    INDEX idx_gas_storage_winters_country (country_code)
+);
+
+-- Logistic regression weights (features: storage_at_start, storage_trend_30d, storage_volatility, vol_x_start)
+-- vol_x_start is the interaction term storage_at_start * storage_volatility
+-- Source: datasets/apsi/apsi.ipynb — logreg.fit(X, y) on all winter rows
+-- Inputs are standardized at prediction time: x_scaled = (x - mean) / std
+CREATE TABLE IF NOT EXISTS gas_storage_model (
+    model_id                   INT    NOT NULL,
+    intercept                  DOUBLE NOT NULL,
+    weight_storage_at_start    DOUBLE NOT NULL,
+    weight_storage_trend_30d   DOUBLE NOT NULL,
+    weight_storage_volatility  DOUBLE NOT NULL,
+    weight_vol_x_start         DOUBLE NOT NULL,
+    mean_storage_at_start      DOUBLE NOT NULL,
+    mean_storage_trend_30d     DOUBLE NOT NULL,
+    mean_storage_volatility    DOUBLE NOT NULL,
+    mean_vol_x_start           DOUBLE NOT NULL,
+    std_storage_at_start       DOUBLE NOT NULL,
+    std_storage_trend_30d      DOUBLE NOT NULL,
+    std_storage_volatility     DOUBLE NOT NULL,
+    std_vol_x_start            DOUBLE NOT NULL,
+    CONSTRAINT pk_gas_storage_model PRIMARY KEY (model_id)
+);
+```
+
+### 04_zeus_persona_features.sql
+
+```sql
+-- =============================================================
+-- OPTIONAL PERSONA FEATURES
+-- Household: saved EU energy news articles
+-- Journalist: frozen snapshot payloads + private journalist notes
+-- =============================================================
+USE Zeus;
+-- Household Owner — bookmark articles from GET /news/eu-energy
+CREATE TABLE IF NOT EXISTS saved_articles (
+    article_id  INT           NOT NULL AUTO_INCREMENT,
+    user_id     INT           NOT NULL,
+    title       VARCHAR(300)  NOT NULL,
+    link        VARCHAR(500)  NOT NULL,
+    source_name VARCHAR(150),
+    description TEXT,
+    pub_date    DATETIME,
+    saved_at    DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_saved_articles PRIMARY KEY (article_id),
+    CONSTRAINT fk_saved_articles_user
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    INDEX idx_saved_articles_user (user_id)
+);
+
+-- Journalist — save a frozen indicator + ML output bundle for citation
+CREATE TABLE IF NOT EXISTS snapshots (
+    snapshot_id  INT          NOT NULL AUTO_INCREMENT,
+    user_id      INT          NOT NULL,
+    country_code CHAR(2)      NOT NULL,
+    label        VARCHAR(150),
+    payload      JSON         NOT NULL,
+    created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_snapshots PRIMARY KEY (snapshot_id),
+    CONSTRAINT fk_snapshots_user
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    INDEX idx_snapshots_user (user_id)
+);
+
+-- Journalist — private notes tied to a country (optional) or general notes
+CREATE TABLE IF NOT EXISTS notes (
+    note_id      INT           NOT NULL AUTO_INCREMENT,
+    user_id      INT           NOT NULL,
+    country_code CHAR(2),
+    content      VARCHAR(2000) NOT NULL,
+    context      JSON,
+    created_at   DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at   DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT pk_notes PRIMARY KEY (note_id),
+    CONSTRAINT fk_notes_user
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    INDEX idx_notes_user (user_id)
+);
+```
+
+### 05_price_prediction.sql
+
+```sql
+-- =============================================================
+-- PRICE PREDICTION — journalist Price Forecast page
+-- Daily prices: seeded from datasets/entsoe/data/clean/prices_daily_ALL.csv
+-- Model weights: seeded from datasets/entsoe/models/lr_price_forecast_ALL.pkl
+--                and      datasets/entsoe/models/lr_scaler_params_ALL.json
+-- =============================================================
+USE Zeus;
+-- Daily electricity prices for all countries (source: ENTSO-E)
+CREATE TABLE IF NOT EXISTS price_daily (
+    price_id          BIGINT        NOT NULL AUTO_INCREMENT,
+    price_date        DATE          NOT NULL,
+    country           CHAR(2)       NOT NULL,
+    avg_price_eur_mwh DOUBLE        NOT NULL,
+    CONSTRAINT pk_price_daily PRIMARY KEY (price_id),
+    CONSTRAINT uq_price_daily_date_country UNIQUE (price_date, country),
+    INDEX idx_price_daily_country_date (country, price_date)
+);
+
+-- Linear regression weights stored as a single wide row, one column per feature.
+CREATE TABLE IF NOT EXISTS price_model_weights (
+    model_id                INT    NOT NULL AUTO_INCREMENT,
+    intercept               DOUBLE NOT NULL,
+    weight_lag_1            DOUBLE, weight_lag_2            DOUBLE, weight_lag_3            DOUBLE,
+    weight_lag_4            DOUBLE, weight_lag_5            DOUBLE, weight_lag_6            DOUBLE,
+    weight_lag_7            DOUBLE,
+    weight_rolling_7d_mean  DOUBLE, weight_rolling_30d_mean DOUBLE,
+    weight_rolling_7d_std   DOUBLE, weight_price_vs_7d_avg  DOUBLE,
+    weight_month_2          DOUBLE, weight_month_3          DOUBLE, weight_month_4          DOUBLE,
+    weight_month_5          DOUBLE, weight_month_6          DOUBLE, weight_month_7          DOUBLE,
+    weight_month_8          DOUBLE, weight_month_9          DOUBLE, weight_month_10         DOUBLE,
+    weight_month_11         DOUBLE, weight_month_12         DOUBLE,
+    weight_dow_1            DOUBLE, weight_dow_2            DOUBLE, weight_dow_3            DOUBLE,
+    weight_dow_4            DOUBLE, weight_dow_5            DOUBLE, weight_dow_6            DOUBLE,
+    weight_country_BE       DOUBLE, weight_country_BG       DOUBLE, weight_country_CZ       DOUBLE,
+    weight_country_DE       DOUBLE, weight_country_ES       DOUBLE, weight_country_FR       DOUBLE,
+    weight_country_HR       DOUBLE, weight_country_HU       DOUBLE, weight_country_LV       DOUBLE,
+    weight_country_NL       DOUBLE, weight_country_PL       DOUBLE, weight_country_PT       DOUBLE,
+    weight_country_RO       DOUBLE, weight_country_SK       DOUBLE,
+    CONSTRAINT pk_price_model_weights PRIMARY KEY (model_id)
+);
+
+-- Model means and st. devs
+CREATE TABLE IF NOT EXISTS price_model_scaler (
+    scaler_id       INT NOT NULL AUTO_INCREMENT,
+    feature_name    VARCHAR(50) NOT NULL,
+    feature_mean    DOUBLE NOT NULL,
+    feature_std     DOUBLE NOT NULL,
+    CONSTRAINT pk_price_model_scaler PRIMARY KEY (scaler_id)
+);
+
+```
+
+### 07_energy_trader_schema.sql
+
+```sql
+-- =============================================================
+-- ENERGY TRADER (persona 3) — watchlist, price alerts, trade journal
+-- Matches: 52_My_Markets.py, 53_Trade_Journal.py
+-- Price forecast ML1 data lives in 05_price_prediction.sql
+-- =============================================================
+USE Zeus;
+-- Bidding zones the trader is actively watching (My Markets watchlist)
+CREATE TABLE IF NOT EXISTS trader_watchlist (
+    watchlist_id INT      NOT NULL AUTO_INCREMENT,
+    user_id      INT      NOT NULL,
+    country_code CHAR(2)  NOT NULL,
+    added_at     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_trader_watchlist PRIMARY KEY (watchlist_id),
+    CONSTRAINT uq_trader_watchlist_user_country UNIQUE (user_id, country_code),
+    CONSTRAINT fk_trader_watchlist_user
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    INDEX idx_trader_watchlist_user (user_id)
+);
+
+-- Per-zone forecast threshold alerts (My Markets price alerts)
+CREATE TABLE IF NOT EXISTS trader_price_alerts (
+    alert_id     INT                              NOT NULL AUTO_INCREMENT,
+    user_id      INT                              NOT NULL,
+    country_code CHAR(2)                          NOT NULL,
+    threshold    DECIMAL(10, 2)                   NOT NULL,
+    direction    ENUM('above', 'below')           NOT NULL,
+    created_at   DATETIME                         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at   DATETIME                         NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT pk_trader_price_alerts PRIMARY KEY (alert_id),
+    CONSTRAINT uq_trader_price_alerts_user_country UNIQUE (user_id, country_code),
+    CONSTRAINT fk_trader_price_alerts_user
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    INDEX idx_trader_price_alerts_user (user_id)
+);
+
+-- Trade journal entries — forecast calls, rationale, and outcome annotation
+CREATE TABLE IF NOT EXISTS trader_trade_notes (
+    note_id        INT                                           NOT NULL AUTO_INCREMENT,
+    user_id        INT                                           NOT NULL,
+    trade_date     DATE                                          NOT NULL,
+    country_code   CHAR(2)                                       NOT NULL,
+    direction      ENUM('Long', 'Short', 'Hedge')                NOT NULL,
+    forecast_call  VARCHAR(300),
+    note           TEXT,
+    outcome        ENUM('Pending', 'Forecast correct', 'Forecast wrong')
+                   NOT NULL DEFAULT 'Pending',
+    outcome_note   VARCHAR(500),
+    created_at     DATETIME                                      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at     DATETIME                                      NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT pk_trader_trade_notes PRIMARY KEY (note_id),
+    CONSTRAINT fk_trader_trade_notes_user
+        FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    INDEX idx_trader_trade_notes_user_date (user_id, trade_date)
+);
+
+```
+
 ## Relational Database Diagram
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
-  {{< siteimg class="er-thumb" data-target="dlg-database" src="images/diagrams/Database_Diagram.png" alt="Relational database diagram" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Relational database diagram — click to enlarge, press Esc to close</figcaption>
+
+The final schema splits into two layers: **core identity and persona features** (everything keyed off `users`) and **model and time-series tables** (trained weights, scaler parameters, and the historical data the API reads at prediction time).
+
+### Core identity and persona features
+
+<figure style="margin: 1.5rem 0;">
+  {{< siteimg class="er-thumb" data-target="dlg-db-core" src="images/phase4/db_core_persona.png" alt="Database schema — users and persona feature tables" style="width: 100%; display: block; cursor: zoom-in;" >}}
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 10: Core identity and persona features (users hub with household profiles, trader watchlists, alerts, trade notes, saved articles, snapshots, and notes) — click to enlarge, press Esc to close</figcaption>
+</figure>
+
+### Model and time-series tables
+
+<figure style="margin: 1.5rem 0;">
+  {{< siteimg class="er-thumb" data-target="dlg-db-model" src="images/phase4/db_model_tables.png" alt="Database schema — price and gas storage model tables" style="width: 100%; display: block; cursor: zoom-in;" >}}
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 11: Model and time-series tables (price weights/scaler, daily price and storage history, gas storage model, and winter feature rows) — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 ## UI wireframes
@@ -420,45 +641,45 @@ These are our initial wireframes for the landing page and persona-specific app v
 The layouts and interactions are expected to evolve as development continues.
 
 ### Home Page
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-home" src="images/diagrams/Home_Page.png" alt="Home page wireframe" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Home page — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 12: Home page wireframe — landing page and persona selection — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 ### Household Owner – View 1
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-household1" src="images/diagrams/Household_View1.png" alt="Household Owner wireframe — View 1" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Household Owner — View 1 — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 13: Household Owner wireframe — View 1 — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 ### Household Owner – View 2
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-household2" src="images/diagrams/Household_View2.png" alt="Household Owner wireframe — View 2" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Household Owner — View 2 — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 14: Household Owner wireframe — View 2 — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 ### Journalist – View 1
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-journalist1" src="images/diagrams/Journalist_View1.png" alt="Journalist wireframe — View 1" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Journalist — View 1 — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 15: Journalist wireframe — View 1 — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 ### Journalist – View 2
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-journalist2" src="images/diagrams/Journalist_View2.png" alt="Journalist wireframe — View 2" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Journalist — View 2 — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 16: Journalist wireframe — View 2 — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 ### Policy Analyst – View 1
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-policy1" src="images/diagrams/Policy_AnalystView1.png" alt="Policy Analyst wireframe — View 1" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Policy Analyst — View 1 — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 17: Policy Analyst wireframe — View 1 — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 ### Policy Analyst – View 2
-<figure style="margin: 1.5rem 0 1.5rem -6rem;">
+<figure style="margin: 1.5rem 0;">
   {{< siteimg class="er-thumb" data-target="dlg-policy2" src="images/diagrams/PolicyAnalystView2.png" alt="Policy Analyst wireframe — View 2" style="width: 100%; display: block; cursor: zoom-in;" >}}
-  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Policy Analyst — View 2 — click to enlarge, press Esc to close</figcaption>
+  <figcaption style="margin-top: 0.45rem; font-size: 0.78rem; text-align: center;">Figure 18: Policy Analyst wireframe — View 2 — click to enlarge, press Esc to close</figcaption>
 </figure>
 
 <dialog id="dlg-full" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
@@ -516,9 +737,14 @@ The layouts and interactions are expected to evolve as development continues.
   {{< siteimg src="images/diagrams/PolicyAnalystView2.png" alt="Policy Analyst wireframe — View 2 (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
 </dialog>
 
-<dialog id="dlg-database" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
+<dialog id="dlg-db-core" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
   <div style="position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); color: white; font-size: 0.85rem; background: rgba(0,0,0,0.6); padding: 0.4rem 0.9rem; border-radius: 9999px; pointer-events: none;">Press <kbd style="background: white; color: black; padding: 0.05rem 0.4rem; border-radius: 0.25rem; font-family: inherit;">Esc</kbd> to close</div>
-  {{< siteimg src="images/diagrams/Database_Diagram.png" alt="Relational database diagram (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
+  {{< siteimg src="images/phase4/db_core_persona.png" alt="Core identity and persona features (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
+</dialog>
+
+<dialog id="dlg-db-model" class="er-dialog" style="padding: 0; border: none; background: rgba(0,0,0,0.92); max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh;">
+  <div style="position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); color: white; font-size: 0.85rem; background: rgba(0,0,0,0.6); padding: 0.4rem 0.9rem; border-radius: 9999px; pointer-events: none;">Press <kbd style="background: white; color: black; padding: 0.05rem 0.4rem; border-radius: 0.25rem; font-family: inherit;">Esc</kbd> to close</div>
+  {{< siteimg src="images/phase4/db_model_tables.png" alt="Model and time-series tables (enlarged)" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; padding: 2rem;" >}}
 </dialog>
 
 <script>

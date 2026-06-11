@@ -11,6 +11,8 @@ showTableOfContents: true
 
 # Phase IV — Team Update
 
+This is the final post in our project dialogue. Over the past weeks we moved from concept and data pipelines through model training, API integration, and persona-specific UI. In this post we document where Zeus stands at the end of the project.
+
 ## Project Recap
 
 Energy security matters to everyone, but the data needed to understand it is scattered across fragmented official sources: ENTSO-E for electricity, GIE for gas storage, and Eurostat for the wider picture. Zeus pulls those signals into a single platform and turns raw European energy data into country-level insight, including day-ahead electricity price forecasts, gas-storage stress relative to historical norms, import dependence, and how each country compares to its neighbors. The goal is to surface the conditions that precede a supply shock, not just report one after it happens.
@@ -117,19 +119,19 @@ The easiest way to see how it fits together is to follow one request. A trader p
 
 ## Final Database Model
 
-<!--
-- Present the final set of tables, grouped into:
-  - Core / identity (Users, Persona, profiles)
-  - Persona features (watchlists, alerts, saved articles, household profiles, etc.)
-  - Model tables (price model weights/scaler, storage model, daily price/storage)
-- Note primary keys and foreign keys that tie the groups together.
-- Explain the "model lives in the DB" decision: why trained model parameters are
-  stored as rows rather than as files, and what that buys the architecture.
-- Reference / embed the final ER + relational diagrams (already on Phase II,
-  updated here if changed).
--->
+The schema splits into two layers: **core identity and persona features** (everything keyed off `users`) and **model and time-series tables** (trained weights, scaler parameters, and the historical data the API reads at prediction time). Trained model parameters live in the database as rows rather than pickle files so the Flask API can load weights and scaler values with a simple query and serve predictions without a separate model artifact pipeline. Our updated schema is shown below, and to see the updated ER diagrams and SQL code you can refer back to our [Phase II Team Update](/team_posts/phase2post/), which contains more of this information.
 
-_TODO: table groupings (core/identity, persona features, model tables), keys/FKs, and the "model lives in the DB" rationale._
+### Core identity and persona features
+
+`users` is the hub: each row carries `user_id`, display name, persona type (`household_owner`, `journalist`, or `energy_trader`), and basic profile fields. Every persona-specific table hangs off `user_id` as a foreign key. Household owners get `household_profiles` (utility, bill amount, billing frequency, tariff, usage). Journalists get `saved_articles`, `snapshots` (labeled country state captures with JSON payloads), and general `notes`. Energy traders get `trader_watchlist` (countries they follow), `trader_price_alerts` (threshold and direction), and `trader_trade_notes` (forecast calls, direction, and outcome tracking).
+
+{{< siteimg src="images/phase4/db_core_persona.png" alt="Database schema — users and persona feature tables" width="700" caption="Figure 1: Core identity and persona features (users hub with household profiles, trader watchlists, alerts, trade notes, saved articles, snapshots, and notes)" >}}
+
+### Model and time-series tables
+
+The second group holds what the API needs to run ML1 and ML2 at request time. `price_daily` and `gas_storage_daily` store the historical ENTSO-E and GIE AGSI series the routes query for charts and lag features. `price_model_weights` and `price_model_scaler` hold the exported linear-regression coefficients and StandardScaler means/stds (42 features total — the screenshot shows the first columns; lag weights, rolling stats, month dummies, day-of-week dummies, and country one-hot weights continue in the same table). `gas_storage_model` stores the logistic-regression intercept, feature weights, and standardization parameters for the winter stress classifier. `gas_storage_winters` holds one row per country-winter with the precomputed features and stress labels used for charts, slider defaults, and ranking.
+
+{{< siteimg src="images/phase4/db_model_tables.png" alt="Database schema — price and gas storage model tables" width="700" caption="Figure 2: Model and time-series tables (price weights/scaler, daily price and storage history, gas storage model, and winter feature rows)" >}}
 
 
 ## Individual posts
