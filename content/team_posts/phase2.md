@@ -21,6 +21,57 @@ Since our last update we have had a couple of changes to our project based on th
 - We redrafted our project description based on the feedback from our previous update, which is shown on our team posts landing page as well as at the top of this blog post. The main changes had to do with making it more action-oriented and redefining the solution as more than just a single dashboard.
 - API access to ENTSO-E was granted last week, which allowed us to pull in data and clean it directly rather than relying solely on CSV downloads.
 
+## User personas
+
+We refined Lena and Marco against the flows we actually built in Phase III (saved preferences, spend input, forecast API, country snapshots, etc.). Sofia remains in scope for later phases; this update centers on household and journalist delivery.
+
+### Persona 1 — Household Owner
+
+{{< persona name="Lena Müller" role="Household Owner" age="30" location="Hamburg, Germany" initials="LM" type="household" photo="images/team/Lena.jpg" >}}
+Since Phase I, Lena's persona has been grounded in a concrete billing intake flow. She now enters her utility provider, monthly bill amount, tariff type, and billing cycle dates through a profile form on her dashboard. This gives the dashboard enough context to count down to her next payment due date and frame the 30-day electricity price forecast directly against what she is currently paying. The plain-language summary remains central to her experience — she has no economics background and needs the forecast translated into a simple contract decision.
+
+**User stories**
+
+1. As Lena, I want to see how electricity prices in Germany are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
+2. As Lena, I want to see how current gas storage levels compare to recent winters, so I can judge whether the upcoming winter is likely to be a high-bill season.
+3. As Lena, I want a plain-language summary of the forecast, so I can understand what is driving the prediction without an economics background.
+4. As Lena, I want to compare Germany's situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
+
+{{< /persona >}}
+
+---
+
+### Persona 2 — Energy Journalist
+
+{{< persona name="Marco Frite" role="Energy Journalist" age="30" location="Brussels, Belgium" initials="MF" type="journalist" photo="images/team/marco.jpg" >}}
+Since Phase I, Marco's persona has been sharpened around two problems: the need to cite figures accurately at a specific point in time, and the need to track story leads without losing context between sessions. The country snapshot feature addresses the first — Marco can freeze a country's indicators and ML outputs as a timestamped record rather than relying on whatever the dashboard shows at publication time. Saved notes address the second by offering the ability to attach notes to any data visualization, and edit or delete them as a story develops or goes cold.
+
+**User stories**
+
+1. As Marco, I want current electricity prices, gas storage, and import dependence for each EU country in one place, so I can gather facts without bouncing between five sources.
+2. As Marco, I want to compare a country's indicators to its neighbors, so I know which countries deserve attention in a story.
+3. As Marco, I want a country snapshot I can screenshot or export, so figures in my article stay accurate without manual copy-paste.
+4. As Marco, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
+
+{{< /persona >}}
+
+---
+
+### Persona 3 — Energy Trader
+
+{{< persona name="Niels Becker" role="Energy Trader" age="34" location="Amsterdam, Netherlands" initials="NB" type="trader" photo="images/team/niels.jpg" >}}
+Niels trades electricity on the EPEX day-ahead market from a desk in Amsterdam. He positions his book 24 to 72 hours out and uses the 30-day price forecast as a directional input to that process. He works fast, trusts quantitative outputs, and keeps a running log of the decisions he makes against the data he acted on so he can evaluate forecast quality over time. Unlike Lena, who checks prices a few times a year, Niels interacts with the forecast daily and needs the dashboard scoped tightly to the markets he is actively trading.
+
+**User stories**
+
+1. As Niels, I want to manage a watchlist of bidding zones so my dashboard shows only the markets I am actively trading, without noise from the full EU view.
+2. As Niels, I want to see the 30-day price forecast and gas storage stress risk score side by side for each watched zone, so I can assess both the price direction and the supply-side risk driving it in one view.
+3. As Niels, I want to set a price alert on a bidding zone so the dashboard flags me when the forecast crosses a threshold I define, without me having to check manually throughout the day.
+5. As Niels, I want to add a post-trade outcome annotation to a past trade note, so I can record whether the forecast called it correctly and build a personal track record over time.
+6. As Niels, I want to browse my trade note history filtered by bidding zone and date range, so I can review patterns in how I have been responding to the forecast across different markets.
+
+{{< /persona >}}
+
 ## Real data curation
  
 ### ML 1
@@ -46,31 +97,41 @@ Since our last update we have had a couple of changes to our project based on th
 ## Data visualizations
 ### ML 1
 
-{{< siteimg src="images/charts/price_history_DEcopy.png" alt="Germany Day Ahead Electricity Prices" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/CS4973-Belgium/interactive_charts/price_history_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **EDA Chart 1: Germany Day Ahead Electricty Prices**
 
 Shows how prices evolved continuously over time. Prices held steady around 50–100 EUR/MWh through 2021, spiked to 699 EUR/MWh during the 2022 Ukraine invasion period, then normalized to 75–150 EUR/MWh through 2026, confirming that the current environment is not historically unusual.
 
-{{< siteimg src="images/charts/seasonality_DEcopy.png" alt="Avg Electricity Price by Month" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/CS4973-Belgium/interactive_charts/seasonality_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **EDA Chart 2: Average Electricty Price by Month**
 
 Compares monthly averages as discrete categories. Summer months (July–September) average 125–160 EUR/MWh while spring (April–May) is cheapest at ~90 EUR/MWh. Note: these figures are inflated by the 2022 crisis peak.
 
-{{< siteimg src="images/charts/yoy_comparison_DEcopy.png" alt="Monthly Avg Price per Year" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/CS4973-Belgium/interactive_charts/yoy_comparison_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **EDA Chart 3: Monthly Average Price pper Year**
 
 Overlays each year's monthly trajectory for direct comparison. 2022 is a clear outlier peaking at 460 EUR/MWh, while all other years cluster tightly in the 60–130 EUR/MWh range. This answers Marco's question that the current moment is not historically unusual.
 
-{{< siteimg src="images/charts/lr_predictions_DEcopy.png" alt="Linear Regression Prediction vs Actual" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/CS4973-Belgium/interactive_charts/lr_predictions_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **ML1 Chart 1: Linear Regression Prediction vs Actual**
 
 Directly evaluates model performance on unseen data. The model tracks the general trend and weekly cycles  across the February–May 2026 test period, with the main weakness being sudden sharp drops. Our R² = 0.265, so the model explains ~27% of the variance. Adjusting this model is somethng we must focus on in Phase 3, along with adding the possibility of selecting other countries for this model, and not Germany alone.
 
-{{< siteimg src="images/charts/lr_coefficients_DEcopy.png" alt="Linear Regression Coefficients" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/CS4973-Belgium/interactive_charts/lr_coefficients_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **ML1 Chart 2: Linear Regression Coefficients**
 
@@ -85,11 +146,6 @@ Shows which features drive the forecast. `lag_1` dominates by a wide margin, con
 - Features include lag prices from 1, 2, 3, 7, 14, and 30 days prior, 7-day and 30-day rolling averages, and calendar features (month, day of week, year) — all normalized with StandardScaler before training
 - Deliberately more complex than a neighborhood-based (kNN) model as required by the assignment, using learned linear weights across 11 engineered features rather than simple distance-based lookup
 - Trained on 2021–May 2026 real ENTSO-E data, with the last 90 days held out as a test set
-
-**The plan for two models:** 
-you'll ultimately have at least two models on real data;
-  parts not yet on real data (like the day-ahead price forecast) currently use simulated
-  data, which is allowed for this phase.
 
 **How well it worked:** 
 - On the 90-day test set (roughly February–May 2026), the model tracked the general price trend closely and correctly captured weekly cycles — prices consistently dipping on weekends and recovering on weekdays — confirming it learned real market patterns
@@ -203,7 +259,7 @@ If a full start guaranteed a safe winter, then no model would be needed.
 
 - The random forest still gave us a useful ranking of what matters. Storage at the start of winter was the strongest signal, followed by the 30-day storage trend and storage volatility.
 
-### ML Chart 1: A Full Tank Does Not Mean a Safe Winter
+### ML Chart 2: A Full Tank Does Not Mean a Safe Winter
 
 - Our first ML chart is a horizontal bar chart of feature importance from the trained random forest. It shows how much each variable contributed to the model’s predictions. The biggest driver was `storage_at_start`, which shows how full storage is when winter begins. The less obvious signals were `storage_trend_30d` and `storage_volatility`, which the model also picked up on.
 
@@ -212,10 +268,7 @@ If a full start guaranteed a safe winter, then no model would be needed.
 ## Difficulties
 
 - One difficulty was working with the AGSI API. API rate limits and occasional server issues required us to build a retry loop with backoff to collect data for all 17 countries.
-
-- Another difficulty was that the “stress” label is only a proxy for supply-shock risk. It is useful for our policy analyst persona because it flags risky winters, but it is not a perfect measure of energy insecurity.
-
-- The dataset is also small, with only around 200 rows. This limits how much we can trust more complex models because they are more likely to overfit. Our current features are storage-only, which also limits the model’s ability to explain why a winter becomes risky.
+- Standardizing the data and three inputs as they were on largely different scales
 
 ## What’s Left
 
