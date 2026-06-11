@@ -51,9 +51,7 @@ In Phase 4, we focused on finalizing the implementation of the website. We rewor
 ## ML #2 — Winter Gas-Storage Stress
 
 ### The model
-- A **logistic regression** that predicts, before winter starts, whether a country's gas storage will drop **below 30%** during the winter — our "stress" label.
-- Trained on **GIE AGSI** gas-storage data, aggregated to **one row per country per winter**.
-- Outputs a **risk probability** (0–1) through the sigmoid function.
+- A logistic regression that predicts before winter starts, whether a country's gas storage will drop below 30 during the winter (the "stress" level)
 
 ### What changed this phase
 - **Added an interaction term** — `storage_volatility × storage_at_start` — so volatility's effect on risk now depends on how full storage is entering winter, instead of being a flat, one-directional linear term.
