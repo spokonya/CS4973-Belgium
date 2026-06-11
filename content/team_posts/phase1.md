@@ -26,7 +26,7 @@ Phase I outcome :: Project concept, personas, data-source plan, and feature scop
 
 ## Project description
 
-Energy security is extremely important for countries across the world. Having sufficient information regarding energy on a country by country view could help make critical policy decisions based on energy. A dashboard that could make it easy to see information on different European Union countries could display which countries are most dependent on energy imports and which ones are at the greatest risk in case of an energy supply shock. This could help policy analysts and government officials in making policy decisions regarding energy security for their country. It could also assist journalists writing about energy policy and citizens looking to understand their energy bills. We want to build this for our project and include information like each country's dependence on others for energy imports, their current gas storage level vs historical norms, an electricity price forecast, a risk score in case of a supply shock, and how each country compares to its neighbors. We would use machine learning for predicting the electricity prices of the countries and classifying each country’s vulnerability to a supply shock.
+Energy security is a major concern for countries across the world, especially in Europe, where many countries depend heavily on imported gas and have faced price spikes and supply uncertainty in recent years. The problem is that the information needed to understand a country's energy situation like its gas storage levels, electricity prices, and how vulnerable it is to a supply shock is spread across different sources and is hard for non-experts to interpret. This makes it difficult for policymakers, journalists, and everyday citizens to quickly see which countries are most at risk and how they compare to one another. Our project addresses this by building a single dashboard that brings this data together for European Union countries and uses machine learning to forecast electricity prices and estimate each country's risk of a winter gas supply shock, so users can understand and compare energy security at a glance.
 
 ### Why now
 
@@ -78,7 +78,7 @@ He writes two to three articles a week. He needs country-level energy facts quic
 4. As a journalist, Marco, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
 {{< /persona >}}
 
-### Persona 3 — Policy Analyst
+### Persona 3 - Policy Analyst
 
 {{< persona name="Sofia Anderson" role="Policy Analyst" age="47" location="Brussels, Belgium" initials="SA" type="policy" photo="images/team/sofia.jpg" >}}
 Senior researcher writing memos. She needs to identify vulnerable member states and model supply-shock scenarios for briefing memos. for MEPs and national energy councils. Comfortable with models and needs exportable, defensible comparisons—not headline noise.
