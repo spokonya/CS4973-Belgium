@@ -59,10 +59,10 @@ Her electric bill is about 180 euros per month. She wants to anticipate bill cha
 
 **User stories**
 
-1. As Lena, I want to see how electricity prices in Germany are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
-2. As Lena, I want to see how current gas storage levels compare to recent winters, so I can judge whether the upcoming winter is likely to be a high-bill season.
-3. As Lena, I want a plain-language summary of the forecast, so I can understand what is driving the prediction without an economics background.
-4. As Lena, I want to compare Germany's situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
+1. As a houshold owner, Lena, I want to see how electricity prices in Germany are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
+2. As a houshold owner, Lena, I want to see how current gas storage levels compare to recent winters, so I can judge whether the upcoming winter is likely to be a high-bill season.
+3. As a houshold owner, Lena, I want a plain-language summary of the forecast, so I can understand what is driving the prediction without an economics background.
+4. As a houshold owner, Lena, I want to compare Germany's situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
 {{< /persona >}}
 
 ### Persona 2 — Energy Journalist
@@ -72,10 +72,10 @@ He writes two to three articles a week. He needs country-level energy facts quic
 
 **User stories**
 
-1. As Marco, I want current electricity prices, gas storage, and import dependence for each EU country in one place, so I can gather facts without bouncing between five sources.
-2. As Marco, I want to compare a country's indicators to its neighbors, so I know which countries deserve attention in a story.
-3. As Marco, I want a country snapshot I can screenshot or export, so figures in my article stay accurate without manual copy-paste.
-4. As Marco, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
+1. As a journalist, Marco, I want current electricity prices, gas storage, and import dependence for each EU country in one place, so I can gather facts without bouncing between five sources.
+2. As a journalist, Marco, I want to compare a country's indicators to its neighbors, so I know which countries deserve attention in a story.
+3. As a journalist, Marco, I want a country snapshot I can screenshot or export, so figures in my article stay accurate without manual copy-paste.
+4. As a journalist, Marco, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
 {{< /persona >}}
 
 ### Persona 3 — Policy Analyst
@@ -85,10 +85,10 @@ Senior researcher writing memos. She needs to identify vulnerable member states 
 
 **User stories**
 
-1. As Sofia, I want to rank EU countries by winter stress risk, so I can prioritize which member states need attention in briefings.
-2. As Sofia, I want to adjust gas storage and weather scenarios by country, so I can model different supply-shock conditions for policymakers.
-3. As Sofia, I want to see which features drive each country's risk score, so I can tie recommendations to evidence.
-4. As Sofia, I want to export country comparison data, so I can drop tables into memos and presentations without retyping numbers.
+1. As a policy analyst, Sofia, I want to rank EU countries by winter stress risk, so I can prioritize which member states need attention in briefings.
+2. As a policy analyst, Sofia, I want to adjust gas storage and weather scenarios by country, so I can model different supply-shock conditions for policymakers.
+3. As a policy analyst, Sofia, I want to see which features drive each country's risk score, so I can tie recommendations to evidence.
+4. As a policy analyst, Sofia, I want to export country comparison data, so I can drop tables into memos and presentations without retyping numbers.
 {{< /persona >}}
 
 ## Data Sources
