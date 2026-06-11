@@ -203,7 +203,7 @@ If a full start guaranteed a safe winter, then no model would be needed.
 
 - The random forest still gave us a useful ranking of what matters. Storage at the start of winter was the strongest signal, followed by the 30-day storage trend and storage volatility.
 
-### ML Chart 1: A Full Tank Does Not Mean a Safe Winter
+### ML Chart 2: A Full Tank Does Not Mean a Safe Winter
 
 - Our first ML chart is a horizontal bar chart of feature importance from the trained random forest. It shows how much each variable contributed to the model’s predictions. The biggest driver was `storage_at_start`, which shows how full storage is when winter begins. The less obvious signals were `storage_trend_30d` and `storage_volatility`, which the model also picked up on.
 
@@ -212,10 +212,7 @@ If a full start guaranteed a safe winter, then no model would be needed.
 ## Difficulties
 
 - One difficulty was working with the AGSI API. API rate limits and occasional server issues required us to build a retry loop with backoff to collect data for all 17 countries.
-
-- Another difficulty was that the “stress” label is only a proxy for supply-shock risk. It is useful for our policy analyst persona because it flags risky winters, but it is not a perfect measure of energy insecurity.
-
-- The dataset is also small, with only around 200 rows. This limits how much we can trust more complex models because they are more likely to overfit. Our current features are storage-only, which also limits the model’s ability to explain why a winter becomes risky.
+- Standardizing the data and three inputs as they were on largely different scales
 
 ## What’s Left
 

@@ -33,12 +33,12 @@ Since Phase I, Lena's persona has been grounded in a concrete billing intake flo
 
 **User stories**
 
-1. As Lena, I want to see how electricity prices in Germany are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
-2. As Lena, I want to see how current gas storage levels compare to recent winters, so I can judge whether the upcoming winter is likely to be a high-bill season.
-3. As Lena, I want a plain-language summary of the forecast, so I can understand what is driving the prediction without an economics background.
-4. As Lena, I want to compare Germany's situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
-5. **[NEW]** As Lena, I want to enter my billing cycle dates, monthly rate, and tariff type so the dashboard can show me a countdown to my next payment and flag whether the forecast suggests prices will be higher or lower by then.
-6. **[NEW]** As Lena, I want to save news articles about EU energy to a personal reading list, so I can review them later before making a contract decision.
+1. As a Household Owner, Lena, I want to see how electricity prices in Germany are forecast to move over the next 30 days, so I can decide whether to lock in a fixed-rate contract now or wait.
+2. As a Household Owner, Lena, I want to see how current gas storage levels compare to recent winters, so I can judge whether the upcoming winter is likely to be a high-bill season.
+3. As a Household Owner, Lena, I want a plain-language summary of the forecast, so I can understand what is driving the prediction without an economics background.
+4. As a Household Owner, Lena, I want to compare Germany's situation to its neighbors, so I can tell whether price pressure is local or EU-wide.
+5. **[NEW]** As a Household Owner, Lena, I want to enter my billing cycle dates, monthly rate, and tariff type so the dashboard can show me a countdown to my next payment and flag whether the forecast suggests prices will be higher or lower by then.
+6. **[NEW]** As a Household Owner, Lena, I want to save news articles about EU energy to a personal reading list, so I can review them later before making a contract decision.
 {{< /persona >}}
 
 ---
@@ -50,13 +50,13 @@ Since Phase I, Marco's persona has been sharpened around two problems: the need 
 
 **User stories**
 
-1. As Marco, I want current electricity prices, gas storage, and import dependence for each EU country in one place, so I can gather facts without bouncing between five sources.
-2. As Marco, I want to compare a country's indicators to its neighbors, so I know which countries deserve attention in a story.
-3. As Marco, I want a country snapshot I can screenshot or export, so figures in my article stay accurate without manual copy-paste.
-4. As Marco, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
-5. **[NEW]** As Marco, I want to save a country's indicators and model outputs as a timestamped snapshot, so the figures I cite in an article reflect the data as it was when I checked
-6. **[NEW]** As Marco, I want to annotate a data point with a private note flagging why it looks newsworthy
-7. **[NEW]** As Marco, I want to browse, edit, and delete my notes, so I can track which leads I have already investigated and which are still open.
+1. As an Energy Journalist, Marco, I want current electricity prices, gas storage, and import dependence for each EU country in one place, so I can gather facts without bouncing between five sources.
+2. As an Energy Journalist, Marco, I want to compare a country's indicators to its neighbors, so I know which countries deserve attention in a story.
+3. As an Energy Journalist, Marco, I want a country snapshot I can screenshot or export, so figures in my article stay accurate without manual copy-paste.
+4. As an Energy Journalist, Marco,, I want to compare today's prices and risk score to the same date in prior years, so I can frame whether the moment is historically unusual.
+5. **[NEW]** As an Energy Journalist, Marco, I want to save a country's indicators and model outputs as a timestamped snapshot, so the figures I cite in an article reflect the data as it was when I checked
+6. **[NEW]** As an Energy Journalist, Marco, I want to annotate a data point with a private note flagging why it looks newsworthy
+7. **[NEW]** As an Energy Journalist, Marco, I want to browse, edit, and delete my notes, so I can track which leads I have already investigated and which are still open.
 {{< /persona >}}
 
 ---
@@ -68,11 +68,11 @@ Niels trades electricity on the EPEX day-ahead market from a desk in Amsterdam. 
 
 **User stories**
 
-1. As Niels, I want to manage a watchlist of bidding zones so my dashboard shows only the markets I am actively trading, without noise from the full EU view.
-2. As Niels, I want to see the 30-day price forecast and gas storage stress risk score side by side for each watched zone, so I can assess both the price direction and the supply-side risk driving it in one view.
-3. As Niels, I want to set a price alert on a bidding zone so the dashboard flags me when the forecast crosses a threshold I define, without me having to check manually throughout the day.
-5. As Niels, I want to add a post-trade outcome annotation to a past trade note, so I can record whether the forecast called it correctly and build a personal track record over time.
-6. As Niels, I want to browse my trade note history filtered by bidding zone and date range, so I can review patterns in how I have been responding to the forecast across different markets.
+1. As an Energy Trader, Niels, I want to manage a watchlist of bidding zones so my dashboard shows only the markets I am actively trading, without noise from the full EU view.
+2. As an Energy Trader, Niels I want to see the 30-day price forecast and gas storage stress risk score side by side for each watched zone, so I can assess both the price direction and the supply-side risk driving it in one view.
+3. As an Energy Trader, Niels, I want to set a price alert on a bidding zone so the dashboard flags me when the forecast crosses a threshold I define, without me having to check manually throughout the day.
+5. As an Energy Trader, Niels I want to add a post-trade outcome annotation to a past trade note, so I can record whether the forecast called it correctly and build a personal track record over time.
+6. As an Energy Trader, Niels I want to browse my trade note history filtered by bidding zone and date range, so I can review patterns in how I have been responding to the forecast across different markets.
 
 {{< /persona >}}
 
