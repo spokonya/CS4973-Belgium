@@ -34,7 +34,7 @@ In Phase 4, we focused on finalizing the implementation of the website. We rewor
 ## ML #1 — Electricity Price Forecast
 
 ### The model
-- A linear regression that forecasts daily electricity prices 30 days forward for 15 EU countries (AT, BE, BG, CZ, DE, ES, FR, HR, HU, LV, NL, PL, PT, RO, SK), trained on ENTSO-E day-ahead price data from January 2021. through May 2026. It uses 7 daily lags (`lag_1` through `lag_8`), rolling 7-day mean, 30-day mean, 7-day standard deviation, and price vs 7-day average ratio as rolling statistics, plus one-hot encoded month (drop_first drops January), day of week (drop_first drops Monday), and country (drop_first drops Austria) dummies — 42 features total, all standardized with StandardScaler.
+A linear regression that forecasts daily electricity prices 30 days forward for 15 EU countries (AT, BE, BG, CZ, DE, ES, FR, HR, HU, LV, NL, PL, PT, RO, SK), trained on ENTSO-E day-ahead price data from January 2021. through May 2026. It uses 7 daily lags (`lag_1` through `lag_8`), rolling 7-day mean, 30-day mean, 7-day standard deviation, and price vs 7-day average ratio as rolling statistics, plus one-hot encoded month (drop_first drops January), day of week (drop_first drops Monday), and country (drop_first drops Austria) dummies — 42 features total, all standardized with StandardScaler.
 
 ### What changed this phase
 - The model itself did not change
