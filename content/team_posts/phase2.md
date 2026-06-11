@@ -105,25 +105,33 @@ Niels trades electricity on the EPEX day-ahead market from a desk in Amsterdam. 
 
 Shows how prices evolved continuously over time. Prices held steady around 50–100 EUR/MWh through 2021, spiked to 699 EUR/MWh during the 2022 Ukraine invasion period, then normalized to 75–150 EUR/MWh through 2026, confirming that the current environment is not historically unusual.
 
-{{< siteimg src="images/charts/seasonality_DEcopy.png" alt="Avg Electricity Price by Month" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/CS4973-Belgium/interactive_charts/seasonality_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **EDA Chart 2: Average Electricty Price by Month**
 
 Compares monthly averages as discrete categories. Summer months (July–September) average 125–160 EUR/MWh while spring (April–May) is cheapest at ~90 EUR/MWh. Note: these figures are inflated by the 2022 crisis peak.
 
-{{< siteimg src="images/charts/yoy_comparison_DEcopy.png" alt="Monthly Avg Price per Year" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/CS4973-Belgium/interactive_charts/yoy_comparison_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **EDA Chart 3: Monthly Average Price pper Year**
 
 Overlays each year's monthly trajectory for direct comparison. 2022 is a clear outlier peaking at 460 EUR/MWh, while all other years cluster tightly in the 60–130 EUR/MWh range. This answers Marco's question that the current moment is not historically unusual.
 
-{{< siteimg src="images/charts/lr_predictions_DEcopy.png" alt="Linear Regression Prediction vs Actual" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/CS4973-Belgium/interactive_charts/lr_predictions_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **ML1 Chart 1: Linear Regression Prediction vs Actual**
 
 Directly evaluates model performance on unseen data. The model tracks the general trend and weekly cycles  across the February–May 2026 test period, with the main weakness being sudden sharp drops. Our R² = 0.265, so the model explains ~27% of the variance. Adjusting this model is somethng we must focus on in Phase 3, along with adding the possibility of selecting other countries for this model, and not Germany alone.
 
-{{< siteimg src="images/charts/lr_coefficients_DEcopy.png" alt="Linear Regression Coefficients" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/CS4973-Belgium/interactive_charts/lr_coefficients_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **ML1 Chart 2: Linear Regression Coefficients**
 
