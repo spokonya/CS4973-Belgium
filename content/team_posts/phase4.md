@@ -45,7 +45,7 @@ In Phase 4, we focused on finalizing the implementation of the website. We rewor
 ### Model implementation
 - The trained weights are exported from the notebook and stored as rows in the `price_model_weights` and `price_model_scaler` tables. The Flask API loads them and rebuilds the prediction in NumPy, rolling forward one day at a time to produce the 30-day forecast, served at `/ml1/forecast`. _[teammate: expand on how the recursive forecast works step by step.]_
 
-### Checks (not shown in the web app)
+### Assumption Checks
 - Evaluated on a held-out test set with R² ≈ 0.61, MAE ≈ 17.7, and RMSE ≈ 23.2, plus residual and predicted-vs-actual plots. _[teammate: confirm the numbers and link the plots.]_
 
 ## ML #2 — Winter Gas-Storage Stress
@@ -75,7 +75,7 @@ In Phase 4, we focused on finalizing the implementation of the website. We rewor
 - It's served at the **`/stats/storage/risk`** endpoint, and the Country Comparison page runs the same function for every country.
 - We **verified the API's predictions match the trained scikit-learn model exactly**, so what runs in the app is identical to what we trained.
 
-### Checks (not shown in the web app)
+### Assumption Checks
 - **Assumptions:**
   - Binary outcome (the label is 0/1).
   - Feature **correlation matrix**.
