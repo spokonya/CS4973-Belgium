@@ -97,7 +97,9 @@ Niels trades electricity on the EPEX day-ahead market from a desk in Amsterdam. 
 ## Data visualizations
 ### ML 1
 
-{{< siteimg src="images/charts/price_history_DEcopy.png" alt="Germany Day Ahead Electricity Prices" width="600" >}}
+{{< rawhtml >}}
+<iframe src="/interactive_charts/price_history_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+{{< /rawhtml >}}
 
 **EDA Chart 1: Germany Day Ahead Electricty Prices**
 
