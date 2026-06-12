@@ -60,7 +60,21 @@ A linear regression that forecasts daily electricity prices 30 days forward for 
   - Residuals over time (actual minus predicted on the test set), confirming errors fluctuate around zero without a clear systematic bias over the holdout period (Figure 1)
   - Residual distribution histogram showing the errors are roughly centered and approximately normally distributed (Figure 2)
 
+{{< rawhtml >}}
+<figure class="siteimg-figure">
+<iframe src="/CS4973-Belgium/interactive_charts/lr_residuals_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 5: Linear regression coefficients — feature weights driving the price forecast</figcaption>
+</figure>
+{{< /rawhtml >}}
+
 {{< siteimg src="images/phase4/ml1_residuals_time.png" alt="ML1 residuals over time on the 90-day test set" width="700" caption="Figure 1: Residuals over time — actual minus predicted electricity prices on the test set (EUR/MWh)" >}}
+
+{{< rawhtml >}}
+<figure class="siteimg-figure">
+<iframe src="/CS4973-Belgium/interactive_charts/lr_residuals_hist_DE.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 5: Linear regression coefficients — feature weights driving the price forecast</figcaption>
+</figure>
+{{< /rawhtml >}}
 
 {{< siteimg src="images/phase4/ml1_residual_histogram.png" alt="ML1 residual distribution histogram" width="700" caption="Figure 2: Residual distribution — histogram of test-set prediction errors (EUR/MWh)" >}}
 

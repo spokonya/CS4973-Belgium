@@ -126,7 +126,7 @@ Compares monthly averages as discrete categories. Summer months (July–Septembe
 </figure>
 {{< /rawhtml >}}
 
-**EDA Chart 3: Monthly Average Price pper Year**
+**EDA Chart 3: Monthly Average Price per Year**
 
 Overlays each year's monthly trajectory for direct comparison. 2022 is a clear outlier peaking at 460 EUR/MWh, while all other years cluster tightly in the 60–130 EUR/MWh range. This answers Marco's question that the current moment is not historically unusual.
 
