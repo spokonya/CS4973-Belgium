@@ -56,9 +56,13 @@ A linear regression that forecasts daily electricity prices 30 days forward for 
 
 ### Assumption Checks
 - We evaluated the model on the final 90 days of data withheld from training, achieving R²=0.608, MAE=17.68 EUR/MWh, and RMSE=23.21 EUR/MWh
-- We validated the linear regression assumptions using three plots: 
-  - Residuals over time chart (actual minus predicted on the test set) confirming residuals are randomly distributed around zero with no systematic bias
-  - Residual distribution histogram showing the errors are approximately normally distributed
+- We validated the linear regression assumptions using two plots:
+  - Residuals over time (actual minus predicted on the test set), confirming errors fluctuate around zero without a clear systematic bias over the holdout period (Figure 1)
+  - Residual distribution histogram showing the errors are roughly centered and approximately normally distributed (Figure 2)
+
+{{< siteimg src="images/phase4/ml1_residuals_time.png" alt="ML1 residuals over time on the 90-day test set" width="700" caption="Figure 1: Residuals over time — actual minus predicted electricity prices on the test set (EUR/MWh)" >}}
+
+{{< siteimg src="images/phase4/ml1_residual_histogram.png" alt="ML1 residual distribution histogram" width="700" caption="Figure 2: Residual distribution — histogram of test-set prediction errors (EUR/MWh)" >}}
 
 ## ML #2 — Winter Gas-Storage Stress
 
@@ -125,13 +129,13 @@ The schema splits into two layers: **core identity and persona features** (every
 
 `users` is the hub: each row carries `user_id`, display name, persona type (`household_owner`, `journalist`, or `energy_trader`), and basic profile fields. Every persona-specific table hangs off `user_id` as a foreign key. Household owners get `household_profiles` (utility, bill amount, billing frequency, tariff, usage). Journalists get `saved_articles`, `snapshots` (labeled country state captures with JSON payloads), and general `notes`. Energy traders get `trader_watchlist` (countries they follow), `trader_price_alerts` (threshold and direction), and `trader_trade_notes` (forecast calls, direction, and outcome tracking).
 
-{{< siteimg src="images/phase4/db_core_persona.png" alt="Database schema — users and persona feature tables" width="700" caption="Figure 1: Core identity and persona features (users hub with household profiles, trader watchlists, alerts, trade notes, saved articles, snapshots, and notes)" >}}
+{{< siteimg src="images/phase4/db_core_persona.png" alt="Database schema — users and persona feature tables" width="700" caption="Figure 3: Core identity and persona features (users hub with household profiles, trader watchlists, alerts, trade notes, saved articles, snapshots, and notes)" >}}
 
 ### Model and time-series tables
 
 The second group holds what the API needs to run ML1 and ML2 at request time. `price_daily` and `gas_storage_daily` store the historical ENTSO-E and GIE AGSI series the routes query for charts and lag features. `price_model_weights` and `price_model_scaler` hold the exported linear-regression coefficients and StandardScaler means/stds (42 features total — the screenshot shows the first columns; lag weights, rolling stats, month dummies, day-of-week dummies, and country one-hot weights continue in the same table). `gas_storage_model` stores the logistic-regression intercept, feature weights, and standardization parameters for the winter stress classifier. `gas_storage_winters` holds one row per country-winter with the precomputed features and stress labels used for charts, slider defaults, and ranking.
 
-{{< siteimg src="images/phase4/db_model_tables.png" alt="Database schema — price and gas storage model tables" width="700" caption="Figure 2: Model and time-series tables (price weights/scaler, daily price and storage history, gas storage model, and winter feature rows)" >}}
+{{< siteimg src="images/phase4/db_model_tables.png" alt="Database schema — price and gas storage model tables" width="700" caption="Figure 4: Model and time-series tables (price weights/scaler, daily price and storage history, gas storage model, and winter feature rows)" >}}
 
 
 ## Individual posts
