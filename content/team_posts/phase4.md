@@ -111,6 +111,14 @@ A linear regression that forecasts daily electricity prices 30 days forward for 
 - For accuracy I used 5-fold stratified cross-validation, checked precision and recall on the confusion matrix, and compared logistic regression against a random forest
 
 
+{{< rawhtml >}}
+<figure class="siteimg-figure">
+<iframe src="/CS4973-Belgium/interactive_charts/correlation_matrix.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 5: Linear regression coefficients — feature weights driving the price forecast</figcaption>
+</figure>
+{{< /rawhtml >}}
+
+
 ## Software Architecture
 
 <!--
