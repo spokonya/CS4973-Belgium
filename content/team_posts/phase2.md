@@ -228,17 +228,38 @@ For each country-winter pair, we took the minimum storage percentage during wint
 
 - For the two-variable analysis, the strongest signal was something we expected to be obvious but actually was not: starting winter near 90-100% full does not guarantee a safe winter. Several country-winters started above 90% and still dropped below the 30% stress line. This helped justify why a predictive model is useful.
 
+{{< rawhtml >}}
+<figure class="siteimg-figure">
+<iframe src="/CS4973-Belgium/interactive_charts/storage_history.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 5: Linear regression coefficients — feature weights driving the price forecast</figcaption>
+</figure>
+{{< /rawhtml >}}
+
 ### EDA Chart 1
 
 Our first EDA chart is a multi-line time series for Germany, France, Italy, and the Netherlands from 2014 to 2024, with the 30% stress threshold marked. We chose a line chart because storage percentage is a continuous value tracked daily, and the yearly fill-and-draw cycle is the most important pattern to surface. A bar chart or scatter plot would hide this seasonal pattern.
 
 This chart answers Lena’s question of whether the current winter is historically unusual. Most years, the lines dip but stay above 30%, while a few winters clearly cross the stress line. This gives her a visual baseline for what “normal” looks like compared to a risky winter.
 
+{{< rawhtml >}}
+<figure class="siteimg-figure">
+<iframe src="/CS4973-Belgium/interactive_charts/min_storage_by_country.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 5: Linear regression coefficients — feature weights driving the price forecast</figcaption>
+</figure>
+{{< /rawhtml >}}
+
 ### EDA Chart 2
 
 Our second EDA chart is a horizontal ranked bar chart showing the single lowest storage point each country has ever recorded. Countries below the 30% threshold are shown as risky, while countries above the threshold are shown as safer.
 
 We chose a ranked bar chart because the question is comparative: who is most at risk historically? Ranking makes the answer instantly readable. This chart answers Sofia’s question of which countries belong at the top of a risk ranking. Almost every country in our dataset has crossed below 30% at least once, with Spain and Poland being the main exceptions.
+
+{{< rawhtml >}}
+<figure class="siteimg-figure">
+<iframe src="/CS4973-Belgium/interactive_charts/start_vs_min.html" width="100%" height="450" frameborder="0" style="border:none;"></iframe>
+<figcaption class="siteimg-figure__caption">Figure 5: Linear regression coefficients — feature weights driving the price forecast</figcaption>
+</figure>
+{{< /rawhtml >}}
 
 ### EDA Chart 3
 
